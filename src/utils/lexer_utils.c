@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:10:15 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/20 22:28:32 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/20 22:31:20 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,15 @@ char	*removed_env(char *str)
 	char	*ret;
 
 	i = 0;
-	while(str[i] != 'S' && str[i] != '\0')
+	while(str[i] != '$' && str[i] != '\0')
 		i++;
-	
+	ret = (char *)malloc((i + 1) * sizeof(char));
+	i = 0;
+	while (str[i] != '$' && str[i] != '\0')
+	{
+		ret[i] = str[i];
+		i++;
+	}
+	free(str);
+	return(ret);
 }

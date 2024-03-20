@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:12:05 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/20 19:39:49 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/20 22:34:03 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,6 @@ char *trim_whitespace(char *str);
 int is_whitespace_null(char c);
 int is_quote(char c);
 char	*append_char_env(char *str, char c);
+char	*removed_env(char *str);
 
 #endif

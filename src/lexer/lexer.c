@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:24:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/20 22:25:44 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/20 22:35:11 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ char	*search_replace_env(t_prompt *prompt, char *str)
 		if (env[j] == NULL)
 		{
 			printf("no match\n");
-			return (NULL);
+			return (removed_env(str));
 		}
 		else if (!ft_strncmp(env_name, env[j], ft_strlen(env_name)))
 		{
