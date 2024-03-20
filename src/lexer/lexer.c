@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:24:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/20 22:35:11 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/20 22:40:26 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ char	*search_replace_env(t_prompt *prompt, char *str)
 			env_name = ft_strdup(replace_env(env_name, env[j]));
 			str = updated_env_str(str, env_name);
 		}
-		printf("test: %s\n", env_name);
 	}
 	return(str);
 }
