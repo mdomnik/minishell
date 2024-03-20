@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:10:15 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/20 19:39:23 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/20 22:28:32 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,15 @@ char	*append_char_env(char *str, char c)
 	ret[i + 1] = '\0';
 	free(str);
 	return(ret);
+}
+
+char	*removed_env(char *str)
+{
+	int		i;
+	char	*ret;
+
+	i = 0;
+	while(str[i] != 'S' && str[i] != '\0')
+		i++;
+	
 }
