@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:24:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/20 21:03:08 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/20 22:05:35 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void split_tokens(t_prompt *prompt)
 		if(prompt->line[i] != '\0')
 				i++;
 	}
-	print_lexer(prompt);
+	// print_lexer(prompt);
 	lexerfreelist_ms(&prompt->lexer);
 }
 
@@ -81,31 +81,71 @@ char	*search_replace_env(t_prompt *prompt, char *str)
 	if (str[i] == '$')
 	{
 		env_name = (char *)malloc(((ft_strlen(str) - i) + 1) * sizeof(char));
+		i++;
 		while (str[i + j] != '\0')
 		{
 			env_name[j] = str[i + j]; 
 			j++;
 		}
 		j = 0;
-		while (env[j] != NULL && ft_strncmp(env_name, env[j], ft_strlen(env_name)))
+		while (env[j] != NULL)
+		{
+			if (!ft_strncmp(env_name, env[j], ft_strlen(env_name)))
+				break ;
 			j++;
-		if (ft_strncmp(env_name, env[j], ft_strlen(env_name)))
-			printf("compare found!!!!!\n");
-		else
+		}
+		if (env[j] == NULL)
+		{
 			printf("no match\n");
+			return (str);
+		}
+		else if (!ft_strncmp(env_name, env[j], ft_strlen(env_name)))
+		{
+			env_name = ft_strdup(replace_env(env_name, env[j]));
+			str = updated_env_str(str, env_name);
+		}
+		printf("test: %s\n", env_name);
 	}
 	return(str);
 }
 
 
-
-void	check_env_make_node(t_prompt *prompt, char *word)
+char	*replace_env(char	*env_name, char	*env_str)
 {
-	t_lexer *new;
-	
-	(void)new;
-	(void)prompt;
-	printf("check: %s\n", word);
-	// new = lexernew_ms(temp);
-	// lexeraddback_ms(&prompt->lexer, new);
+	int		i;
+	int		j;
+	char	*replace;
+
+
+	i = 0;
+	j = 0;
+	while (!ft_strncmp(env_name, env_str, i))
+		i++;
+	replace = (char *)malloc(((ft_strlen(env_str) - i) + 1) * sizeof(char));
+	while (env_str[i + j] != '\0')
+	{
+		replace[j] = env_str[i + j];
+		j++;
+	}
+	free(env_name);
+	return(replace);
+}
+
+char 	*updated_env_str(char *str, char	*env_str)
+{
+	int		i;
+	char	*cat;
+
+	i = 0;
+	while(str[i] != '$' && str[i] != '\0')
+		i++;
+	cat = (char *)malloc((i + ft_strlen(env_str) + 1) * sizeof(char));
+	i = 0;
+	while(str[i] != '$' && str[i] != '\0')
+	{
+		cat[i] = str[i];
+		i++;
+	}
+	str = ft_strjoin(cat, env_str);
+	return (str);
 }
