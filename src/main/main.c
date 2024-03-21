@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:23:31 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/20 22:14:48 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/21 16:40:29 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@ int	main(int argc, char **argv, char **envp)
 {
 	t_prompt	*prompt;
 
-	int	i;
-	
-	i = 0;
 	prompt = NULL;
 	prompt = init_prompt(prompt);
 	if(argc != 1 || argv[1])
@@ -27,12 +24,6 @@ int	main(int argc, char **argv, char **envp)
 	prompt->envp->env = double_dup(envp);
 	if (!prompt->envp->env)
 		simple_err(ERR_ENV);
-	while(prompt->envp->env[i] != NULL)
-	{
-		printf("%s\n", prompt->envp->env[i]);
-		i++;
-	}
-
 	ms_loop(prompt);
 	return (1);
 }

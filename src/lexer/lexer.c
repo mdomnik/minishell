@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:24:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/20 22:40:26 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/21 17:28:36 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,16 @@ void split_tokens(t_prompt *prompt)
 	{
 		if(!is_whitespace_null(prompt->line[i]))
 		{
-			word = NULL;
+			word = ft_strdup("");
+			if (word == NULL)
+				simple_err(ERR_MALLOC);
 			i = node_process(prompt, i, word);
 		}
-		if(prompt->line[i] != '\0')
+		else
 				i++;
 	}
-	// print_lexer(prompt);
+	print_lexer(prompt);
+	reset_increment_i(0);
 	lexerfreelist_ms(&prompt->lexer);
 }
 
@@ -40,10 +43,9 @@ int	node_process(t_prompt *prompt, int	i, char *word)
 	char	*temp;
 	t_lexer *new;
 
-	(void)new;
 	while (!is_whitespace_null(prompt->line[i]))
 	{
-		temp = NULL;
+		temp = ft_strdup("");
 		q = 0;
 		if (is_quote(prompt->line[i]))
 		{
@@ -58,22 +60,22 @@ int	node_process(t_prompt *prompt, int	i, char *word)
 			while(!is_quote(prompt->line[i]) && !is_whitespace_null(prompt->line[i]))
 				temp = append_char_env(temp, prompt->line[i++]);
 		if (q != 39)
-			temp = search_replace_env(prompt, temp);
+			temp = search_replace_env(temp);
 		word = ft_strjoin(word, temp);
+		free(temp);
 	}
-	printf("word: %s\n", word);
-	// check_env_make_node(prompt, word);
+	new = lexernew_ms(word);
+	lexeraddback_ms(&prompt->lexer, new);
 	return(i);
 }
 
-char	*search_replace_env(t_prompt *prompt, char *str)
+char	*search_replace_env(char *str)
 {
-	char	**env;
-	char	*env_name;
 	int		i;
 	int		j;
+	char	*env_name;
+	char	*new;
 
-	env = prompt->envp->env;
 	i = 0;
 	j = 0;
 	while (str[i] != '$' && str[i] != '\0')
@@ -87,27 +89,24 @@ char	*search_replace_env(t_prompt *prompt, char *str)
 			env_name[j] = str[i + j]; 
 			j++;
 		}
-		j = 0;
-		while (env[j] != NULL)
+		env_name[j] = '\0';
+		char *env_value = getenv(env_name);
+		free(env_name);
+		if (env_value == NULL)
 		{
-			if (!ft_strncmp(env_name, env[j], ft_strlen(env_name)))
-				break ;
-			j++;
+			new = removed_env(str);
+			str = ft_strdup(new);
+			free(new);
 		}
-		if (env[j] == NULL)
+		else
 		{
-			printf("no match\n");
-			return (removed_env(str));
-		}
-		else if (!ft_strncmp(env_name, env[j], ft_strlen(env_name)))
-		{
-			env_name = ft_strdup(replace_env(env_name, env[j]));
-			str = updated_env_str(str, env_name);
+			env_value = ft_strdup(env_value);
+			str = updated_env_str(str, env_value);
+			free(env_value);
 		}
 	}
 	return(str);
 }
-
 
 char	*replace_env(char	*env_name, char	*env_str)
 {
