@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:12:05 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 14:36:46 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 15:28:03 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@ int	find_redir(char *str);
 int	ft_memcmp_ms(const void *s1, const void *s2);
 int	ft_strlen_ms(char *s);
 void add_node(t_prompt *prompt, char *word, t_tokens token);
+
+//lexer_utils_3.c
 char *search_redir(t_prompt *prompt, char *str);
+int	check_redir(char c1, char c2);
+int	cmpchar(char c1, char c2);
 
 #endif

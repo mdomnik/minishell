@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:58:47 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 14:59:00 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 15:07:20 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,4 @@ void add_node(t_prompt *prompt, char *word, t_tokens token)
 	
 	new = lexernew_ms(word, token);
 	lexeraddback_ms(&prompt->lexer, new);
-}
-
-char *search_redir(t_prompt *prompt, char *str)
-{
-	t_tokens	token;
-	int			i;
-
-	i = 0;
-	while ()
 }
