@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:07:09 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 16:37:43 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 16:59:45 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ char *search_redir(t_prompt *prompt, char *str, char *word)
 		}
 		token = check_redir(str[i], str[i + 1]);
 		temp = ft_substr(str, 0, i);
-		add_node(prompt, temp, T_WORD);
+		if (temp[0] != '\0')
+			add_node(prompt, temp, T_WORD);
 		if (token == T_APPEND || token == T_HEREDOC || token == T_MISTAKE)
 		{
 			add_node(prompt, ft_substr(str, i, 2), token);

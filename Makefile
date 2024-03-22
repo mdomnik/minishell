@@ -6,7 +6,7 @@
 #    By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 21:52:00 by kaan              #+#    #+#              #
-#    Updated: 2024/03/22 16:37:23 by mdomnik          ###   ########.fr        #
+#    Updated: 2024/03/22 17:03:54 by mdomnik          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,8 +26,7 @@ READFLAG = -lreadline
 
 RM = rm -f
 
-SRC = 	src/main/minishell_exe.c\
-	src/main/exe_utils.c\
+SRC = 	src/main/main.c\
 		src/main/error_free.c\
 		src/lexer/lexer.c\
 		src/utils/lexer_utils/lexer_struct.c\

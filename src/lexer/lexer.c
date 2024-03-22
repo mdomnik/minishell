@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:24:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 16:33:19 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 17:32:28 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ int	node_process(t_prompt *prompt, int	i, char *word)
 		else 
 			while(!is_quote(prompt->line[i]) && !is_whitespace_null(prompt->line[i]))
 				temp = append_char_env(temp, prompt->line[i++]);
-		if (q != 39)
-			temp = search_replace_env(temp);
 		if (q == 0)
 		{
 			temp = search_redir(prompt, temp, word);
@@ -71,6 +69,8 @@ int	node_process(t_prompt *prompt, int	i, char *word)
 				prompt->printable = 0;
 			}
 		}
+		if (q != 39)
+			temp = search_replace_env(temp);
 		word = ft_strjoin(word, temp);
 		free(temp);
 	}
@@ -84,6 +84,7 @@ char	*search_replace_env(char *str)
 	int		i;
 	int		j;
 	char	*env_name;
+	char	*env_value;
 	char	*new;
 
 	i = 0;
@@ -100,7 +101,7 @@ char	*search_replace_env(char *str)
 			j++;
 		}
 		env_name[j] = '\0';
-		char *env_value = getenv(env_name);
+		env_value = getenv(env_name);
 		free(env_name);
 		if (env_value == NULL)
 		{
@@ -154,6 +155,7 @@ char 	*updated_env_str(char *str, char	*env_str)
 		cat[i] = str[i];
 		i++;
 	}
+	cat[i] = '\0';
 	str = ft_strjoin(cat, env_str);
 	return (str);
 }
