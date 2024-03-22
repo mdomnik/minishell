@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:58:47 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 14:05:39 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 14:36:39 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,17 @@ int	ft_strlen_ms(char *s)
 		i++;
 	}
 	return (i);
+}
+
+void add_node(t_prompt *prompt, char *word, t_tokens token)
+{
+	t_lexer *new;
+	
+	new = lexernew_ms(word, token);
+	lexeraddback_ms(&prompt->lexer, new);
+}
+
+char *search_redir(t_prompt *prompt, char *str)
+{
+	
 }

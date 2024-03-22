@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:12:05 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 14:06:16 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 14:36:46 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,7 @@ char	*removed_env(char *str);
 int	find_redir(char *str);
 int	ft_memcmp_ms(const void *s1, const void *s2);
 int	ft_strlen_ms(char *s);
+void add_node(t_prompt *prompt, char *word, t_tokens token);
+char *search_redir(t_prompt *prompt, char *str);
+
 #endif

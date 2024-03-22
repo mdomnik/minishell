@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:24:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 14:15:02 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 14:31:36 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	node_process(t_prompt *prompt, int	i, char *word)
 	int		q;
 	char	*temp;
 	t_tokens	token;
-	t_lexer *new;
 
 	while (!is_whitespace_null(prompt->line[i]))
 	{
@@ -63,13 +62,22 @@ int	node_process(t_prompt *prompt, int	i, char *word)
 				temp = append_char_env(temp, prompt->line[i++]);
 		if (q != 39)
 			temp = search_replace_env(temp);
+		if (q == 0)
+		{
+			search_redir();
+			//token = find_redir(temp);
+		}
+		if (token != T_WORD)
+		{
+			add_node(prompt, word, T_WORD);
+			add_node(prompt, temp, token);
+			free(temp);
+			return(i);
+		}
 		word = ft_strjoin(word, temp);
 		free(temp);
 	}
-	if (q == 0)
-		token = find_redir(word);
-	new = lexernew_ms(word, token);
-	lexeraddback_ms(&prompt->lexer, new);
+	add_node(prompt, word, T_WORD);
 	return(i);
 }
 
