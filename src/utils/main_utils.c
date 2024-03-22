@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:40:19 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/21 16:50:50 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 13:51:33 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	print_lexer(t_prompt *prompt)
 	while (current != NULL)
 	{
 		printf("word: [%s] ", current->word);
+		printf("token: [%d] ", current->token);
 		printf("index: [%d]\n", current->index);
 		current = current->next;
 	}

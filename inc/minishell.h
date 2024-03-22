@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/03/18 15:52:39 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 13:52:51 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # include "lexer.h"
 # include "parser.h"
 # include "utils.h"
+
 #define CL_NAME "[minishell]$ "
 
 //ERROR DEFINES

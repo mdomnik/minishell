@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:24:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/21 18:17:47 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 14:15:02 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,13 @@ int	node_process(t_prompt *prompt, int	i, char *word)
 {
 	int		q;
 	char	*temp;
+	t_tokens	token;
 	t_lexer *new;
 
 	while (!is_whitespace_null(prompt->line[i]))
 	{
 		temp = ft_strdup("");
+		token = T_WORD;
 		q = 0;
 		if (is_quote(prompt->line[i]))
 		{
@@ -64,7 +66,9 @@ int	node_process(t_prompt *prompt, int	i, char *word)
 		word = ft_strjoin(word, temp);
 		free(temp);
 	}
-	new = lexernew_ms(word);
+	if (q == 0)
+		token = find_redir(word);
+	new = lexernew_ms(word, token);
 	lexeraddback_ms(&prompt->lexer, new);
 	return(i);
 }
@@ -94,11 +98,8 @@ char	*search_replace_env(char *str)
 		free(env_name);
 		if (env_value == NULL)
 		{
-			printf("strpre: [%s]\n", str);
 			new = removed_env(str);
-			printf("new: [%s]\n", new);
 			str = ft_strdup(new);
-			printf("str: [%s]\n", str);
 			free(new);
 		}
 		else
