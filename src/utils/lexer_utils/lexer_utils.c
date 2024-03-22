@@ -6,11 +6,11 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:10:15 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/21 18:40:02 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 16:37:49 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../../inc/minishell.h"
 
 //gets rid of all the whitespace before and after the string
 char *trim_whitespace(char *str)

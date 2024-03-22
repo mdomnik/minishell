@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:24:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 16:19:25 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 16:33:19 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,8 @@ void split_tokens(t_prompt *prompt)
 		else
 				i++;
 	}
-	print_lexer(prompt);
 	reset_increment_i(0);
-	lexerfreelist_ms(&prompt->lexer);
+	restructure_prompt(prompt);
 }
 
 int	node_process(t_prompt *prompt, int	i, char *word)

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/03/22 16:16:33 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 16:29:09 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_prompt
 	int					printable;
 	char				*line;
 	struct s_envll      *envp;
+	struct s_parser		*parser;
 	struct s_lexer		*lexer;
 } 				t_prompt;
 

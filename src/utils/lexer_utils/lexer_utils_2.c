@@ -6,11 +6,11 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:58:47 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 15:07:20 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 16:37:39 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../../../inc/minishell.h"
 
 int	find_redir(char *str)
 {
