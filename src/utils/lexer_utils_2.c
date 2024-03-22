@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 13:58:47 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 14:36:39 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 14:59:00 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ int	find_redir(char *str)
 		return(T_HEREDOC);
 	else if (!ft_memcmp_ms(str, ">>"))
 		return(T_APPEND);
+	else if (!ft_memcmp_ms(str, "<>"))
+		return(T_MISTAKE);
 	return (T_WORD);
 }
 
@@ -73,5 +75,9 @@ void add_node(t_prompt *prompt, char *word, t_tokens token)
 
 char *search_redir(t_prompt *prompt, char *str)
 {
-	
+	t_tokens	token;
+	int			i;
+
+	i = 0;
+	while ()
 }

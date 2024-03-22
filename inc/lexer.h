@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 11:41:48 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 14:07:07 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 14:55:13 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ typedef enum e_tokens
 	T_LESSER = 3,
 	T_HEREDOC = 4,
 	T_APPEND = 5,
+	T_MISTAKE = 6,
 }	t_tokens;
 
 //struct for lexer linked list
