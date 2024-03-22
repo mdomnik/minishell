@@ -26,7 +26,8 @@ READFLAG = -lreadline
 
 RM = rm -f
 
-SRC = 	src/main/main.c\
+SRC = 	src/main/minishell_exe.c\
+	src/main/exe_utils.c\
 		src/main/error_free.c\
 		src/lexer/lexer.c\
 		src/utils/lexer_utils/lexer_struct.c\

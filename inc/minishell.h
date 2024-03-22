@@ -15,9 +15,13 @@
 
 # include "../lib/libft/inc/libft.h"
 # include <stdio.h>
+# include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <stdlib.h>
+# include <signal.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include "lexer.h"
 # include "parser.h"
 # include "utils.h"
