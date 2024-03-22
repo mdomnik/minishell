@@ -6,13 +6,13 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:07:09 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 15:50:18 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 16:21:11 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char *search_redir(t_prompt *prompt, char *str)
+char *search_redir(t_prompt *prompt, char *str, char *word)
 {
 	t_tokens	token;
 	char		*temp;
@@ -25,6 +25,11 @@ char *search_redir(t_prompt *prompt, char *str)
 		return (str);
 	else
 	{
+		if (prompt->printable == 0 && word[0] != '\0')
+		{
+			add_node(prompt, word, T_WORD);
+			prompt->printable = 1;
+		}
 		token = check_redir(str[i], str[i + 1]);
 		temp = ft_substr(str, 0, i);
 		add_node(prompt, temp, T_WORD);
@@ -42,7 +47,7 @@ char *search_redir(t_prompt *prompt, char *str)
 	if(str[0] == '\0')
 		return (str);
 	else
-		str = search_redir(prompt, str);
+		str = search_redir(prompt, str, word);
 	return (str);
 }
 

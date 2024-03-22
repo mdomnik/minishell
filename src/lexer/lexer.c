@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:24:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 15:47:30 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 16:19:25 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,15 @@ int	node_process(t_prompt *prompt, int	i, char *word)
 		if (q != 39)
 			temp = search_replace_env(temp);
 		if (q == 0)
-			temp = search_redir(prompt, temp);
+		{
+			temp = search_redir(prompt, temp, word);
+			if (prompt->printable == 1)
+			{
+				free(word);
+				word = NULL;
+				prompt->printable = 0;
+			}
+		}
 		word = ft_strjoin(word, temp);
 		free(temp);
 	}
