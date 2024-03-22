@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:24:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 20:27:52 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 22:43:10 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,10 @@ int	node_process(t_prompt *prompt, int	i)
 {
 	int		q;
 	char	*temp;
-	t_tokens	token;
 
 	while (!is_whitespace_null(prompt->line[i]))
 	{
 		temp = ft_strdup("");
-		token = T_WORD;
 		q = 0;
 		if (is_quote(prompt->line[i]))
 		{

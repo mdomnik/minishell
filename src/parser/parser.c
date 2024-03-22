@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:51:26 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 21:07:56 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 22:43:27 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,9 @@ void group_redir(t_prompt *prompt)
 {
 	t_lexer *temp;
 	char    **io;
-	int i;
 	
 	io = (char **)malloc(4 * sizeof(char *));
 	temp = prompt->lexer;
-	i = 0;
 	while(temp->next != NULL)
 	{
 		if (temp->token != T_WORD && temp->next->token == T_WORD)
