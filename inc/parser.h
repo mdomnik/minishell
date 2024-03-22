@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:37:46 by kaan              #+#    #+#             */
-/*   Updated: 2024/03/22 18:00:36 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 21:05:04 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef struct s_parser
 
 //parser.c
 void restructure_prompt(t_prompt *prompt);
-char **group_redir(t_lexer *lexer);
+void group_redir(t_prompt *prompt);
+void group_waste(t_prompt *prompt, t_lexer *temp);
 
 #endif
