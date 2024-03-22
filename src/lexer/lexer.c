@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:24:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 17:32:28 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 20:27:52 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@
 void split_tokens(t_prompt *prompt)
 {
 	int		i;
-	char	*word;
 
 	i = 0;
 	prompt->line = trim_whitespace(prompt->line);
@@ -24,10 +23,10 @@ void split_tokens(t_prompt *prompt)
 	{
 		if(!is_whitespace_null(prompt->line[i]))
 		{
-			word = ft_strdup("");
-			if (word == NULL)
+			prompt->word = ft_strdup("");
+			if (prompt->word == NULL)
 				simple_err(ERR_MALLOC);
-			i = node_process(prompt, i, word);
+			i = node_process(prompt, i);
 		}
 		else
 				i++;
@@ -36,7 +35,7 @@ void split_tokens(t_prompt *prompt)
 	restructure_prompt(prompt);
 }
 
-int	node_process(t_prompt *prompt, int	i, char *word)
+int	node_process(t_prompt *prompt, int	i)
 {
 	int		q;
 	char	*temp;
@@ -61,25 +60,25 @@ int	node_process(t_prompt *prompt, int	i, char *word)
 				temp = append_char_env(temp, prompt->line[i++]);
 		if (q == 0)
 		{
-			temp = search_redir(prompt, temp, word);
+			temp = search_redir(prompt, temp);
 			if (prompt->printable == 1)
 			{
-				free(word);
-				word = NULL;
+				free(prompt->word);
+				prompt->word = NULL;
 				prompt->printable = 0;
 			}
 		}
 		if (q != 39)
-			temp = search_replace_env(temp);
-		word = ft_strjoin(word, temp);
+			temp = search_replace_env(prompt, temp);
+		prompt->word = ft_strjoin(prompt->word, temp);
 		free(temp);
 	}
-	if (word[0] != '\0')
-		add_node(prompt, word, T_WORD);
+	if (prompt->word[0] != '\0')
+		add_node(prompt, prompt->word, T_WORD);
 	return(i);
 }
 
-char	*search_replace_env(char *str)
+char	*search_replace_env(t_prompt *prompt, char *str)
 {
 	int		i;
 	int		j;
@@ -113,6 +112,9 @@ char	*search_replace_env(char *str)
 		{
 			env_value = ft_strdup(env_value);
 			str = updated_env_str(str, env_value);
+			str = makes_nodes_env(prompt, str);
+			free(prompt->word);
+			prompt->word = NULL;
 			free(env_value);
 		}
 	}
@@ -140,7 +142,7 @@ char	*replace_env(char	*env_name, char	*env_str)
 	return(replace);
 }
 
-char 	*updated_env_str(char *str, char	*env_str)
+char 	*updated_env_str(char *str, char *env_str)
 {
 	int		i;
 	char	*cat;

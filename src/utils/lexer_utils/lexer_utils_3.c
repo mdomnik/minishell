@@ -6,13 +6,13 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:07:09 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 16:59:45 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 20:24:39 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
-char *search_redir(t_prompt *prompt, char *str, char *word)
+char *search_redir(t_prompt *prompt, char *str)
 {
 	t_tokens	token;
 	char		*temp;
@@ -25,9 +25,9 @@ char *search_redir(t_prompt *prompt, char *str, char *word)
 		return (str);
 	else
 	{
-		if (prompt->printable == 0 && word[0] != '\0')
+		if (prompt->printable == 0 && prompt->word[0] != '\0')
 		{
-			add_node(prompt, word, T_WORD);
+			add_node(prompt, prompt->word, T_WORD);
 			prompt->printable = 1;
 		}
 		token = check_redir(str[i], str[i + 1]);
@@ -48,7 +48,7 @@ char *search_redir(t_prompt *prompt, char *str, char *word)
 	if(str[0] == '\0')
 		return (str);
 	else
-		str = search_redir(prompt, str, word);
+		str = search_redir(prompt, str);
 	return (str);
 }
 
@@ -74,4 +74,47 @@ int	cmpchar(char c1, char c2)
 	if (c1 != c2)
 		return (c1 - c2);
 	return (0);
+}
+
+char *makes_nodes_env(t_prompt *prompt, char *str)
+{
+	char	*semi;
+	char	*node;
+	int		q;
+	int		i;
+
+	i = 0;
+	printf("wodasdrd: %s\n", prompt->word);
+	while(str[i] != '\0')
+	{
+		node = ft_strdup("");
+		while (!is_whitespace_null(str[i]))
+		{
+			semi = NULL;
+			semi = ft_strdup("");
+			q = 0;
+			if (is_quote(str[i]))
+			{
+				q = is_quote(str[i++]);
+				while(str[i] != q && str[i] != '\0')
+					semi = append_char_env(semi, str[i++]);
+				if(str[i] == '\0')
+					simple_err(ERR_QUOTE);
+				i++;
+			}
+			else 
+				while(!is_quote(str[i]) && !is_whitespace_null(str[i]))
+					semi = append_char_env(semi, str[i++]);
+			node = ft_strjoin(node, semi);
+			if (!is_whitespace_null(semi[0]))
+				break;
+			i++;
+		}
+		if(str[i] == '\0')
+			break;
+		add_node(prompt, node, T_WORD);
+		free(node);
+		i++;
+	}
+	return (node);
 }

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:12:05 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 16:04:19 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/22 20:21:18 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,12 @@ int	ft_strlen_ms(char *s);
 void add_node(t_prompt *prompt, char *word, t_tokens token);
 
 //lexer_utils_3.c
-char *search_redir(t_prompt *prompt, char *str, char *word);
+char *search_redir(t_prompt *prompt, char *str);
 int	check_redir(char c1, char c2);
 int	cmpchar(char c1, char c2);
+char *makes_nodes_env(t_prompt *prompt, char *str);
 
+//parser_struct.c
+t_parser	*parsernew_ms(void);
+int	reset_increment_j(int x);
 #endif
