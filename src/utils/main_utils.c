@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:40:19 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 20:12:27 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/23 16:30:33 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,41 @@ void	print_lexer(t_prompt *prompt)
 		printf("word: [%s] ", current->word);
 		printf("token: [%d] ", current->token);
 		printf("index: [%d]\n", current->index);
+		current = current->next;
+	}
+}
+
+void	print_parser(t_prompt *prompt)
+{
+	t_parser	*current;
+	int			i;
+
+	i = 0;
+	current = prompt->parser;
+	if (prompt->parser == NULL)
+		printf("Stack is empty\n");
+	printf("Stack contents:\n");
+	while (current != NULL)
+	{
+		printf("cmd: [%s] ", current->cmd);
+		while (current->args[i] != NULL)
+		{
+			printf("arg %d:[%s], ", i, current->args[i]);
+			i++;
+		}
+		printf("\n");
+		printf("input: [%d], ", current->input);
+		printf("i_str: [%s]\n", current->i_str);
+		printf("output: [%d], ", current->output);
+		printf("o_str: [%s]\n", current->o_str);
+		i = 0;
+		while (current->files[i] != NULL)
+		{
+			printf("file %d:[%s], ", i, current->files[i]);
+			i++;
+		}
+		printf("\n");
+		printf("index: %d\n", current->index);
 		current = current->next;
 	}
 }

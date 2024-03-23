@@ -6,19 +6,22 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:41:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 18:04:16 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/23 16:34:21 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
-t_parser	*parsernew_ms(void)
+t_parser	*parsernew_ms(t_prompt *prompt)
 {
 	t_parser		*element;
+	t_lexer			*lexer;
+
+	lexer = prompt->lexer;
 	element = (t_parser *)malloc(sizeof(t_parser));
 	if (!element)
 		return (NULL);
-	// element->
+	//functions for each of the elements of the node (pipe natual delim)
 	element->index = (reset_increment_j(1) - 1);
 	element->prev = NULL;
 	element->next = NULL;

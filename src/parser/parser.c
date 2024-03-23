@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:51:26 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 22:43:27 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/23 16:18:50 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void restructure_prompt(t_prompt *prompt)
 {
 	// char **redir;
-	print_lexer(prompt);
 	group_redir(prompt);
 	
 	lexerfreelist_ms(&prompt->lexer);

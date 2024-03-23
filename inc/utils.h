@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:12:05 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 20:21:18 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/23 16:32:25 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_prompt *init_prompt(t_prompt *prompt);
 char	**double_dup(char **str);
 void	free_double(char **double_str);
 void	print_lexer(t_prompt *prompt);
+void	print_parser(t_prompt *prompt);
 
 //lexer_struct.c
 t_lexer	*lexernew_ms(char *word, t_tokens token);
@@ -51,6 +52,6 @@ int	cmpchar(char c1, char c2);
 char *makes_nodes_env(t_prompt *prompt, char *str);
 
 //parser_struct.c
-t_parser	*parsernew_ms(void);
+t_parser	*parsernew_ms(t_prompt *prompt);
 int	reset_increment_j(int x);
 #endif
