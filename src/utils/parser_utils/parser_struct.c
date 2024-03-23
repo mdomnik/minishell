@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:41:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/23 16:34:21 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/23 20:02:27 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,10 @@
 t_parser	*parsernew_ms(t_prompt *prompt)
 {
 	t_parser		*element;
-	t_lexer			*lexer;
+	// t_lexer			*lexer;
 
-	lexer = prompt->lexer;
+	(void)prompt;
+	// lexer = prompt->lexer;
 	element = (t_parser *)malloc(sizeof(t_parser));
 	if (!element)
 		return (NULL);
