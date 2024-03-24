@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:37:46 by kaan              #+#    #+#             */
-/*   Updated: 2024/03/23 20:14:52 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/24 16:20:50 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ typedef enum e_io
 {
     I_STDIN = 10,
     O_STDOUT = 20,
-    O_PIPE = 30,
+    I_PIPE = 30,
+    O_PIPE = 40,
 } t_io;
 
 typedef struct s_parser

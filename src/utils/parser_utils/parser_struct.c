@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:41:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/24 16:02:09 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/24 16:54:11 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,37 @@ t_parser *parsernew_ms(char **args, char **io, char **files)
 	element = (t_parser *)malloc(sizeof(t_parser));
 	if (!element)
 		return (NULL);
+	element->index = (reset_increment_j(1) - 1);
+	
 	element->cmd = ft_strdup(args[0]);
 	element->args = remove_first(args);
 
-	element->input = find_redir(io[0]);
-	element->i_str = ft_strdup(io[1]);
-
-	element->output = find_redir(io[2]);
-	element->o_str = ft_strdup(io[3]);
+	if (io[0] == NULL)
+	{
+		if (element->index == 0)
+			element->input = I_STDIN;
+		else
+			element->input = I_PIPE;
+		element->i_str = NULL;
+	}
+	else
+	{
+		element->input = find_redir(io[0]);
+		element->i_str = ft_strdup(io[1]);
+	}
+	if (io[2] == NULL)
+	{
+		element->output = 0;
+		element->o_str = NULL;
+	}
+	else
+	{
+		element->output = find_redir(io[2]);
+		element->o_str = ft_strdup(io[3]);
+	}
 
 	element->files = files;
 
-	element->index = (reset_increment_j(1) - 1);
 
 	element->prev = NULL;
 	element->next = NULL;

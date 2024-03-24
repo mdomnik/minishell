@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:51:26 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/24 16:07:20 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/24 16:54:05 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ void group_args(t_prompt *prompt, t_lexer *temp, char **io, char **files)
 		if (temp->token == T_PIPE)
 			break ;
 		args[i] = ft_strdup(temp->word);
+		if (args[i] == NULL)
+			simple_err(ERR_MALLOC);
 		delete_node_at_index(&prompt->lexer, 0);
 		i++;
 		temp = temp->next;
@@ -120,12 +122,15 @@ void group_args(t_prompt *prompt, t_lexer *temp, char **io, char **files)
 	temp = prompt->lexer;
 	if (temp == NULL)
 		return ;
+	if (io)
+		free_double(io);
+	if (files)
+		free_double(files);
+	if (args)
+		free_double(args);
 	if (temp->token == T_PIPE && temp->next != NULL)
 	{
 		delete_node_at_index(&prompt->lexer, 0);
-		free_double(io);
-		free_double(files);
-		free_double(args);
 		group_redir(prompt);
 	}
 	// print_parser(prompt);
