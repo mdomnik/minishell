@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:51:26 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/24 14:34:05 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/24 14:48:46 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void restructure_prompt(t_prompt *prompt)
 	// char **redir;
 	// print_lexer(prompt);
 	group_redir(prompt);
-	lexerfreelist_ms(&prompt->lexer);
+	// lexerfreelist_ms(&prompt->lexer);
 }
 
 void group_redir(t_prompt *prompt)
@@ -87,12 +87,7 @@ void group_files(t_prompt *prompt, t_lexer *temp, int create, char **io)
 void group_args(t_prompt *prompt, t_lexer *temp, char **io, char **files)
 {
 	char **args;
-	int i;
-
-	if (!prompt || !temp || !io || !files) {
-		printf("One of the input parameters is NULL.\n");
-		return;
-	}
+	int	i;
 
 	i = 0;
 	while(temp != NULL)
@@ -102,24 +97,14 @@ void group_args(t_prompt *prompt, t_lexer *temp, char **io, char **files)
 		temp = temp->next;
 	}
 	args = (char **)malloc((i + 1) * sizeof(char *));
-	if (!args) {
-		printf("Memory allocation failed.\n");
-		return;
-	}
 	temp = prompt->lexer;
 	i = 0;
-	print_lexer(prompt);
 	while (temp != NULL)
 	{
 		if (temp->token == T_PIPE)
 			break ;
-		if (!temp->word) {
-			printf("temp->word is NULL.\n");
-			break;
-		}
 		args[i] = ft_strdup(temp->word);
-		printf("temp->index: %d\n", temp->index);
-		delete_node_at_index(&temp, temp->index);
+		delete_node_at_index(&prompt->lexer, 0);
 		i++;
 		temp = temp->next;
 	}

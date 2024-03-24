@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:07:09 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 20:24:39 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/24 14:42:43 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,6 @@ char *makes_nodes_env(t_prompt *prompt, char *str)
 	int		i;
 
 	i = 0;
-	printf("wodasdrd: %s\n", prompt->word);
 	while(str[i] != '\0')
 	{
 		node = ft_strdup("");
