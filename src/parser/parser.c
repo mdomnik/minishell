@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:51:26 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/23 20:37:39 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/24 14:34:05 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void group_redir(t_prompt *prompt)
 		if (temp->token != T_WORD && temp->next->token == T_WORD)
 		{
 			if (temp->token == T_PIPE)
-				return ;
+				break ;
 			else if (temp->token == T_HEREDOC || temp->token == T_LESSER)
 			{
 				io[0] = ft_strdup(temp->word);
@@ -64,7 +64,7 @@ void group_files(t_prompt *prompt, t_lexer *temp, int create, char **io)
 		if (temp->token != T_WORD && temp->next->token == T_WORD)
 		{
 			if (temp->token == T_PIPE)
-				return ;
+				break ;
 			else if (temp->token == T_HEREDOC || temp->token == T_LESSER)
 			{
 				delete_node_at_index(&temp, temp->index);
@@ -87,33 +87,43 @@ void group_files(t_prompt *prompt, t_lexer *temp, int create, char **io)
 void group_args(t_prompt *prompt, t_lexer *temp, char **io, char **files)
 {
 	char **args;
-	int	i;
+	int i;
+
+	if (!prompt || !temp || !io || !files) {
+		printf("One of the input parameters is NULL.\n");
+		return;
+	}
 
 	i = 0;
-	printf("1\n");
-	while(temp->next != NULL)
+	while(temp != NULL)
 	{
+		temp->index = i;
 		i++;
 		temp = temp->next;
 	}
-		printf("2\n");
 	args = (char **)malloc((i + 1) * sizeof(char *));
-		printf("3\n");
+	if (!args) {
+		printf("Memory allocation failed.\n");
+		return;
+	}
 	temp = prompt->lexer;
-		printf("4\n");
-	while (temp->next != NULL)
+	i = 0;
+	print_lexer(prompt);
+	while (temp != NULL)
 	{
-		printf("ww\n");
 		if (temp->token == T_PIPE)
-			return ;
+			break ;
+		if (!temp->word) {
+			printf("temp->word is NULL.\n");
+			break;
+		}
 		args[i] = ft_strdup(temp->word);
+		printf("temp->index: %d\n", temp->index);
+		delete_node_at_index(&temp, temp->index);
 		i++;
-		printf("[%s]", args[i]);
 		temp = temp->next;
 	}
-		printf("5\n");
 	args[i] = NULL;
-		printf("6\n");
 	printf("input: [%s] ", io[0]);
 	printf("| file: [%s]\n", io[1]);
 	printf("output: [%s] ", io[2]);
@@ -133,5 +143,5 @@ void group_args(t_prompt *prompt, t_lexer *temp, char **io, char **files)
 		i++;
 	}
 	printf("\n");
-	// print_lexer(prompt);
+	print_lexer(prompt);
 }
