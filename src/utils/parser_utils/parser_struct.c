@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:41:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/24 16:54:11 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/24 19:19:55 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,25 @@ t_parser *parsernew_ms(char **args, char **io, char **files)
 		return (NULL);
 	element->index = (reset_increment_j(1) - 1);
 	
-	element->cmd = ft_strdup(args[0]);
+	if (args[0] != NULL)
+		element->cmd = ft_strdup(args[0]);
+	else
+		element->cmd = NULL;
 	element->args = remove_first(args);
 
 	if (io[0] == NULL)
 	{
 		if (element->index == 0)
+		{
 			element->input = I_STDIN;
+			element->i_str = "STDIN";
+		}
 		else
+		{
 			element->input = I_PIPE;
-		element->i_str = NULL;
+			element->i_str = "PIPE";
+		}
+		
 	}
 	else
 	{
@@ -54,29 +63,7 @@ t_parser *parsernew_ms(char **args, char **io, char **files)
 	element->prev = NULL;
 	element->next = NULL;
 
-	printf("---------------------\n\n");
-	int i = 0;
-	
-	printf("cmd: [%s] \n", element->cmd);
-	printf("args: ");
-	while (element->args[i] != NULL)
-	{
-		printf("[%s] ", element->args[i]);
-		i++;
-	}
-	printf("\n");
-	printf("input: [%d], ", element->input);
-	printf("i_str: [%s]\n", element->i_str);
-	printf("output: [%d], ", element->output);
-	printf("o_str: [%s]\n", element->o_str);
-	i = 0;
-	while (element->files[i] != NULL)
-	{
-		printf("file %d:[%s], ", i, element->files[i]);
-		i++;
-	}
-	printf("\n");
-	printf("index: %d\n", element->index);
+
 	return (element);
 }
 
@@ -104,7 +91,7 @@ void	parseraddback_ms(t_parser **lst, t_parser *new)
 	while (temp->next != NULL)
 		temp = temp->next;
 	temp->next = new;
-	new->prev = temp;	
+	new->prev = temp;
 }
 
 // //frees the parser linked list

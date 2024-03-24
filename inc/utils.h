@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:12:05 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/24 15:25:36 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/24 19:01:44 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,6 @@ void	parseraddback_ms(t_parser **lst, t_parser *new);
 
 //parser_utils.c
 char **remove_first(char **args);
+void parser_check_out(t_prompt *prompt);
 
 #endif

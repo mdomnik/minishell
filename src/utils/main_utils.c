@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:40:19 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/24 16:38:57 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/24 19:03:24 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ t_prompt *init_prompt(t_prompt *prompt)
 {
 	prompt = malloc(sizeof(t_prompt));
 	prompt->envp = malloc(sizeof(t_envll)); 
-	prompt->lexer = NULL;
 	prompt->parser = malloc(sizeof(t_parser));
+	prompt->lexer = NULL;
 	prompt->printable = 0;
 	prompt->word = NULL;
 	return (prompt);
@@ -86,34 +86,8 @@ void	print_lexer(t_prompt *prompt)
 void	print_parser(t_prompt *prompt)
 {
 	t_parser	*current;
-	int			i;
 
-	i = 0;
 	current = prompt->parser;
-	if (prompt->parser == NULL)
-		printf("Stack is empty\n");
-	printf("Stack contents:\n");
-	while (current != NULL)
-	{
-		printf("cmd: [%s] ", current->cmd);
-		while (current->args[i] != NULL)
-		{
-			printf("arg %d:[%s], ", i, current->args[i]);
-			i++;
-		}
-		printf("\n");
-		printf("input: [%d], ", current->input);
-		printf("i_str: [%s]\n", current->i_str);
-		printf("output: [%d], ", current->output);
-		printf("o_str: [%s]\n", current->o_str);
-		i = 0;
-		while (current->files[i] != NULL)
-		{
-			printf("file %d:[%s], ", i, current->files[i]);
-			i++;
-		}
-		printf("\n");
-		printf("index: %d\n", current->index);
-		current = current->next;
-	}
+	printf("cmd : %s\n", current->cmd);
+
 }

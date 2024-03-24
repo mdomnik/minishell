@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:51:26 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/24 16:54:05 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/24 19:28:13 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 void restructure_prompt(t_prompt *prompt)
 {
 	// char **redir;
-	// print_lexer(prompt);
+	print_lexer(prompt);
 	reset_increment_j(0);
 	group_redir(prompt);
+	parser_check_out(prompt);
+	print_parser(prompt);
 	// lexerfreelist_ms(&prompt->lexer);
 }
 
@@ -28,7 +30,7 @@ void group_redir(t_prompt *prompt)
 	int	 create;
 
 	create = 0;	
-	io = (char **)malloc(4 * sizeof(char *));
+	io = (char **)ft_calloc((5), sizeof(char *));
 	temp = prompt->lexer;
 	while(temp->next != NULL)
 	{
@@ -48,8 +50,10 @@ void group_redir(t_prompt *prompt)
 				create++;
 			}
 		}
+		io[4] = NULL;
 		temp = temp->next;
 	}
+	
 	group_files(prompt, prompt->lexer, create, io);
 }
 
@@ -116,22 +120,28 @@ void group_args(t_prompt *prompt, t_lexer *temp, char **io, char **files)
 		i++;
 		temp = temp->next;
 	}
+	
 	args[i] = NULL;
-	new = parsernew_ms(args, io, files);
+    new = parsernew_ms(args, io, files);
+	printf("new->cmd: %s\n", new->cmd);
 	parseraddback_ms(&prompt->parser, new);
+	printf("prompt->parser->cmd: %s\n", prompt->parser->cmd);
 	temp = prompt->lexer;
+	if (io) 
+	{
+		free_double(io);
+		io = NULL;
+	}
+	if (files)
+	{
+		free_double(files);
+		files = NULL; 
+	}
 	if (temp == NULL)
 		return ;
-	if (io)
-		free_double(io);
-	if (files)
-		free_double(files);
-	if (args)
-		free_double(args);
 	if (temp->token == T_PIPE && temp->next != NULL)
 	{
 		delete_node_at_index(&prompt->lexer, 0);
-		group_redir(prompt);
+		restructure_prompt(prompt);
 	}
-	// print_parser(prompt);
 }
