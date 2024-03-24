@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:51:26 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/24 19:28:13 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/24 20:23:25 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void restructure_prompt(t_prompt *prompt)
 {
-	// char **redir;
-	print_lexer(prompt);
+	prompt->parser = NULL;
+	// print_lexer(prompt);
 	reset_increment_j(0);
 	group_redir(prompt);
 	parser_check_out(prompt);
@@ -120,12 +120,9 @@ void group_args(t_prompt *prompt, t_lexer *temp, char **io, char **files)
 		i++;
 		temp = temp->next;
 	}
-	
 	args[i] = NULL;
     new = parsernew_ms(args, io, files);
-	printf("new->cmd: %s\n", new->cmd);
 	parseraddback_ms(&prompt->parser, new);
-	printf("prompt->parser->cmd: %s\n", prompt->parser->cmd);
 	temp = prompt->lexer;
 	if (io) 
 	{
@@ -142,6 +139,6 @@ void group_args(t_prompt *prompt, t_lexer *temp, char **io, char **files)
 	if (temp->token == T_PIPE && temp->next != NULL)
 	{
 		delete_node_at_index(&prompt->lexer, 0);
-		restructure_prompt(prompt);
+		group_redir(prompt);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:41:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/24 19:19:55 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/24 20:10:37 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	parseraddback_ms(t_parser **lst, t_parser *new)
 	while (temp->next != NULL)
 		temp = temp->next;
 	temp->next = new;
-	new->prev = temp;
+	new->prev = temp;	
 }
 
 // //frees the parser linked list
