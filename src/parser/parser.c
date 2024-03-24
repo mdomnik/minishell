@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:51:26 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/24 14:48:46 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/24 16:07:20 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void restructure_prompt(t_prompt *prompt)
 {
 	// char **redir;
 	// print_lexer(prompt);
+	reset_increment_j(0);
 	group_redir(prompt);
 	// lexerfreelist_ms(&prompt->lexer);
 }
@@ -56,29 +57,33 @@ void group_files(t_prompt *prompt, t_lexer *temp, int create, char **io)
 {
 	char **files;
 	int i;
+	t_lexer *next_node;
 
 	i = 0;
 	files = (char **)malloc((create + 1) * sizeof(char *));
-	while(temp->next != NULL)
+	while(temp != NULL)
 	{
-		if (temp->token != T_WORD && temp->next->token == T_WORD)
+		next_node = temp->next;
+		if (temp->token != T_WORD && next_node && next_node->token == T_WORD)
 		{
 			if (temp->token == T_PIPE)
 				break ;
 			else if (temp->token == T_HEREDOC || temp->token == T_LESSER)
 			{
 				delete_node_at_index(&temp, temp->index);
-				delete_node_at_index(&temp, temp->next->index);
+				if (next_node)
+					delete_node_at_index(&temp, next_node->index);
 			}
 			else if (temp->token == T_APPEND || temp->token == T_GREATER)
 			{
-				files[i] = ft_strdup(temp->next->word);
-				delete_node_at_index(&temp, temp->next->index);
+				files[i] = ft_strdup(next_node->word);
+				if (next_node)
+					delete_node_at_index(&temp, next_node->index);
 				delete_node_at_index(&temp, temp->index);
 				i++;
 			}
 		}
-		temp = temp->next;
+		temp = next_node;
 	}
 	files[i] = NULL;
 	group_args(prompt, prompt->lexer, io, files);
@@ -86,6 +91,7 @@ void group_files(t_prompt *prompt, t_lexer *temp, int create, char **io)
 
 void group_args(t_prompt *prompt, t_lexer *temp, char **io, char **files)
 {
+	t_parser *new;
 	char **args;
 	int	i;
 
@@ -109,24 +115,18 @@ void group_args(t_prompt *prompt, t_lexer *temp, char **io, char **files)
 		temp = temp->next;
 	}
 	args[i] = NULL;
-	printf("input: [%s] ", io[0]);
-	printf("| file: [%s]\n", io[1]);
-	printf("output: [%s] ", io[2]);
-	printf("| file: [%s]\n", io[3]);
-	i = 0;
-	printf("files: ");
-	while (files[i] != NULL)
+	new = parsernew_ms(args, io, files);
+	parseraddback_ms(&prompt->parser, new);
+	temp = prompt->lexer;
+	if (temp == NULL)
+		return ;
+	if (temp->token == T_PIPE && temp->next != NULL)
 	{
-		printf("[%s]", files[i]);
-		i++;
+		delete_node_at_index(&prompt->lexer, 0);
+		free_double(io);
+		free_double(files);
+		free_double(args);
+		group_redir(prompt);
 	}
-	printf("\nargs: ");
-	i = 0;
-	while (args[i] != NULL)
-	{
-		printf("[%s]", args[i]);
-		i++;
-	}
-	printf("\n");
-	print_lexer(prompt);
+	// print_parser(prompt);
 }

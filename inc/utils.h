@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:12:05 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/23 16:32:25 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/24 15:25:36 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ int	cmpchar(char c1, char c2);
 char *makes_nodes_env(t_prompt *prompt, char *str);
 
 //parser_struct.c
-t_parser	*parsernew_ms(t_prompt *prompt);
+t_parser *parsernew_ms(char **args, char **io, char **files);
 int	reset_increment_j(int x);
+void	parseraddback_ms(t_parser **lst, t_parser *new);
+
+//parser_utils.c
+char **remove_first(char **args);
+
 #endif

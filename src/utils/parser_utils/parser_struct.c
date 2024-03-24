@@ -6,26 +6,58 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:41:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/23 20:02:27 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/24 16:02:09 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
-t_parser	*parsernew_ms(t_prompt *prompt)
+t_parser *parsernew_ms(char **args, char **io, char **files)
 {
 	t_parser		*element;
-	// t_lexer			*lexer;
 
-	(void)prompt;
-	// lexer = prompt->lexer;
 	element = (t_parser *)malloc(sizeof(t_parser));
 	if (!element)
 		return (NULL);
-	//functions for each of the elements of the node (pipe natual delim)
+	element->cmd = ft_strdup(args[0]);
+	element->args = remove_first(args);
+
+	element->input = find_redir(io[0]);
+	element->i_str = ft_strdup(io[1]);
+
+	element->output = find_redir(io[2]);
+	element->o_str = ft_strdup(io[3]);
+
+	element->files = files;
+
 	element->index = (reset_increment_j(1) - 1);
+
 	element->prev = NULL;
 	element->next = NULL;
+
+	printf("---------------------\n\n");
+	int i = 0;
+	
+	printf("cmd: [%s] \n", element->cmd);
+	printf("args: ");
+	while (element->args[i] != NULL)
+	{
+		printf("[%s] ", element->args[i]);
+		i++;
+	}
+	printf("\n");
+	printf("input: [%d], ", element->input);
+	printf("i_str: [%s]\n", element->i_str);
+	printf("output: [%d], ", element->output);
+	printf("o_str: [%s]\n", element->o_str);
+	i = 0;
+	while (element->files[i] != NULL)
+	{
+		printf("file %d:[%s], ", i, element->files[i]);
+		i++;
+	}
+	printf("\n");
+	printf("index: %d\n", element->index);
 	return (element);
 }
 
@@ -39,27 +71,27 @@ int	reset_increment_j(int x)
 	return (j);
 }
 
-// //adds new node to the back of the lexer linked list
-// void	lexeraddback_ms(t_lexer **lst, t_lexer *new)
-// {
-// 	t_lexer		*temp;
+//adds new node to the back of the parser linked list
+void	parseraddback_ms(t_parser **lst, t_parser *new)
+{
+	t_parser		*temp;
 
-// 	temp = *lst;
-// 	if (*lst == NULL)
-// 	{
-// 		*lst = new;
-// 		return ;
-// 	}
-// 	while (temp->next != NULL)
-// 		temp = temp->next;
-// 	temp->next = new;
-// 	new->prev = temp;	
-// }
+	temp = *lst;
+	if (*lst == NULL)
+	{
+		*lst = new;
+		return ;
+	}
+	while (temp->next != NULL)
+		temp = temp->next;
+	temp->next = new;
+	new->prev = temp;	
+}
 
-// //frees the lexer linked list
-// t_lexer *lexerfreelist_ms(t_lexer **lst)
+// //frees the parser linked list
+// t_parser *lexerfreelist_ms(t_parser **lst)
 // {
-// 	t_lexer *temp;
+// 	t_parser *temp;
 
 // 	temp = *lst;
 // 	if (!(*lst))
