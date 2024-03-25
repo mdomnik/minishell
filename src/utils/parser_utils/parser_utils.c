@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:39:35 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/24 18:22:30 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/25 19:00:50 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,19 @@ void parser_check_out(t_prompt *prompt)
 		i++;
 		temp = temp->next;
 	}
-	while (temp->next != NULL)
+	temp = prompt->parser;
+	while (temp != NULL)
 	{
 		if (temp->output == 0 && j < i)
+		{
 			temp->output = O_PIPE;
-		else if (temp->output == 0 && j == i)
+			temp->o_str = "PIPE";
+		}
+		else if (temp->output == 0 && (j == i))
+		{
 			temp->output = O_STDOUT;
+			temp->o_str = "STDOUT";
+		}
 		j++;
 		temp = temp->next;
 	}

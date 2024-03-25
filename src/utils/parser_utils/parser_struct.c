@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:41:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/24 20:10:37 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/03/25 18:52:51 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ t_parser *parsernew_ms(char **args, char **io, char **files)
 		element->output = find_redir(io[2]);
 		element->o_str = ft_strdup(io[3]);
 	}
-
-	element->files = files;
+	
+	element->files = double_dup(files);
 
 
 	element->prev = NULL;
