@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 11:41:48 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 20:10:57 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/09 18:07:28 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,5 @@ typedef struct s_lexer
 void split_tokens(t_prompt *prompt);
 int	node_process(t_prompt *prompt, int	i);
 char	*search_replace_env(t_prompt *prompt, char *str);
-char	*replace_env(char	*env_name, char	*env_str);
 char 	*updated_env_str(char *str, char	*env_str);
 #endif

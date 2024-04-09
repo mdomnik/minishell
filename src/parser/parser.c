@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:51:26 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/09 17:24:58 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/09 18:16:41 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,16 +132,6 @@ void group_args(t_prompt *prompt, t_lexer *temp, char **io, char **files)
     new = parsernew_ms(args, io, files);
 	parseraddback_ms(&prompt->parser, new);
 	temp = prompt->lexer;
-	if (io) 
-	{
-		free_double(io);
-		io = NULL;
-	}
-	if (files)
-	{
-		free_double(files);
-		files = NULL; 
-	}
 	if (temp == NULL)
 		return ;
 	if (temp->token == T_PIPE && temp->next != NULL)

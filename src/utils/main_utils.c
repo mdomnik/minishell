@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:40:19 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/08 17:24:33 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/09 18:19:48 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,12 @@ char	**double_dup(char **str)
 
 void free_double(char **double_str)
 {
+	int i;
+	
+	i = 0;
 	if (double_str == NULL)
 		return;
 
-	int i = 0;
 	while (double_str[i] != NULL)
 	{
 		free(double_str[i]);

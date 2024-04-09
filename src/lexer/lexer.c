@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:24:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/09 17:28:21 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/09 18:09:45 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,27 +118,6 @@ char	*search_replace_env(t_prompt *prompt, char *str)
 		}
 	}
 	return(str);
-}
-
-char	*replace_env(char	*env_name, char	*env_str)
-{
-	int		i;
-	int		j;
-	char	*replace;
-
-
-	i = 0;
-	j = 0;
-	while (!ft_strncmp(env_name, env_str, i))
-		i++;
-	replace = (char *)malloc(((ft_strlen(env_str) - i) + 1) * sizeof(char));
-	while (env_str[i + j] != '\0')
-	{
-		replace[j] = env_str[i + j];
-		j++;
-	}
-	free(env_name);
-	return(replace);
 }
 
 char 	*updated_env_str(char *str, char *env_str)
