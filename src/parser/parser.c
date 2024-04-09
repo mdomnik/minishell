@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:51:26 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/25 18:52:14 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/09 17:24:58 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ void restructure_prompt(t_prompt *prompt)
 	group_redir(prompt);
 	parser_check_out(prompt);
 	print_parser(prompt);
-	// lexerfreelist_ms(&prompt->lexer);
+	lexerfreelist_ms(&prompt->lexer);
+	parserfreelist_ms(&prompt->parser);
+	exit(0);
 }
 
 void group_redir(t_prompt *prompt)
@@ -74,15 +76,21 @@ void group_files(t_prompt *prompt, t_lexer *temp, int create, char **io)
 				break ;
 			else if (temp->token == T_HEREDOC || temp->token == T_LESSER)
 			{
-				delete_node_at_index(&temp, temp->index);
 				if (next_node)
-					delete_node_at_index(&temp, next_node->index);
+				{
+					delete_node_at_index(&temp, temp->next->index);
+					next_node = temp->next;
+				}
+				delete_node_at_index(&temp, temp->index);
 			}
 			else if (temp->token == T_APPEND || temp->token == T_GREATER)
 			{
 				files[i] = ft_strdup(next_node->word);
 				if (next_node)
-					delete_node_at_index(&temp, next_node->index);
+				{
+					delete_node_at_index(&temp, temp->next->index);
+					next_node = temp->next;
+				}
 				delete_node_at_index(&temp, temp->index);
 				i++;
 			}
@@ -116,9 +124,9 @@ void group_args(t_prompt *prompt, t_lexer *temp, char **io, char **files)
 		args[i] = ft_strdup(temp->word);
 		if (args[i] == NULL)
 			simple_err(ERR_MALLOC);
-		delete_node_at_index(&prompt->lexer, 0);
 		i++;
 		temp = temp->next;
+		delete_node_at_index(&prompt->lexer, 0);
 	}
 	args[i] = NULL;
     new = parsernew_ms(args, io, files);

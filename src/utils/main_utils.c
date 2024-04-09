@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:40:19 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/24 20:27:07 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/08 17:24:33 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ char	**double_dup(char **str)
 		}
 		i++;
 	}
+	ret[i] = NULL;
 	return (ret);
 }
 
@@ -88,7 +89,6 @@ void	print_parser(t_prompt *prompt)
 	t_parser	*current;
 	int			i;
 
-	i = 0;
 	current = prompt->parser;
 	if (prompt->parser == NULL)
 		printf("Stack is empty\n");
@@ -97,24 +97,21 @@ void	print_parser(t_prompt *prompt)
 	{
 		printf("cmd: [%s] ", current->cmd);
 		printf("args: ");
-		if (current->args != NULL) {
-			while (current->args[i] != NULL)
-			{
-				printf("[%s] ", current->args[i]);
-				i++;
-			}
+		i = 0;
+		while (current->args[i] != NULL)
+		{
+			printf("[%s] ", current->args[i]);
+			i++;
 		}
 		printf("\n");
 		printf("input: [%d] [%s]\n", current->input, current->i_str);
 		printf("output: [%d] [%s]\n", current->output, current->o_str);
-		i = 0;
 		printf("files: ");
-		if (current->files != NULL) {
-			while (current->files[i] != NULL)
-			{
-				printf("[%s] ", current->files[i]);
-				i++;
-			}
+		i = 0;
+		while (current->files[i] != NULL)
+		{
+			printf("[%s] ", current->files[i]);
+			i++;
 		}
 		printf("\n");
 		printf("index: %d\n", current->index);

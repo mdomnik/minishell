@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:24:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 22:43:10 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/09 17:28:21 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	node_process(t_prompt *prompt, int	i)
 	}
 	if (prompt->word[0] != '\0')
 		add_node(prompt, prompt->word, T_WORD);
+	free(prompt->word);
 	return(i);
 }
 

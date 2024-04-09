@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:41:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/25 18:52:51 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/09 17:38:54 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,10 @@ t_parser *parsernew_ms(char **args, char **io, char **files)
 	element->prev = NULL;
 	element->next = NULL;
 
-
+	//possible broken change
+	free_double(args);
+	free_double(io);
+	free_double(files);
 	return (element);
 }
 
@@ -94,25 +97,28 @@ void	parseraddback_ms(t_parser **lst, t_parser *new)
 	new->prev = temp;	
 }
 
-// //frees the parser linked list
-// t_parser *lexerfreelist_ms(t_parser **lst)
-// {
-// 	t_parser *temp;
+t_parser *parserfreelist_ms(t_parser **lst)
+{
+	t_parser *temp;
 
-// 	temp = *lst;
-// 	if (!(*lst))
-// 		return (NULL);
-// 	while (*lst)
-// 	{
-// 		temp = (*lst)->next;
-// 		if ((*lst)->word)
-// 			free ((*lst)->word);
-// 		free(*lst);
-// 		*lst = temp;
-// 	}
-// 	*lst = NULL;
-// 	return (NULL);
-// }
+	temp = *lst;
+	if (!(*lst))
+		return (NULL);
+	while (*lst)
+	{
+		temp = (*lst)->next;
+		if ((*lst)->cmd)
+			free ((*lst)->cmd);
+		if ((*lst)->args)
+			free_double((*lst)->args);
+		if ((*lst)->files)
+			free_double((*lst)->files);
+		free(*lst);
+		*lst = temp;
+	}
+	*lst = NULL;
+	return (NULL);
+}
 
 // void delete_node_at_index(t_lexer **lexer, int index)
 // {
