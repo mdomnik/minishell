@@ -1,0 +1,1 @@
+cmd1 >out1 "arg1$PATH" arg2 >>out2 <in1 <<in2 | cmd2 >out3 "arg2$SHLVL" <<in3 >>out4 <out4 | cmd3 arg3 arg4
