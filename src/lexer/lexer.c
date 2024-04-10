@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:24:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/10 15:59:10 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/10 19:25:57 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ int	node_process(t_prompt *prompt, int	i)
 		if (q != 39)
 			temp = search_replace_env(prompt, temp);
 		prompt->word = ft_strjoin(prompt->word, temp);
-		free(temp);
 	}
 	if (prompt->word[0] != '\0')
 		add_node(prompt, prompt->word, T_WORD);
@@ -113,7 +112,6 @@ char	*search_replace_env(t_prompt *prompt, char *str)
 			str = makes_nodes_env(prompt, str);
 			free(prompt->word);
 			prompt->word = NULL;
-			free(env_value);
 		}
 	}
 	return(str);

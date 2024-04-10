@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:10:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/10 16:18:09 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/10 16:20:36 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ t_lexer	*lexernew_ms(char *word, t_tokens token)
 		return (NULL);
 	if (word)
 	{
-		printf("creating word: %s\n", word);
 		element->word = ft_strdup(word);
+		free(word);
 	}
 	else
 		element->word = NULL;
@@ -30,7 +30,6 @@ t_lexer	*lexernew_ms(char *word, t_tokens token)
 	element->index = (reset_increment_i(1) - 1);
 	element->prev = NULL;
 	element->next = NULL;
-	free(word);
 	return (element);
 }
 

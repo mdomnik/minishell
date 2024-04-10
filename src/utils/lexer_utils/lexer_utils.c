@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:10:15 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 16:37:49 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/10 18:41:55 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,13 +76,11 @@ char	*append_char_env(char *str, char c)
 	if(str == NULL)
 	{
 		str = (char *)malloc(1 * sizeof(char));
-		*str = '\0';
+		str[0] = '\0';
 	}
 	i = 0;
 	while(str[i] != '\0')
-	{
 		i++;
-	}
 	ret = (char *)malloc((i + 2) * sizeof(char));
 	i = 0;
 	while(str[i] != '\0')
