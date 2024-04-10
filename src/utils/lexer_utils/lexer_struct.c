@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 14:10:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/22 20:07:16 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/10 16:18:09 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,18 @@ t_lexer	*lexernew_ms(char *word, t_tokens token)
 	element = (t_lexer *)malloc(sizeof(t_lexer));
 	if (!element)
 		return (NULL);
-	element->word = ft_strdup(word);
+	if (word)
+	{
+		printf("creating word: %s\n", word);
+		element->word = ft_strdup(word);
+	}
+	else
+		element->word = NULL;
 	element->token = token;
 	element->index = (reset_increment_i(1) - 1);
 	element->prev = NULL;
 	element->next = NULL;
+	free(word);
 	return (element);
 }
 
@@ -78,6 +85,8 @@ void delete_node_at_index(t_lexer **lexer, int index)
 		*lexer = current->next;
 		if (*lexer != NULL)
 			(*lexer)->prev = NULL;
+		if (current->word != NULL)
+			free (current->word);
 		free(current);
 		return;
 	}
@@ -90,6 +99,8 @@ void delete_node_at_index(t_lexer **lexer, int index)
 	current->prev->next = current->next;
 	if (current->next != NULL)
 		current->next->prev = current->prev;
+	if (current->word != NULL)
+		free (current->word);
 	free(current);
 }
 

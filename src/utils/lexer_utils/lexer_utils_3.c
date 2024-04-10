@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:07:09 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/03/24 14:42:43 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/10 14:55:00 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ char *search_redir(t_prompt *prompt, char *str)
 		return (str);
 	else
 		str = search_redir(prompt, str);
+	free(temp);
 	return (str);
 }
 

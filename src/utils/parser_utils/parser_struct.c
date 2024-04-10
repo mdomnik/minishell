@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 17:41:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/09 18:17:15 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/10 15:55:37 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,10 @@ t_parser *parserfreelist_ms(t_parser **lst)
 		temp = (*lst)->next;
 		if ((*lst)->cmd)
 			free ((*lst)->cmd);
+		// if ((*lst)->i_str != NULL)
+		// 	free ((*lst)->i_str);
+		// if ((*lst)->o_str != NULL)
+		// 	free ((*lst)->o_str);
 		if ((*lst)->args != NULL)
 			free_double((*lst)->args);
 		if ((*lst)->files != NULL)

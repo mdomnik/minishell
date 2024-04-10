@@ -6,13 +6,13 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:51:26 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/09 18:16:41 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/10 16:15:56 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void restructure_prompt(t_prompt *prompt)
+void	restructure_prompt(t_prompt *prompt)
 {
 	prompt->parser = NULL;
 	// print_lexer(prompt);
@@ -25,16 +25,16 @@ void restructure_prompt(t_prompt *prompt)
 	exit(0);
 }
 
-void group_redir(t_prompt *prompt)
+void	group_redir(t_prompt *prompt)
 {
-	t_lexer *temp;
-	char    **io;
-	int	 create;
+	t_lexer	*temp;
+	char	**io;
+	int		create;
 
-	create = 0;	
+	create = 0;
 	io = (char **)ft_calloc((5), sizeof(char *));
 	temp = prompt->lexer;
-	while(temp->next != NULL)
+	while (temp->next != NULL)
 	{
 		if (temp->token != T_WORD && temp->next->token == T_WORD)
 		{
@@ -55,19 +55,18 @@ void group_redir(t_prompt *prompt)
 		io[4] = NULL;
 		temp = temp->next;
 	}
-	
 	group_files(prompt, prompt->lexer, create, io);
 }
 
-void group_files(t_prompt *prompt, t_lexer *temp, int create, char **io)
+void	group_files(t_prompt *prompt, t_lexer *temp, int create, char **io)
 {
-	char **files;
-	int i;
-	t_lexer *next_node;
+	char	**files;
+	int		i;
+	t_lexer	*next_node;
 
 	i = 0;
 	files = (char **)malloc((create + 1) * sizeof(char *));
-	while(temp != NULL)
+	while (temp != NULL)
 	{
 		next_node = temp->next;
 		if (temp->token != T_WORD && next_node && next_node->token == T_WORD)
@@ -101,14 +100,14 @@ void group_files(t_prompt *prompt, t_lexer *temp, int create, char **io)
 	group_args(prompt, prompt->lexer, io, files);
 }
 
-void group_args(t_prompt *prompt, t_lexer *temp, char **io, char **files)
+void	group_args(t_prompt *prompt, t_lexer *temp, char **io, char **files)
 {
-	t_parser *new;
-	char **args;
-	int	i;
+	t_parser	*new;
+	char		**args;
+	int			i;
 
 	i = 0;
-	while(temp != NULL)
+	while (temp != NULL)
 	{
 		temp->index = i;
 		i++;
@@ -129,7 +128,7 @@ void group_args(t_prompt *prompt, t_lexer *temp, char **io, char **files)
 		delete_node_at_index(&prompt->lexer, 0);
 	}
 	args[i] = NULL;
-    new = parsernew_ms(args, io, files);
+	new = parsernew_ms(args, io, files);
 	parseraddback_ms(&prompt->parser, new);
 	temp = prompt->lexer;
 	if (temp == NULL)
