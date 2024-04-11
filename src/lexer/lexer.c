@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 11:24:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/10 19:25:57 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/11 03:46:03 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	node_process(t_prompt *prompt, int	i)
 
 	while (!is_whitespace_null(prompt->line[i]))
 	{
-		temp = ft_strdup("");
+		temp = NULL;
 		q = 0;
 		if (is_quote(prompt->line[i]))
 		{
@@ -102,6 +102,7 @@ char	*search_replace_env(t_prompt *prompt, char *str)
 		if (env_value == NULL)
 		{
 			new = removed_env(str);
+			free(str);
 			str = ft_strdup(new);
 			free(new);
 		}
@@ -132,6 +133,7 @@ char 	*updated_env_str(char *str, char *env_str)
 		cat[i] = str[i];
 		i++;
 	}
+	free(str);
 	cat[i] = '\0';
 	str = ft_strjoin(cat, env_str);
 	return (str);

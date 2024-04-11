@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/22 15:07:09 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/10 19:25:23 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/11 01:53:06 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,5 +116,6 @@ char *makes_nodes_env(t_prompt *prompt, char *str)
 		free(node);
 		i++;
 	}
+	free(str);
 	return (node);
 }
