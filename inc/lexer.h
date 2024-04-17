@@ -6,19 +6,19 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 11:41:48 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/09 18:07:28 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/17 14:28:30 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-#include "minishell.h"
+# include "minishell.h"
 
 //prototyping prompt struct
-typedef struct s_prompt t_prompt;
+typedef struct s_shell	t_shell;
 
-//gives num values to operators (tokenizes)
+//TOKENS
 typedef enum e_tokens
 {
 	T_WORD = 0,
@@ -30,21 +30,42 @@ typedef enum e_tokens
 	T_MISTAKE = 6,
 }	t_tokens;
 
-//struct for lexer linked list
-//stores words(delimited by whitespace), tokens (from s_token struct),
-//position in the index, adresses of previous and next nodes
+/* struct for lexer linked list
+stores words(delimited by whitespace), tokens (from e_token enum),
+position in the index, adresses of previous and next nodes */
 typedef struct s_lexer
 {
 	char			*word;
 	t_tokens		token;
+	int				join;
+	int				quote;
 	int				index;
 	struct s_lexer	*prev;
 	struct s_lexer	*next;
-} t_lexer;
+}			t_lexer;
+
+//lexer_redir.c
+void		redir_scan(char *str, t_shell *shell, int split);
+int			form_word(char *str, t_shell *shell, int i, int split);
+int			form_redir(char *str, t_shell *shell, int i);
+int			check_redir(char c1, char c2);
+int			cmpchar(char c1, char c2);
+
+//lexer_struct.c
+t_lexer		*lexernew_ms(char *word, t_tokens token, int join, int quote);
+int			reset_increment_i(int x);
+void		lexeraddback_ms(t_lexer **lst, t_lexer *new);
+t_lexer		*lexerfreelist_ms(t_lexer **lst);
+
+//lexer_word.c
+char		*trim_whitespace(t_shell *shell);
+int			is_whitespace_null(char c);
+int			is_quote(char c);
 
 //lexer.c
-void split_tokens(t_prompt *prompt);
-int	node_process(t_prompt *prompt, int	i);
-char	*search_replace_env(t_prompt *prompt, char *str);
-char 	*updated_env_str(char *str, char	*env_str);
+void		tokenizer(t_shell *shell);
+int			node_process(t_shell *shell, int i, int split);
+int			double_quote(t_shell *shell, int i, int split);
+int			single_quote(t_shell *shell, int i, int split);
+int			word_process(t_shell *shell, int i, int split);
 #endif

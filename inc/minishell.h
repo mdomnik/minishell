@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/03/22 20:06:58 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/16 22:09:06 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,36 +24,49 @@
 # include <sys/wait.h>
 # include "lexer.h"
 # include "parser.h"
+# include "expander.h"
 # include "utils.h"
 
-#define CL_NAME "[minishell]$ "
+//command line front message
+# define CL_NAME "[minishell]$ "
 
 //ERROR DEFINES
-#define ERR_I "Error: too many arguments; launch program with ./minishell and no arguments"
-#define ERR_ENV "Error: failed to load environmental variables"
-#define ERR_MALLOC "Error: failed to allocate memory"
-#define ERR_QUOTE "Error: quote not terminated by another quote"
+# define ERR_I "Error: launch program with ./minishell and no arguments"
+# define ERR_SHELL "Error: failed to initialize shell"
+# define ERR_ENV "Error: failed to load environmental variables"
+# define ERR_MALLOC "Error: failed to allocate memory"
+# define ERR_LEXER "Error: failed to initialize lexer node"
+# define ERR_EXPAND "Error: failed to initialize expand node"
+# define ERR_EMPTY "Error: no nodes found in the lexer list"
+# define ERR_INDEX "Error: Index out of range. Cannot delete node"
+# define ERR_SYNTAX "Error: syntax error near unexpected token"
+# define ERR_QUOTE "Error: quote not terminated by another quote"
 
-typedef struct s_prompt
+/*outermost struct of the shell
+  contains all other structs and
+  variables needed for the shell to run*/
+typedef struct s_shell
 {
 	int					printable;
-	char				*word;
 	char				*line;
-	struct s_envll      *envp;
-	struct s_parser		*parser;
-	struct s_lexer		*lexer;
-} 				t_prompt;
-
-typedef struct s_envll
-{
 	char				**env;
-} 				t_envll;
+	struct s_expand		*expand;
+	struct s_lexer		*lexer;
+	struct s_parser		*parser;
+}			t_shell;
 
-//error_free.c
-void simple_err(char *err_str);
-
+//error_seq.c
+void	simple_err(char *err_str);
+void	free_err(char *err_str, t_shell *shell);
+void	free_shell(t_shell *shell);
 
 //main.c
-void ms_loop(t_prompt *prompt);
+t_shell	*init_shell(t_shell *shell);
+void	shell_loop(t_shell *shell);
+t_shell	*init_shell(t_shell *shell);
+
+//testing.c
+void	print_lexer(t_shell *shell);
+void	print_expand(t_shell *shell);
 
 #endif

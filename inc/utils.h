@@ -6,59 +6,26 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:12:05 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/09 16:23:21 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/17 19:06:01 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef UTILS_H
 # define UTILS_H
 
-#include "minishell.h"
+# include "minishell.h"
 
-//prototyping prompt struct
-typedef struct s_prompt t_prompt;
+//prototyping shell struct
+typedef struct s_shell	t_shell;
 
-//main_utils.c
-t_prompt *init_prompt(t_prompt *prompt);
+//gen_utils_1.c
 char	**double_dup(char **str);
 void	free_double(char **double_str);
-void	print_lexer(t_prompt *prompt);
-void	print_parser(t_prompt *prompt);
+int		ft_strlen_ms(char *s);
+char	**add_delim_split(char *str);
+char	*ft_strjoin_ms(char *s1, char *s2);
 
-//lexer_struct.c
-t_lexer	*lexernew_ms(char *word, t_tokens token);
-void	lexeraddback_ms(t_lexer **lst, t_lexer *new);
-t_lexer *lexerfreelist_ms(t_lexer **lst);
-void delete_node_at_index(t_lexer **lexer, int index);
-int	reset_increment_i(int x);
-
-//lexer_utils.c
-char *trim_whitespace(char *str);
-int is_whitespace_null(char c);
-int is_quote(char c);
-char	*append_char_env(char *str, char c);
-char	*removed_env(char *str);
-
-//lexer_utils_2.c
-int	find_redir(char *str);
-int	ft_memcmp_ms(const void *s1, const void *s2);
-int	ft_strlen_ms(char *s);
-void add_node(t_prompt *prompt, char *word, t_tokens token);
-
-//lexer_utils_3.c
-char *search_redir(t_prompt *prompt, char *str);
-int	check_redir(char c1, char c2);
-int	cmpchar(char c1, char c2);
-char *makes_nodes_env(t_prompt *prompt, char *str);
-
-//parser_struct.c
-t_parser *parsernew_ms(char **args, char **io, char **files);
-int	reset_increment_j(int x);
-void	parseraddback_ms(t_parser **lst, t_parser *new);
-
-//parser_utils.c
-char **remove_first(char **args);
-void parser_check_out(t_prompt *prompt);
-t_parser *parserfreelist_ms(t_parser **lst);
+//gen_utils_split.c
+char	**ft_split_ms(const char *s, char c);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/21 12:33:22 by kaan              #+#    #+#             */
-/*   Updated: 2024/04/11 03:45:41 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/16 20:44:37 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,5 @@ char	*ft_strjoin(char *s1, char *s2)
 		new[i++] = s2[j++];
 	new[i] = '\0';
 	free(s1);
-	free(s2);
 	return (new);
 }

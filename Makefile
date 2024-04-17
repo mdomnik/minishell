@@ -6,7 +6,7 @@
 #    By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 21:52:00 by kaan              #+#    #+#              #
-#    Updated: 2024/03/22 17:41:52 by mdomnik          ###   ########.fr        #
+#    Updated: 2024/04/17 20:29:27 by mdomnik          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,17 +26,19 @@ READFLAG = -lreadline
 
 RM = rm -f
 
-SRC = 	src/main/main.c\
-		src/main/error_free.c\
+SRC =	src/expander/expander_process.c\
+		src/expander/expander_struct.c\
+		src/expander/expander.c\
+		src/lexer/lexer_redir.c\
+		src/lexer/lexer_struct.c\
+		src/lexer/lexer_word.c\
 		src/lexer/lexer.c\
-		src/utils/lexer_utils/lexer_struct.c\
-		src/utils/lexer_utils/lexer_utils.c\
-		src/utils/lexer_utils/lexer_utils_2.c\
-		src/utils/lexer_utils/lexer_utils_3.c\
+		src/main/error_seq.c\
+		src/main/main.c\
+		src/main/testing.c\
 		src/parser/parser.c\
-		src/utils/parser_utils/parser_struct.c\
-		src/utils/parser_utils/parser_utils.c\
-		src/utils/main_utils.c\
+		src/utils/gen_utils_1.c\
+		src/utils/gen_utils_split.c\
 
 OBJ = $(patsubst %.c,$(OBJ_DIR)%.o,$(SRC))
 

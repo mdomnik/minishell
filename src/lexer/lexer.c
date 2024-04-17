@@ -5,136 +5,151 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 11:24:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/11 03:46:03 by mdomnik          ###   ########.fr       */
+/*   Created: 2024/04/15 13:43:18 by mdomnik           #+#    #+#             */
+/*   Updated: 2024/04/17 14:29:05 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//splits prompt into tokens and nodes of the lexer linked list
-void split_tokens(t_prompt *prompt)
+/**
+ * Tokenizes the input line and performs node processing and expansion.
+ * Tokens are split by whitespace and redirection symbols, and quotes.
+ * the tokenized linked list is passed to the expander function for
+ * joining of tokens and environmental variable expansion.
+ * 
+ * @param shell The shell structure containing the input line.
+ */
+void	tokenizer(t_shell *shell)
 {
-	int		i;
+	int	i;
+	int	split;
 
 	i = 0;
-	prompt->line = trim_whitespace(prompt->line);
-	while(prompt->line[i] != '\0')
+	split = 1;
+	shell->line = trim_whitespace(shell);
+	while (shell->line[i] != '\0')
 	{
-		if(!is_whitespace_null(prompt->line[i]))
+		if (!is_whitespace_null(shell->line[i]))
 		{
-			prompt->word = ft_strdup("");
-			if (prompt->word == NULL)
-				simple_err(ERR_MALLOC);
-			i = node_process(prompt, i);
+			i += node_process(shell, i, split);
+			split = 0;
 		}
 		else
-				i++;
-	}
-	reset_increment_i(0);
-	restructure_prompt(prompt);
-}
-
-int	node_process(t_prompt *prompt, int	i)
-{
-	int		q;
-	char	*temp;
-
-	while (!is_whitespace_null(prompt->line[i]))
-	{
-		temp = NULL;
-		q = 0;
-		if (is_quote(prompt->line[i]))
 		{
-			q = is_quote(prompt->line[i++]);
-			while(prompt->line[i] != q && prompt->line[i] != '\0')
-				temp = append_char_env(temp, prompt->line[i++]);
-			if(prompt->line[i] == '\0')
-				simple_err(ERR_QUOTE);
+			split = 1;
 			i++;
 		}
-		else 
-			while(!is_quote(prompt->line[i]) && !is_whitespace_null(prompt->line[i]))
-				temp = append_char_env(temp, prompt->line[i++]);
-		if (q == 0)
-		{
-			temp = search_redir(prompt, temp);
-			if (prompt->printable == 1)
-			{
-				free(prompt->word);
-				prompt->word = NULL;
-				prompt->printable = 0;
-			}
-		}
-		if (q != 39)
-			temp = search_replace_env(prompt, temp);
-		prompt->word = ft_strjoin(prompt->word, temp);
 	}
-	if (prompt->word[0] != '\0')
-		add_node(prompt, prompt->word, T_WORD);
-	return(i);
+	expander(shell);
 }
 
-char	*search_replace_env(t_prompt *prompt, char *str)
+/**
+ * Processes a node in the shell's lexer.
+ * 
+ * @param shell The shell structure.
+ * @param i The index of the current character in the input line.
+ * @param split The index of the split character in the input line.
+ * @return The number of characters processed.
+ */
+int	node_process(t_shell *shell, int i, int split)
 {
-	int		i;
-	int		j;
-	char	*env_name;
-	char	*env_value;
-	char	*new;
+	int	j;
 
-	i = 0;
 	j = 0;
-	while (str[i] != '$' && str[i] != '\0')
-		i++;
-	if (str[i] == '$')
-	{
-		env_name = (char *)malloc(((ft_strlen(str) - i) + 1) * sizeof(char));
-		i++;
-		while (str[i + j] != '\0')
-		{
-			env_name[j] = str[i + j]; 
-			j++;
-		}
-		env_name[j] = '\0';
-		env_value = getenv(env_name);
-		free(env_name);
-		if (env_value == NULL)
-		{
-			new = removed_env(str);
-			free(str);
-			str = ft_strdup(new);
-			free(new);
-		}
-		else
-		{
-			env_value = ft_strdup(env_value);
-			str = updated_env_str(str, env_value);
-			str = makes_nodes_env(prompt, str);
-			free(prompt->word);
-			prompt->word = NULL;
-		}
-	}
-	return(str);
+	if (is_quote(shell->line[i]) == 34)
+		j = double_quote(shell, i, split);
+	else if (is_quote(shell->line[i]) == 39)
+		j = single_quote(shell, i, split);
+	else
+		j = word_process(shell, i, split);
+	return (j);
 }
 
-char 	*updated_env_str(char *str, char *env_str)
+/**
+ * Processes a double quote in the input line and creates a new lexer token.
+ * 
+ * @param shell The shell structure.
+ * @param i The current index in the input line.
+ * @param split The split flag indicating whether the token should be split.
+ * @return The number of characters processed, including the double quote.
+ */
+int	double_quote(t_shell *shell, int i, int split)
 {
-	int		i;
-	char	*cat;
+	int		j;
+	t_lexer	*new;
+	char	*temp;
 
-	i = 0;
-	while(str[i] != '$' && str[i] != '\0')
-		i++;
-	cat = (char *)malloc((i + ft_strlen(env_str) + 1) * sizeof(char));
-	i = 0;
-	while(str[i] != '$' && str[i] != '\0')
+	j = 1;
+	while (shell->line[i + j] != 34 && shell->line[i + j] != '\0')
+		j++;
+	if (j == 1)
+		return (2);
+	if (shell->line[i + j] == '\0')
+		free_err(ERR_QUOTE, shell);
+	temp = ft_substr(shell->line, (i + 1), (j - 1));
+	if (!temp)
+		free_err(ERR_MALLOC, shell);
+	new = lexernew_ms(temp, T_WORD, split, 0);
+	lexeraddback_ms(&shell->lexer, new);
+	return (j + 1);
+}
+
+/**
+ * Processes a single quote in the input line and creates a new lexer token.
+ * 
+ * @param shell The shell structure.
+ * @param i The index of the single quote in the input line.
+ * @param split The split flag indicating whether the token should be split.
+ * @return The number of characters processed, including the single quote.
+ */
+int	single_quote(t_shell *shell, int i, int split)
+{
+	int		j;
+	t_lexer	*new;
+	char	*temp;
+
+	j = 1;
+	while (shell->line[i + j] != 39 && shell->line[i + j] != '\0')
+		j++;
+	if (j == 1)
+		return (2);
+	if (shell->line[i + j] == '\0')
+		free_err(ERR_QUOTE, shell);
+	temp = ft_substr(shell->line, (i + 1), (j - 1));
+	if (!temp)
+		free_err(ERR_MALLOC, shell);
+	new = lexernew_ms(temp, T_WORD, split, 1);
+	lexeraddback_ms(&shell->lexer, new);
+	return (j + 1);
+}
+
+/**
+ * Processes a word in the shell line.
+ * 
+ * @param shell The shell structure.
+ * @param i The starting index of the word in the shell line.
+ * @param split The split flag indicating whether the 
+ * word is split by a delimiter.
+ * @return The number of characters processed.
+ */
+int	word_process(t_shell *shell, int i, int split)
+{
+	int		j;
+	char	*temp;
+
+	j = 0;
+	while (shell->line[i + j] != 34 && shell->line[i + j] != 39 
+		&& !is_whitespace_null(shell->line[i + j]))
 	{
-		cat[i] = str[i];
-		i++;
+		j++;
 	}
-	free(str);
-	cat[i] = '\0';
-	str = ft_strjoin(cat, env_str);
-	return (str);
+	temp = ft_substr(shell->line, i, j);
+	if (!temp) 
+	{
+		free_err(ERR_MALLOC, shell);
+	}
+	redir_scan(temp, shell, split);
+	free(temp);
+	return (j);
 }
