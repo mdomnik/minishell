@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:09:18 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/19 15:25:56 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/19 18:03:01 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void purge_redir(t_shell *shell)
 {
 	t_expand *current;
+	t_expand *temp;
 
 	current = shell->expand;
 	while (current != NULL)
@@ -23,9 +24,14 @@ void purge_redir(t_shell *shell)
 			break ;
 		if (current->token != T_WORD && current->next->token == T_WORD)
 		{
+			temp = current->next;
 			delete_node(shell, current);
-			current = current->next;
+			current = temp;
+			temp = current->next;
+			if (temp == NULL)
+				break ;
 			delete_node(shell, current);
+			current = temp;
 		}
 		current = current->next;
 	}	

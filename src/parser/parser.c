@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:28:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/19 17:41:42 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/19 17:53:44 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,20 +84,46 @@ void group_files(t_shell *shell, char **io, int file_num)
 		file_num--;
 	}
 	purge_redir(shell);
-	group_args(shell, io, files);
+		free_double(io);
+	free_double(files);
 }
 
 void	group_args(t_shell *shell, char **io, char **files)
 {
 	t_expand	*current;
-	char **args;
+	int			arg_num;
+	char 		**args;
 	
-	printf("io[0]: %s\n", io[0]);
-	printf("io[1]: %s\n", io[1]);
-	printf("io[2]: %s\n", io[2]);
-	printf("io[3]: %s\n", io[3]);
-	printf("io[4]: %s\n", io[4]);
+	current = shell->expand;
+	arg_num = 0;
+	while (current != NULL)
+	{
+		if (current->token == T_PIPE)
+			break ;
+		arg_num++;
+		current = current->next;
+	}
+	args = (char **)ft_calloc((arg_num + 1), sizeof(char *));
+	if (!args)
+		free_err(ERR_MALLOC, shell);
+	arg_num = 0;
+	current = shell->expand;
+	while (current != NULL)
+	{
+		if (current->token == T_PIPE)
+			break ;
+		args[arg_num] = ft_strdup(current->word);
+		delete_node(shell, current);
+		arg_num++;
+		current = current->next;
+	}
+	while(arg_num > 0)
+	{
+		printf("args[%d]: %s\n", arg_num, args[arg_num - 1]);
+		arg_num--;
+	}
 	print_expand(shell);
 	free_double(io);
 	free_double(files);
+	free_double(args);
 }

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:37:46 by kaan              #+#    #+#             */
-/*   Updated: 2024/04/19 17:29:41 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/19 17:49:26 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void delete_node(t_shell *shell, t_expand *current);
 //parser.c
 void	parser(t_shell *shell);
 void	group_redir(t_shell *shell);
-void group_files(t_shell *shell, char **io, int file_num);
+void	group_files(t_shell *shell, char **io, int file_num);
 void	group_args(t_shell *shell, char **io, char **files);
 
 #endif
