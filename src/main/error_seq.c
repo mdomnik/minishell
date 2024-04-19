@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:19:13 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/16 23:53:07 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/18 17:25:18 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,7 @@ void	free_shell(t_shell *shell)
 		free(shell->line);
 	if (shell->lexer)
 		lexerfreelist_ms(&shell->lexer);
+	if (shell->expand)
+		expandfreelist_ms(&shell->expand);
 	free(shell);
 }

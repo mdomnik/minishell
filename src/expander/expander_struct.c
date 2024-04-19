@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:50:12 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/17 20:36:20 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/19 14:59:47 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ t_expand	*expandfreelist_ms(t_expand **lst)
 
 	temp = *lst;
 	if (!(*lst))
-		return (NULL);
+		free_err(ERR_EXPAND, NULL);
 	while (*lst)
 	{
 		temp = (*lst)->next;
@@ -108,3 +108,4 @@ t_expand	*expandfreelist_ms(t_expand **lst)
 	reset_increment_j(0);
 	return (NULL);
 }
+

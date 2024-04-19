@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/04/16 22:09:06 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/19 15:21:34 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include "lexer.h"
-# include "parser.h"
 # include "expander.h"
+# include "parser.h"
 # include "utils.h"
 
 //command line front message
@@ -68,5 +68,6 @@ t_shell	*init_shell(t_shell *shell);
 //testing.c
 void	print_lexer(t_shell *shell);
 void	print_expand(t_shell *shell);
+void	print_parser(t_shell *shell);
 
 #endif

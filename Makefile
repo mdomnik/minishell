@@ -6,7 +6,7 @@
 #    By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 21:52:00 by kaan              #+#    #+#              #
-#    Updated: 2024/04/17 20:29:27 by mdomnik          ###   ########.fr        #
+#    Updated: 2024/04/19 15:20:59 by mdomnik          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,9 @@ SRC =	src/expander/expander_process.c\
 		src/main/main.c\
 		src/main/testing.c\
 		src/parser/parser.c\
+		src/parser/parser_struct.c\
+		src/parser/parser_utils_1.c\
+		src/parser/parser_utils_2.c\
 		src/utils/gen_utils_1.c\
 		src/utils/gen_utils_split.c\
 
