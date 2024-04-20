@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/04/19 15:21:34 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/20 17:37:04 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "../lib/libft/inc/libft.h"
 # include <stdio.h>
+# include <string.h>
+# include <bsd/string.h>
 # include <unistd.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -47,7 +49,6 @@
   variables needed for the shell to run*/
 typedef struct s_shell
 {
-	int					printable;
 	char				*line;
 	char				**env;
 	struct s_expand		*expand;
@@ -69,5 +70,6 @@ t_shell	*init_shell(t_shell *shell);
 void	print_lexer(t_shell *shell);
 void	print_expand(t_shell *shell);
 void	print_parser(t_shell *shell);
+void	test_parser_pointers(char **args, char **io, char **files);
 
 #endif

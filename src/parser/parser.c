@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:28:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/19 17:53:44 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/20 17:52:43 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 void	parser(t_shell *shell)
 {
 	group_redir(shell);
+	adjust_output(shell);
+	print_parser(shell);
+	parserfreelist_ms(&shell->parser);
 }
 
 void group_redir(t_shell *shell)
@@ -26,7 +29,7 @@ void group_redir(t_shell *shell)
 	current = shell->expand;
 	if (!current)
 		return ;
-	io = (char **)ft_calloc((5), sizeof(char *));
+	io = (char **)ft_calloc((4), sizeof(char *));
 	file_num = 0;
 	while (current->next != NULL)
 	{
@@ -44,7 +47,6 @@ void group_redir(t_shell *shell)
 				file_num++;
 			}
 		}
-		io[4] = NULL;
 		current = current->next;
 	}
 	if (current->token != T_WORD && current->token != T_PIPE)
@@ -78,14 +80,8 @@ void group_files(t_shell *shell, char **io, int file_num)
 			break ;
 		current = current->next;
 	}
-	while(file_num > 0)
-	{
-		printf("files[%d]: %s\n", file_num, files[file_num - 1]);
-		file_num--;
-	}
 	purge_redir(shell);
-		free_double(io);
-	free_double(files);
+	group_args(shell, io, files);
 }
 
 void	group_args(t_shell *shell, char **io, char **files)
@@ -115,15 +111,12 @@ void	group_args(t_shell *shell, char **io, char **files)
 		args[arg_num] = ft_strdup(current->word);
 		delete_node(shell, current);
 		arg_num++;
-		current = current->next;
+		current = shell->expand;
 	}
-	while(arg_num > 0)
+	create_parser_node(shell, args, io, files);
+	if (current != NULL)
 	{
-		printf("args[%d]: %s\n", arg_num, args[arg_num - 1]);
-		arg_num--;
+		delete_node(shell, current);
+		group_redir(shell);
 	}
-	print_expand(shell);
-	free_double(io);
-	free_double(files);
-	free_double(args);
 }

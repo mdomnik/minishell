@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:40:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/18 14:45:31 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/20 17:30:02 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	print_lexer(t_shell *shell)
 		printf("index: [%d]\n", current->index);
 		current = current->next;
 	}
+	printf("----------------------\n");
 }
 
 //prints the entire stack (linked list)
@@ -48,6 +49,7 @@ void	print_expand(t_shell *shell)
 		printf("index: [%d]\n", current->index);
 		current = current->next;
 	}
+	printf("----------------------\n");
 }
 
 //prints the entire stack (linked list)
@@ -84,4 +86,28 @@ void	print_parser(t_shell *shell)
 		printf("index: %d\n", current->index);
 		current = current->next;
 	}
+	printf("----------------------\n");
+}
+
+void	test_parser_pointers(char **args, char **io, char **files)
+{
+	int	i;
+	
+	i = 0;
+	while(files[i] != NULL)
+	{
+		printf("files[%d]: %s\n", i, files[i]);
+		i++;
+	}
+	i = 0;
+	while(args[i] != NULL)
+	{
+		printf("args[%d]: %s\n", i, args[i]);
+		i++;
+	}
+	printf("io[0]: %s\n", io[0]);
+	printf("io[1]: %s\n", io[1]);
+	printf("io[2]: %s\n", io[2]);
+	printf("io[3]: %s\n", io[3]);
+	printf("----------------\n");
 }

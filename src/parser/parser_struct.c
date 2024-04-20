@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:37:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/18 14:41:18 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/20 18:01:58 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,11 @@ t_parser *parsernew_ms(char **args, char **io, char **files)
 	if (!element)
 		return (NULL);
 	element->index = (reset_increment_k(1) - 1);
-	
 	if (args[0] != NULL)
 		element->cmd = ft_strdup(args[0]);
 	else
 		element->cmd = NULL;
 	element->args = remove_first(args);
-
 	if (io[0] == NULL)
 	{
 		if (element->index == 0)
@@ -48,7 +46,7 @@ t_parser *parsernew_ms(char **args, char **io, char **files)
 	}
 	if (io[2] == NULL)
 	{
-		element->output = 0;
+		element->output = O_STDOUT;
 		element->o_str = NULL;
 	}
 	else
@@ -56,17 +54,9 @@ t_parser *parsernew_ms(char **args, char **io, char **files)
 		element->output = find_redir(io[2]);
 		element->o_str = ft_strdup(io[3]);
 	}
-	
 	element->files = double_dup(files);
-
-
 	element->prev = NULL;
 	element->next = NULL;
-
-	free_double(args);
-	free_double(io);
-	free_double(files);
-	
 	return (element);
 }
 
@@ -113,6 +103,12 @@ t_parser *parserfreelist_ms(t_parser **lst)
 			free_double((*lst)->args);
 		if ((*lst)->files != NULL)
 			free_double((*lst)->files);
+		if (ft_memcmp_ms((*lst)->i_str, "STDIN") 
+			&& ft_memcmp_ms((*lst)->i_str, "PIPE") && (*lst)->i_str != NULL)
+			free((*lst)->i_str);
+		if (ft_memcmp_ms((*lst)->o_str, "STDOUT") 
+			&& ft_memcmp_ms((*lst)->o_str, "PIPE") && (*lst)->o_str != NULL)
+			free((*lst)->o_str);
 		free(*lst);
 		*lst = temp;
 	}

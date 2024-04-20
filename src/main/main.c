@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:27:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/17 19:49:38 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/20 17:37:18 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,5 @@ t_shell	*init_shell(t_shell *shell)
 	shell->lexer = NULL;
 	shell->parser = NULL;
 	shell->env = NULL;
-	shell->printable = 0;
 	return (shell);
 }

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:09:18 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/19 18:03:01 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/20 17:49:06 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,21 +16,19 @@ void purge_redir(t_shell *shell)
 {
 	t_expand *current;
 	t_expand *temp;
+	t_expand *ptr;
 
 	current = shell->expand;
+	temp = shell->expand;
 	while (current != NULL)
 	{
 		if (current->token == T_PIPE)
 			break ;
 		if (current->token != T_WORD && current->next->token == T_WORD)
 		{
-			temp = current->next;
+			ptr = current->next;
 			delete_node(shell, current);
-			current = temp;
-			temp = current->next;
-			if (temp == NULL)
-				break ;
-			delete_node(shell, current);
+			delete_node(shell, ptr);
 			current = temp;
 		}
 		current = current->next;
@@ -60,4 +58,45 @@ void delete_node(t_shell *shell, t_expand *current)
         }
         ptr = ptr->next;
     }
+}
+
+void	free_io(char **double_str)
+{
+	free(double_str[0]);
+	free(double_str[1]);
+	free(double_str[2]);
+	free(double_str[3]);
+	free(double_str);
+}
+
+void create_parser_node(t_shell *shell, char ** args, char **io, char **files)
+{
+	t_parser *element;
+
+	element = parsernew_ms(args, io, files);
+	parseraddback_ms(&shell->parser, element);
+	free_io(io);
+	free_double(files);
+	free_double(args);
+}
+
+void adjust_output(t_shell *shell)
+{
+	t_parser *current;
+
+	current = shell->parser;
+	while (current->next != NULL)
+	{
+		if (current->next != NULL && current->o_str == NULL)
+		{
+			current->output = T_PIPE;
+			current->o_str = "PIPE";
+		}
+		current = current->next;
+	}
+	if (current->next == NULL && current->o_str == NULL)
+		{
+			current->output = O_STDOUT;
+			current->o_str = "STDOUT";
+		}
 }

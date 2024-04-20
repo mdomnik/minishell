@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:58:23 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/17 20:34:00 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/20 19:51:52 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	env_expander(t_shell *shell, t_lexer *lexer, int i)
 			env_split = add_delim_split(lexer->word);
 			while (env_split[i] != NULL)
 			{
-				env_split[i] = search_replace_env(env_split[i], shell);
+				env_split[i] = search_replace_env(env_split[i], shell);	
 				i++;
 			}
 			i = 0;
@@ -90,16 +90,21 @@ char	*search_replace_env(char *str, t_shell *shell)
 		i++;
 	if (str[i] == '\0')
 		return (str);
+	else if (str[i + 1] == '?')
+		return (str);
 	temp = ft_substr(str, (i + 1), ft_strlen(str));
 	if (!temp)
 		free_err(ERR_MALLOC, shell);
-	ret = getenv(temp);
+	if (ft_memcmp_ms(temp, "?") == 0)
+		ret = ft_strdup("$?");
+	else
+		ret = getenv(temp);
 	if (!ret)
 		ret = ft_strdup("");
 	if (!ret)
 		free_err(ERR_MALLOC, shell);
 	free(str);
-	str = ft_substr(ret, 0, ft_strlen(ret));
+	str = ft_strdup(ret);
 	if (ret[0] == '\0')
 		free(ret);
 	free(temp);
