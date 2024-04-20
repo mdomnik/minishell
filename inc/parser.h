@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:37:46 by kaan              #+#    #+#             */
-/*   Updated: 2024/04/20 17:48:00 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/20 20:12:41 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,27 @@ typedef struct s_parser
 //parser_struct.c
 t_parser	*parsernew_ms(char **args, char **io, char **files);
 int			reset_increment_k(int x);
-void	parseraddback_ms(t_parser **lst, t_parser *new);
-t_parser *parserfreelist_ms(t_parser **lst);
+void		parseraddback_ms(t_parser **lst, t_parser *new);
+t_parser	*parserfreelist_ms(t_parser **lst);
 
 //parser_utils_1.c
-char **pop_io(char **io, char *str1, char *str2 , int token);
-char **remove_first(char **args);
-int	find_redir(char *str);
-int	ft_memcmp_ms(const void *s1, const void *s2);
+char		**pop_io(char **io, char *str1, char *str2, int token);
+char		**remove_first(char **args);
+int			find_redir(char *str);
+int			ft_memcmp_ms(const void *s1, const void *s2);
 
 //parser_utils_2.c
-void purge_redir(t_shell *shell);
-void delete_node(t_shell *shell, t_expand *current);
-void	free_io(char **double_str);
-void create_parser_node(t_shell *shell, char ** args, char **io, char **files);
-void adjust_output(t_shell *shell);
+void		purge_redir(t_shell *shell);
+void		delete_node(t_shell *shell, t_expand *current);
+void		free_io(char **double_str);
+void		create_parser_node(t_shell *shell, char **args,
+				char **io, char **files);
+void		adjust_output(t_shell *shell);
 
 //parser.c
-void	parser(t_shell *shell);
-void	group_redir(t_shell *shell);
-void	group_files(t_shell *shell, char **io, int file_num);
-void	group_args(t_shell *shell, char **io, char **files);
+void		parser(t_shell *shell);
+void		group_redir(t_shell *shell);
+void		group_files(t_shell *shell, char **io, int file_num);
+void		group_args(t_shell *shell, char **io, char **files);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:28:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/20 20:05:27 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/20 20:38:08 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,41 +19,65 @@ void	parser(t_shell *shell)
 	execute(shell);
 }
 
-void group_redir(t_shell *shell)
+/**
+ * Handles grouping and redirection in the shell.
+ *
+ * This function processes the tokens in the shell's expansion list and performs
+ * grouping and redirection operations based on the token types. It checks for
+ * syntax errors and populates the `io` array with input/output file names.
+ * The `file_num` variable keeps track of the number of files in the `io` array.
+ *
+ * @param shell A pointer to the shell structure.
+ */
+void	group_redir(t_shell *shell)
 {
-	t_expand	*current;
+	t_expand	*cur;
 	char		**io;
 	int			file_num;
 
-	current = shell->expand;
-	if (!current)
+	cur = shell->expand;
+	if (!cur)
 		return ;
 	io = (char **)ft_calloc((4), sizeof(char *));
 	file_num = 0;
-	while (current->next != NULL)
+	while (cur->next != NULL)
 	{
-		if (current->token != T_WORD && (current->next->token != T_WORD || current->next == NULL))
+		if (cur->token != T_WORD 
+			&& (cur->next->token != T_WORD || cur->next == NULL))
 			free_err(ERR_SYNTAX, shell);
-		if (current->token != T_WORD && current->next->token == T_WORD)
+		if (cur->token != T_WORD && cur->next->token == T_WORD)
 		{
-			if (current->token == T_PIPE)
+			if (cur->token == T_PIPE)
 				break ;
-			else if (current->token == T_LESSER || current->token == T_HEREDOC)
-				io = pop_io(io, current->word, current->next->word, current->token);
-			else if (current->token == T_GREATER || current->token == T_APPEND)
+			else if (cur->token == T_LESSER || cur->token == T_HEREDOC)
+				io = pop_io(io, cur->word, cur->next->word, cur->token);
+			else if (cur->token == T_GREATER || cur->token == T_APPEND)
 			{
-				io = pop_io(io, current->word, current->next->word, current->token);
+				io = pop_io(io, cur->word, cur->next->word, cur->token);
 				file_num++;
 			}
 		}
-		current = current->next;
+		cur = cur->next;
 	}
-	if (current->token != T_WORD && current->token != T_PIPE)
-			free_err(ERR_SYNTAX, shell);
+	if (cur->token != T_WORD && cur->token != T_PIPE)
+		free_err(ERR_SYNTAX, shell);
 	group_files(shell, io, file_num);
 }
 
-void group_files(t_shell *shell, char **io, int file_num)
+/**
+ * Groups files and passes them to the `group_args` function.
+ *
+ * This function takes a `t_shell` struct, an array of input/output redirection
+ * strings (`io`), and the number of files (`file_num`). It groups the files
+ * from the `t_expand` linked list in the `shell` struct and stores them in the
+ * `files` array. Then, it calls the `group_args` function to process the
+ * grouped arguments.
+ *
+ * @param shell     The `t_shell` struct containing the expand linked list.
+ * @param io        An array of input/output redirection strings.
+ * @param file_num  The number of files to be grouped.
+ */
+void	group_files(t_shell *shell, char **io, int file_num)
 {
 	t_expand	*current;
 	char		**files;
@@ -68,7 +92,7 @@ void group_files(t_shell *shell, char **io, int file_num)
 		if (current->token != T_WORD && current->next->token == T_WORD)
 		{
 			if (current->token == T_PIPE)
-				break ;	
+				break ;
 			else if (current->token == T_GREATER || current->token == T_APPEND)
 			{
 				files[file_num] = ft_strdup(current->next->word);
@@ -83,12 +107,19 @@ void group_files(t_shell *shell, char **io, int file_num)
 	group_args(shell, io, files);
 }
 
+/**
+ * Groups arguments from the shell's expand list and creates a parser node.
+ * 
+ * @param shell The shell structure.
+ * @param io An array of input/output redirections.
+ * @param files An array of file names for redirections.
+ */
 void	group_args(t_shell *shell, char **io, char **files)
 {
 	t_expand	*current;
 	int			arg_num;
-	char 		**args;
-	
+	char		**args;
+
 	current = shell->expand;
 	arg_num = 0;
 	while (current != NULL)

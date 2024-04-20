@@ -6,13 +6,19 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:40:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/20 17:30:02 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/20 20:21:51 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-//prints the entire stack (linked list)
+//TO DELETE LATER
+
+/**
+ * Prints the contents of the lexer stack.
+ * 
+ * @param shell The shell structure containing the lexer stack.
+ */
 void	print_lexer(t_shell *shell)
 {
 	t_lexer	*current;
@@ -33,7 +39,11 @@ void	print_lexer(t_shell *shell)
 	printf("----------------------\n");
 }
 
-//prints the entire stack (linked list)
+/**
+ * Prints the contents of the expand stack in the given shell.
+ *
+ * @param shell The shell containing the expand stack.
+ */
 void	print_expand(t_shell *shell)
 {
 	t_expand	*current;
@@ -52,7 +62,11 @@ void	print_expand(t_shell *shell)
 	printf("----------------------\n");
 }
 
-//prints the entire stack (linked list)
+/**
+ * Prints the contents of the parser in the given shell.
+ *
+ * @param shell The shell containing the parser.
+ */
 void	print_parser(t_shell *shell)
 {
 	t_parser	*current;
@@ -89,18 +103,27 @@ void	print_parser(t_shell *shell)
 	printf("----------------------\n");
 }
 
+/**
+ * This function is used to test the pointers in the parser.
+ * It takes three arrays of strings as arguments: args, io, and files.
+ * It prints the values of the files array, args array, and io array.
+ * 
+ * @param args   The array of strings representing command arguments.
+ * @param io     The array of strings representing input/output redirection.
+ * @param files  The array of strings representing file names.
+ */
 void	test_parser_pointers(char **args, char **io, char **files)
 {
 	int	i;
-	
+
 	i = 0;
-	while(files[i] != NULL)
+	while (files[i] != NULL)
 	{
 		printf("files[%d]: %s\n", i, files[i]);
 		i++;
 	}
 	i = 0;
-	while(args[i] != NULL)
+	while (args[i] != NULL)
 	{
 		printf("args[%d]: %s\n", i, args[i]);
 		i++;

@@ -6,17 +6,23 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:09:18 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/20 17:49:06 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/20 20:34:42 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void purge_redir(t_shell *shell)
+/**
+ * Purges redirection tokens from the shell's expand list.
+ * Redirection tokens and file names are removed.
+ *
+ * @param shell The shell structure.
+ */
+void	purge_redir(t_shell *shell)
 {
-	t_expand *current;
-	t_expand *temp;
-	t_expand *ptr;
+	t_expand	*current;
+	t_expand	*temp;
+	t_expand	*ptr;
 
 	current = shell->expand;
 	temp = shell->expand;
@@ -32,34 +38,46 @@ void purge_redir(t_shell *shell)
 			current = temp;
 		}
 		current = current->next;
-	}	
+	}
 }
 
-void delete_node(t_shell *shell, t_expand *current)
+/**
+ * Deletes a node from the expand list in the shell structure
+ * at "current" position.
+ * 
+ * @param shell The shell structure.
+ * @param current The node to be deleted.
+ */
+void	delete_node(t_shell *shell, t_expand *current)
 {
-	t_expand *ptr;
+	t_expand	*ptr;
 
-    if (shell == NULL || current == NULL)
-        return;
-    ptr = shell->expand;
-    while (ptr != NULL)
+	if (shell == NULL || current == NULL)
+		return ;
+	ptr = shell->expand;
+	while (ptr != NULL)
 	{
-        if (ptr == current)
+		if (ptr == current)
 		{
-            if (ptr == shell->expand)
-                shell->expand = ptr->next;
-            if (ptr->prev != NULL) 
-                ptr->prev->next = ptr->next;
-            if (ptr->next != NULL) 
-                ptr->next->prev = ptr->prev;
-            free(ptr->word);
-            free(ptr);
-            return ;
-        }
-        ptr = ptr->next;
-    }
+			if (ptr == shell->expand)
+				shell->expand = ptr->next;
+			if (ptr->prev != NULL)
+				ptr->prev->next = ptr->next;
+			if (ptr->next != NULL)
+				ptr->next->prev = ptr->prev;
+			free(ptr->word);
+			free(ptr);
+			return ;
+		}
+		ptr = ptr->next;
+	}
 }
 
+/**
+ * Frees the memory allocated for an array of strings.
+ * 
+ * @param double_str The array of strings to be freed.
+ */
 void	free_io(char **double_str)
 {
 	free(double_str[0]);
@@ -69,9 +87,18 @@ void	free_io(char **double_str)
 	free(double_str);
 }
 
-void create_parser_node(t_shell *shell, char ** args, char **io, char **files)
+/**
+ * Creates a parser node and adds it to the shell's parser.
+ * also frees the memory allocated for the arguments, I/O redirections,
+ * and files.
+ * @param shell The shell structure.
+ * @param args An array of arguments.
+ * @param io An array of I/O redirections.
+ * @param files An array of file names.
+ */
+void	create_parser_node(t_shell *shell, char **args, char **io, char **files)
 {
-	t_parser *element;
+	t_parser	*element;
 
 	element = parsernew_ms(args, io, files);
 	parseraddback_ms(&shell->parser, element);
@@ -80,9 +107,15 @@ void create_parser_node(t_shell *shell, char ** args, char **io, char **files)
 	free_double(args);
 }
 
-void adjust_output(t_shell *shell)
+/**
+ * Adjusts the output of the parser.
+ * If the output is not set, it is set to T_PIPE or O_STDOUT.
+ * 
+ * @param shell The shell structure.
+ */
+void	adjust_output(t_shell *shell)
 {
-	t_parser *current;
+	t_parser	*current;
 
 	current = shell->parser;
 	while (current->next != NULL)
@@ -95,8 +128,8 @@ void adjust_output(t_shell *shell)
 		current = current->next;
 	}
 	if (current->next == NULL && current->o_str == NULL)
-		{
-			current->output = O_STDOUT;
-			current->o_str = "STDOUT";
-		}
+	{
+		current->output = O_STDOUT;
+		current->o_str = "STDOUT";
+	}
 }

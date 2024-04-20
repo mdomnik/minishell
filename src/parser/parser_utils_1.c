@@ -6,13 +6,22 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 16:53:27 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/20 16:09:56 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/20 20:30:58 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-char **pop_io(char **io, char *str1, char *str2 , int token)
+/**
+ * Populates the io array with the given strings based on the token type.
+ *
+ * @param io The io array to populate.
+ * @param str1 The first string to copy into the io array.
+ * @param str2 The second string to copy into the io array.
+ * @param token The token type indicating the operation to perform.
+ * @return The updated io array.
+ */
+char	**pop_io(char **io, char *str1, char *str2, int token)
 {
 	if (token == T_LESSER || token == T_HEREDOC)
 	{
@@ -35,17 +44,23 @@ char **pop_io(char **io, char *str1, char *str2 , int token)
 	return (io);
 }
 
-char **remove_first(char **args)
+/**
+ * Removes the first element from an array of strings.
+ * 
+ * @param args The array of strings from which to remove the first element.
+ * @return A new array of strings without the first element.
+ */
+char	**remove_first(char **args)
 {
-	char **temp;
-	int i;
+	char	**temp;
+	int		i;
 
 	i = 0;
 	while (args[i] != NULL)
 		i++;
 	temp = (char **)malloc((i) * sizeof(char *));
 	i = 1;
-	while(args[i] != NULL)
+	while (args[i] != NULL)
 	{
 		temp[i - 1] = ft_strdup(args[i]);
 		i++;
@@ -54,23 +69,45 @@ char **remove_first(char **args)
 	return (temp);
 }
 
+/**
+ * Finds the type of redirection based on the given string.
+ *
+ * @param str The string to check for redirection.
+ * @return The type of redirection found.
+ */
 int	find_redir(char *str)
 {
 	if (!ft_memcmp_ms(str, "|"))
-		return(T_PIPE);
+		return (T_PIPE);
 	else if (!ft_memcmp_ms(str, ">"))
-		return(T_GREATER);
+		return (T_GREATER);
 	else if (!ft_memcmp_ms(str, "<"))
-		return(T_LESSER);
+		return (T_LESSER);
 	else if (!ft_memcmp_ms(str, "<<"))
-		return(T_HEREDOC);
+		return (T_HEREDOC);
 	else if (!ft_memcmp_ms(str, ">>"))
-		return(T_APPEND);
+		return (T_APPEND);
 	else if (!ft_memcmp_ms(str, "<>"))
-		return(T_MISTAKE);
+		return (T_MISTAKE);
 	return (T_WORD);
 }
 
+/**
+ * Compares two memory blocks.
+ *
+ * This function compares the memory blocks pointed to by `s1` and `s2`.
+ * It returns an integer less than, equal to, or greater than zero if the
+ *  first `n` bytes of `s1` are found,
+ * respectively, to be less than, to match, or be greater 
+ * than the first `n` bytes of `s2`.
+ *
+ * @param s1 A pointer to the first memory block to be compared.
+ * @param s2 A pointer to the second memory block to be compared.
+ * @return An integer less than, equal to, or greater than zero if the first 
+ * `n` bytes of `s1` are found,
+ * respectively, to be less than, to match, or be greater than the first
+ *  `n` bytes of `s2`.
+ */
 int	ft_memcmp_ms(const void *s1, const void *s2)
 {
 	char	*p1;
@@ -94,4 +131,3 @@ int	ft_memcmp_ms(const void *s1, const void *s2)
 	}
 	return (0);
 }
-

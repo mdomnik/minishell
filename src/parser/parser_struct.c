@@ -6,13 +6,13 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:37:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/20 18:01:58 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/20 20:28:06 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_parser *parsernew_ms(char **args, char **io, char **files)
+t_parser	*parsernew_ms(char **args, char **io, char **files)
 {
 	t_parser		*element;
 
@@ -37,7 +37,6 @@ t_parser *parsernew_ms(char **args, char **io, char **files)
 			element->input = I_PIPE;
 			element->i_str = "PIPE";
 		}
-		
 	}
 	else
 	{
@@ -60,9 +59,19 @@ t_parser *parsernew_ms(char **args, char **io, char **files)
 	return (element);
 }
 
+/**
+ * @brief Resets or increments the value of the static variable k.
+ *
+ * This function is used to reset the value of k to 0 or increment it by 1,
+ * depending on the value of the parameter x.
+ *
+ * @param x The value used to determine whether to reset or increment k.
+ * @return The updated value of k.
+ */
 int	reset_increment_k(int x)
 {
-	static int k = 0;
+	static int	k = 0;
+
 	if (x == 0)
 		k = 0;
 	else
@@ -70,7 +79,12 @@ int	reset_increment_k(int x)
 	return (k);
 }
 
-//adds new node to the back of the parser linked list
+/**
+ * Adds a new t_parser node to the end of the linked list.
+ *
+ * @param lst The pointer to the head of the linked list.
+ * @param new The pointer to the new t_parser node to be added.
+ */
 void	parseraddback_ms(t_parser **lst, t_parser *new)
 {
 	t_parser		*temp;
@@ -84,12 +98,18 @@ void	parseraddback_ms(t_parser **lst, t_parser *new)
 	while (temp->next != NULL)
 		temp = temp->next;
 	temp->next = new;
-	new->prev = temp;	
+	new->prev = temp;
 }
 
-t_parser *parserfreelist_ms(t_parser **lst)
+/**
+ * Frees the memory allocated for the parser list.
+ *
+ * @param lst The pointer to the head of the linked list.
+ * @return NULL.
+ */
+t_parser	*parserfreelist_ms(t_parser **lst)
 {
-	t_parser *temp;
+	t_parser	*temp;
 
 	temp = *lst;
 	if (!(*lst))
@@ -113,6 +133,5 @@ t_parser *parserfreelist_ms(t_parser **lst)
 		*lst = temp;
 	}
 	*lst = NULL;
-	reset_increment_k(0);
 	return (NULL);
 }

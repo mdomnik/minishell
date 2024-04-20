@@ -6,7 +6,7 @@
 #    By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 21:52:00 by kaan              #+#    #+#              #
-#    Updated: 2024/04/20 20:00:33 by mdomnik          ###   ########.fr        #
+#    Updated: 2024/04/20 20:39:50 by mdomnik          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,5 +70,8 @@ fclean: clean
 	@$(RM) $(LIBFT)
 
 re: fclean all
+
+norminette:
+	@norminette $(SRC)
 
 .PHONY: start all clean fclean re
