@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:28:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/20 17:52:43 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/20 20:05:27 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,7 @@ void	parser(t_shell *shell)
 {
 	group_redir(shell);
 	adjust_output(shell);
-	print_parser(shell);
-	parserfreelist_ms(&shell->parser);
+	execute(shell);
 }
 
 void group_redir(t_shell *shell)

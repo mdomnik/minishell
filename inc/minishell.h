@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/04/20 17:37:04 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/20 19:59:13 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include "lexer.h"
 # include "expander.h"
 # include "parser.h"
+# include "execution.h"
 # include "utils.h"
 
 //command line front message

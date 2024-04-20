@@ -6,7 +6,7 @@
 #    By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 21:52:00 by kaan              #+#    #+#              #
-#    Updated: 2024/04/19 23:39:01 by mdomnik          ###   ########.fr        #
+#    Updated: 2024/04/20 20:00:33 by mdomnik          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ READFLAG = -lreadline
 
 RM = rm -f
 
-SRC =	src/expander/expander_process.c\
+SRC =	src/execution/execution.c\
+		src/expander/expander_process.c\
 		src/expander/expander_struct.c\
 		src/expander/expander.c\
 		src/lexer/lexer_redir.c\
