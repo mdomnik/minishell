@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:27:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/20 17:37:18 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/21 19:07:57 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(int argc, char **argv, char **envp)
 
 /* core loop of the shell
     waits for input from user, then
-    sends it for processing*/
+    sends it for processing yes*/
 
 void	shell_loop(t_shell *shell)
 {
