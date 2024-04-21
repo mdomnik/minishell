@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:28:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/20 20:38:08 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/21 16:46:03 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,18 @@ void	group_redir(t_shell *shell)
 	cur = shell->expand;
 	if (!cur)
 		return ;
-	io = (char **)ft_calloc((4), sizeof(char *));
+	io = (char **)ft_calloc(4, sizeof(char *));
 	file_num = 0;
 	while (cur->next != NULL)
 	{
-		if (cur->token != T_WORD 
-			&& (cur->next->token != T_WORD || cur->next == NULL))
+		if (cur->token != T_WORD && (cur->next->token != T_WORD || !cur->next))
 			free_err(ERR_SYNTAX, shell);
 		if (cur->token != T_WORD && cur->next->token == T_WORD)
 		{
 			if (cur->token == T_PIPE)
 				break ;
-			else if (cur->token == T_LESSER || cur->token == T_HEREDOC)
-				io = pop_io(io, cur->word, cur->next->word, cur->token);
-			else if (cur->token == T_GREATER || cur->token == T_APPEND)
-			{
-				io = pop_io(io, cur->word, cur->next->word, cur->token);
-				file_num++;
-			}
+			else
+				handle_token(cur, io, &file_num);
 		}
 		cur = cur->next;
 	}
@@ -94,10 +88,7 @@ void	group_files(t_shell *shell, char **io, int file_num)
 			if (current->token == T_PIPE)
 				break ;
 			else if (current->token == T_GREATER || current->token == T_APPEND)
-			{
-				files[file_num] = ft_strdup(current->next->word);
-				file_num++;
-			}
+				files[file_num++] = ft_strdup(current->next->word);
 		}
 		if (current->next == NULL)
 			break ;
@@ -116,19 +107,12 @@ void	group_files(t_shell *shell, char **io, int file_num)
  */
 void	group_args(t_shell *shell, char **io, char **files)
 {
+	char		**args;
 	t_expand	*current;
 	int			arg_num;
-	char		**args;
 
 	current = shell->expand;
-	arg_num = 0;
-	while (current != NULL)
-	{
-		if (current->token == T_PIPE)
-			break ;
-		arg_num++;
-		current = current->next;
-	}
+	arg_num = count_args_before_pipe(current);
 	args = (char **)ft_calloc((arg_num + 1), sizeof(char *));
 	if (!args)
 		free_err(ERR_MALLOC, shell);
@@ -138,9 +122,8 @@ void	group_args(t_shell *shell, char **io, char **files)
 	{
 		if (current->token == T_PIPE)
 			break ;
-		args[arg_num] = ft_strdup(current->word);
+		args[arg_num++] = ft_strdup(current->word);
 		delete_node(shell, current);
-		arg_num++;
 		current = shell->expand;
 	}
 	create_parser_node(shell, args, io, files);

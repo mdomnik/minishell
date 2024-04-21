@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:37:46 by kaan              #+#    #+#             */
-/*   Updated: 2024/04/20 20:12:41 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/21 16:42:47 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,11 @@ typedef struct s_parser
 	struct s_parser	*next;
 }	t_parser;
 
+//parser_node.c
+void		set_io(char **io, t_parser *element);
+void		set_input(char **io, t_parser *element);
+void		set_output(char **io, t_parser *element);
+
 //parser_struct.c
 t_parser	*parsernew_ms(char **args, char **io, char **files);
 int			reset_increment_k(int x);
@@ -59,6 +64,10 @@ void		free_io(char **double_str);
 void		create_parser_node(t_shell *shell, char **args,
 				char **io, char **files);
 void		adjust_output(t_shell *shell);
+
+//parser_utils_3.c
+void		handle_token(t_expand *cur, char **io, int *file_num);
+int			count_args_before_pipe(t_expand *expand);
 
 //parser.c
 void		parser(t_shell *shell);

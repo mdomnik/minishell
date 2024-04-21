@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:37:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/20 20:28:06 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/21 16:16:48 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,34 +25,7 @@ t_parser	*parsernew_ms(char **args, char **io, char **files)
 	else
 		element->cmd = NULL;
 	element->args = remove_first(args);
-	if (io[0] == NULL)
-	{
-		if (element->index == 0)
-		{
-			element->input = I_STDIN;
-			element->i_str = "STDIN";
-		}
-		else
-		{
-			element->input = I_PIPE;
-			element->i_str = "PIPE";
-		}
-	}
-	else
-	{
-		element->input = find_redir(io[0]);
-		element->i_str = ft_strdup(io[1]);
-	}
-	if (io[2] == NULL)
-	{
-		element->output = O_STDOUT;
-		element->o_str = NULL;
-	}
-	else
-	{
-		element->output = find_redir(io[2]);
-		element->o_str = ft_strdup(io[3]);
-	}
+	set_io(io, element);
 	element->files = double_dup(files);
 	element->prev = NULL;
 	element->next = NULL;
