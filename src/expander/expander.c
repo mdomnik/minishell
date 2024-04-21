@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:58:23 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/20 20:24:49 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/21 20:29:50 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	expander(t_shell *shell)
 	lexer = shell->lexer;
 	if (lexer->next == NULL && lexer->token == T_PIPE)
 		free_err(ERR_SYNTAX, shell);
-	env_expander(lexer, 0);
+	env_expander(lexer, 0, shell);
 	process_lexer(shell, lexer, string, boolean);
 	lexerfreelist_ms(&shell->lexer);
 	parser(shell);
@@ -41,7 +41,7 @@ void	expander(t_shell *shell)
  * @param lexer The lexer structure containing the command tokens.
  * @param i The index variable used for iteration.
  */
-void	env_expander(t_lexer *lexer, int i)
+void	env_expander(t_lexer *lexer, int i, t_shell *shell)
 {
 	char	*temp;
 	char	**env_split;
@@ -51,7 +51,7 @@ void	env_expander(t_lexer *lexer, int i)
 		i = 0;
 		if (lexer->token == T_WORD && lexer->quote == 0)
 		{
-			env_split = add_delim_split(lexer->word);
+			env_split = add_delim_split(lexer->word, shell);
 			while (env_split[i] != NULL)
 			{
 				env_split[i] = search_replace_env(env_split[i]);

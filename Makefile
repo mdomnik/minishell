@@ -6,7 +6,7 @@
 #    By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 21:52:00 by kaan              #+#    #+#              #
-#    Updated: 2024/04/21 16:29:17 by mdomnik          ###   ########.fr        #
+#    Updated: 2024/04/21 19:14:28 by mdomnik          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ SRC =	src/execution/execution.c\
 		src/lexer/lexer.c\
 		src/main/error_seq.c\
 		src/main/main.c\
+		src/main/signals.c\
 		src/main/testing.c\
 		src/parser/parser_node.c\
 		src/parser/parser_struct.c\

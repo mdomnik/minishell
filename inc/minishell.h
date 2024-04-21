@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/04/20 19:59:13 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/21 20:34:15 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@
 # define ERR_INDEX "Error: Index out of range. Cannot delete node"
 # define ERR_SYNTAX "Error: syntax error near unexpected token"
 # define ERR_QUOTE "Error: quote not terminated by another quote"
+# define ERR_CMD "Error: command not found"
 
 /*outermost struct of the shell
   contains all other structs and
@@ -66,6 +67,10 @@ void	free_shell(t_shell *shell);
 t_shell	*init_shell(t_shell *shell);
 void	shell_loop(t_shell *shell);
 t_shell	*init_shell(t_shell *shell);
+
+//signals.c
+void	handle_sigint(int sig);
+void	set_signals(void);
 
 //testing.c
 void	print_lexer(t_shell *shell);

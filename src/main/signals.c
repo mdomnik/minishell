@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/17 12:12:05 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/21 20:28:45 by mdomnik          ###   ########.fr       */
+/*   Created: 2024/04/21 19:13:52 by mdomnik           #+#    #+#             */
+/*   Updated: 2024/04/21 20:34:09 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#include "../../inc/minishell.h"
 
-# include "minishell.h"
+void	handle_sigint(int sig)
+{
+	if (sig == SIGINT)
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+}
 
-//prototyping shell struct
-typedef struct s_shell	t_shell;
-
-//gen_utils_1.c
-char	**double_dup(char **str);
-void	free_double(char **double_str);
-int		ft_strlen_ms(char *s);
-char	**add_delim_split(char *str, t_shell *shell);
-char	*ft_strjoin_ms(char *s1, char *s2);
-
-//gen_utils_split.c
-char	**ft_split_ms(const char *s, char c);
-
-#endif
+void	set_signals(void)
+{
+	signal(SIGINT, handle_sigint);
+}

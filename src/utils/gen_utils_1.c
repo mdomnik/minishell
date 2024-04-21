@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:41:28 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/20 16:27:55 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/21 20:33:49 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ int	ft_strlen_ms(char *s)
  * @return An array of strings where each element is a split
  *  part of the original string.
  */
-char	**add_delim_split(char *str)
+char	**add_delim_split(char *str, t_shell *shell)
 {
 	int		i;
 	int		is_env;
@@ -112,6 +112,8 @@ char	**add_delim_split(char *str)
 	else
 		is_env = 0;
 	ret = ft_split_ms(str, '$');
+	if (ret[0] == NULL)
+		free_err(ERR_CMD, shell);
 	while (ret[i] != NULL)
 	{
 		if (i > 0)
