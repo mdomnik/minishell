@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:27:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/24 17:51:26 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/24 23:07:32 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,21 @@ int	main(int argc, char **argv, char **envp)
 
 void	shell_loop(t_shell *shell)
 {
+	set_signals();
 	shell->line = readline(CL_NAME);
+	if (!shell->line) 
+	{
+		printf("exit\n");
+		exit(0);
+	}
 	if (shell->line[0] != '\0')
 	{
-		tokenizer(shell);
 		add_history(shell->line);
+		tokenizer(shell);
 	}
 	if (shell->line)
-	{
 		free(shell->line);
-		shell_loop(shell);
-	}
+	shell_loop(shell);
 }
 
 /* this function initializes all components

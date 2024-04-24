@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/04/21 20:36:21 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/24 22:53:19 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ t_shell	*init_shell(t_shell *shell);
 //signals.c
 void	handle_sigint(int sig);
 void	set_signals(void);
-void	handle_sigquit(int sig);
 
 //testing.c
 void	print_lexer(t_shell *shell);

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:43:18 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/24 22:05:30 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/24 23:05:56 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	tokenizer(t_shell *shell)
 	i = 0;
 	split = 1;
 	shell->line = trim_whitespace(shell);
+	if (!shell->line)
+		return ;
 	while (shell->line[i] != '\0')
 	{
 		if (!is_whitespace_null(shell->line[i]))

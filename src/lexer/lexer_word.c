@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:43:48 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/17 19:44:12 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/24 22:59:04 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	*trim_whitespace(t_shell *shell)
 		j--;
 	temp = malloc((j - i) + 2);
 	if (!temp)
-		free_err(ERR_MALLOC, shell);
+		return (NULL);
 	while ((i + k) <= j)
 	{
 		temp[k] = shell->line[i + k];
