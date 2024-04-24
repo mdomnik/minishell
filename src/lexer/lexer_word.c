@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:43:48 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/24 22:59:04 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/24 23:12:08 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ char	*trim_whitespace(t_shell *shell)
 	j = (ft_strlen_ms(shell->line) - 1);
 	i = 0;
 	k = 0;
+	if (j == 0)
+		return (NULL);
 	while (shell->line[i] == 32 
 		|| (shell->line[i] >= 9 && shell->line[i] <= 13))
 		i++;
