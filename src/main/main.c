@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:27:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/21 19:18:11 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/24 17:51:26 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	main(int argc, char **argv, char **envp)
 	if (!shell->env)
 		free_err(ERR_ENV, shell);
 	rl_clear_history();
-	set_signals();
 	shell_loop(shell);
 	return (0);
 }
