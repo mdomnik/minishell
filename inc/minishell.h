@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/04/25 18:36:38 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/26 00:01:31 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,11 @@
 # define ERR_SYNTAX "Error: syntax error near unexpected token"
 # define ERR_QUOTE "Error: quote not terminated by another quote"
 # define ERR_CMD "Error: command not found"
+# define ERR_NCMD ": command not found"
 # define ERR_PWD "Error: failed to get current working directory"
+# define ERR_ARG "Error: too many arguments"
+# define ERR_CD " No such file or directory"
+
 
 /*outermost struct of the shell
   contains all other structs and

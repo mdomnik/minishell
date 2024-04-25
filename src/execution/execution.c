@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:54:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/25 19:04:03 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/26 00:04:35 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,21 @@ void	find_builtin(t_shell *shell)
 	char	*cmd;
 
 	cmd = shell->parser->cmd;
-	if (cmp_str(cmd, "pwd") == 0)
-		builtin_pwd(shell);
-	else if (cmp_str(cmd, "exit") == 0)
-		builtin_exit(shell);
-	else if (cmp_str(cmd, "env") == 0)
-		builtin_env(shell);
+	if (cmp_str(cmd, "cd") == 0)
+		builtin_cd(shell);
 	else if (cmp_str(cmd, "echo") == 0)
 		builtin_echo(shell);
+	else if (cmp_str(cmd, "env") == 0)
+		builtin_env(shell);
+	else if (cmp_str(cmd, "exit") == 0)
+		builtin_exit(shell);
+	else if (cmp_str(cmd, "pwd") == 0)
+		builtin_pwd(shell);
 	else
-		reset_loop(shell, ERR_CMD);
+	{
+		printf("%s", shell->parser->cmd);
+		reset_loop(shell, ERR_NCMD);
+	}
 }
 
 // void find_builtin(t_shell *shell)
