@@ -6,7 +6,7 @@
 #    By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 21:52:00 by kaan              #+#    #+#              #
-#    Updated: 2024/04/25 22:18:01 by mdomnik          ###   ########.fr        #
+#    Updated: 2024/04/26 01:08:59 by mdomnik          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRC =	src/builtin/cd.c\
 		src/builtin/echo.c\
 		src/builtin/env.c\
 		src/builtin/exit.c\
+		src/builtin/export.c\
 		src/builtin/pwd.c\
 		src/execution/execution.c\
 		src/expander/expander_process.c\

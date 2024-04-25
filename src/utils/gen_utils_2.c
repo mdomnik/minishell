@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:28:06 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/25 22:37:54 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/26 01:18:03 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,24 @@ int	count_args(char **args)
 	while (args[i])
 		i++;
 	return (i);
+}
+
+char	**double_join(char *str, t_shell *shell)
+{
+	char	**new_duostr;
+	int		i;
+
+	i = 0;
+	new_duostr = (char **)malloc((count_args(shell->env) + 1) * sizeof(char *));
+	if (!new_duostr)
+		free_err(ERR_MALLOC, shell);
+	while (i <= count_args(shell->env))
+	{
+		new_duostr[i] = ft_strdup(shell->env[i]);
+		if (!new_duostr[i])
+			free_err(ERR_MALLOC, shell);
+		i++;
+	}
+	free_double(shell->env);
+	return (new_duostr);
 }

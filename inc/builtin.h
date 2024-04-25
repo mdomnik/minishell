@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:00:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/25 22:18:15 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/26 01:13:05 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,13 @@ int		check_echo_option(char **args, int **n_flag, int i, int j);
 //env.c
 void	builtin_env(t_shell *shell);
 
-//pwd.c
-void	builtin_pwd(t_shell *shell);
-
 //exit.c
 void	builtin_exit(t_shell *shell);
+
+//export.c
+void	builtin_export(t_shell *shell);
+
+//pwd.c
+void	builtin_pwd(t_shell *shell);
 
 #endif
