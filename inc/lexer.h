@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 11:41:48 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/17 14:28:30 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/25 12:56:54 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ t_lexer		*lexerfreelist_ms(t_lexer **lst);
 char		*trim_whitespace(t_shell *shell);
 int			is_whitespace_null(char c);
 int			is_quote(char c);
+int			check_whitespace(char *str);
+int			inc_whitespace(t_shell *shell, int i);
 
 //lexer.c
 void		tokenizer(t_shell *shell);

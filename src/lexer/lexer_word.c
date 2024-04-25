@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:43:48 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/24 23:12:08 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/25 12:56:24 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,13 @@ char	*trim_whitespace(t_shell *shell)
 	int		j;
 	int		k;
 
-	j = (ft_strlen_ms(shell->line) - 1);
+	j = ft_strlen_ms(shell->line);
 	i = 0;
 	k = 0;
 	if (j == 0)
 		return (NULL);
-	while (shell->line[i] == 32 
-		|| (shell->line[i] >= 9 && shell->line[i] <= 13))
-		i++;
-	while (shell->line[j] == 32 
-		|| (shell->line[j] >= 9 && shell->line[j] <= 13))
-		j--;
+	i = inc_whitespace(shell, i);
+	j = inc_whitespace(shell, j);
 	temp = malloc((j - i) + 2);
 	if (!temp)
 		return (NULL);
@@ -47,6 +43,8 @@ char	*trim_whitespace(t_shell *shell)
 	}
 	temp[k] = '\0';
 	free(shell->line);
+	if (!check_whitespace(temp))
+		return (NULL);
 	return (temp);
 }
 
@@ -79,4 +77,42 @@ int	is_quote(char c)
 		return (39);
 	else
 		return (0);
+}
+
+/**
+ * Checks if a string consists only of whitespace characters.
+ *
+ * @param str The string to be checked.
+ * @return 0 if the string consists only of whitespace characters, 1 otherwise.
+ */
+int	check_whitespace(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!(str[i] == 32 || (str[i] >= 9 && str[i] <= 13)))
+			return (1);
+		i++;
+	}
+	free(str);
+	return (0);
+}
+
+int	inc_whitespace(t_shell *shell, int i)
+{
+	if (i > 0)
+	{
+		while (shell->line[i] == 32 
+			|| (shell->line[i] >= 9 && shell->line[i] <= 13))
+			i--;
+	}
+	else
+	{
+		while (shell->line[i] == 32 
+			|| (shell->line[i] >= 9 && shell->line[i] <= 13))
+			i++;
+	}
+	return (i);
 }
