@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:12:05 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/21 20:28:45 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/25 18:37:26 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,9 @@ void	free_double(char **double_str);
 int		ft_strlen_ms(char *s);
 char	**add_delim_split(char *str, t_shell *shell);
 char	*ft_strjoin_ms(char *s1, char *s2);
+
+//gen_utils_2.c
+int		cmp_str(char *s1, const char *s2);
 
 //gen_utils_split.c
 char	**ft_split_ms(const char *s, char c);

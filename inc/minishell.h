@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/04/25 18:02:12 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/25 18:36:38 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@
 # define ERR_SYNTAX "Error: syntax error near unexpected token"
 # define ERR_QUOTE "Error: quote not terminated by another quote"
 # define ERR_CMD "Error: command not found"
+# define ERR_PWD "Error: failed to get current working directory"
 
 /*outermost struct of the shell
   contains all other structs and

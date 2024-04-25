@@ -1,5 +1,2 @@
-@^%&()*^&"":"'''
-change exit on error, not quit on invalid input
-"$ < > ? $ * 
-" dwad d wad awd awdaw
-" 
+if a lot of dollar, change dollar to number and join
+if command not found, print input

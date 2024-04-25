@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:54:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/25 18:13:21 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/25 18:47:57 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,21 @@
  */
 void	execute(t_shell *shell)
 {
-	// print_parser(shell);
+	print_parser(shell);
 	find_builtin(shell);
 }
 
-void find_builtin(t_shell *shell)
+void	find_builtin(t_shell *shell)
 {
-	if (ft_strncmp(shell->parser->cmd, "pwd", ft_strlen(shell->parser->cmd)) == 0)
-		pwd(shell);
+	char	*cmd;
+
+	cmd = shell->parser->cmd;
+	if (cmp_str(cmd, "pwd") == 0)
+		builtin_pwd(shell);
+	else if (cmp_str(cmd, "exit") == 0)
+		builtin_exit(shell);
+	else if (cmp_str(cmd, "env") == 0)
+		builtin_env(shell);
 	else
 		reset_loop(shell, ERR_CMD);
 }

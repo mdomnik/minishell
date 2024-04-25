@@ -1,30 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/25 17:59:48 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/25 18:44:46 by mdomnik          ###   ########.fr       */
+/*   Created: 2024/04/25 18:38:32 by mdomnik           #+#    #+#             */
+/*   Updated: 2024/04/25 18:44:16 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 /**
- * Prints the current working directory.
+ * Prints the environment variables stored in the shell.
  *
- * @param shell The shell structure.
+ * @param shell The shell structure containing the environment variables.
  */
-void	builtin_pwd(t_shell *shell)
+void	builtin_env(t_shell *shell)
 {
-	char	*pwd;
+	int	i;
 
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
-		reset_loop(shell, ERR_PWD);
-	printf("%s\n", pwd);
-	free(pwd);
+	i = 0;
+	while (shell->env[i])
+	{
+		printf("%s\n", shell->env[i]);
+		i++;
+	}
 	reset_loop(shell, NULL);
 }
