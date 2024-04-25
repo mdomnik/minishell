@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:00:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/25 18:39:08 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/25 21:43:03 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 
 //prototyping prompt struct
 typedef struct s_shell	t_shell;
+
+//echo.c
+void	builtin_echo(t_shell *shell);
+int		check_echo_option(char **args, int **n_flag, int i, int j);
 
 //env.c
 void	builtin_env(t_shell *shell);

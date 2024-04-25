@@ -6,7 +6,7 @@
 #    By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 21:52:00 by kaan              #+#    #+#              #
-#    Updated: 2024/04/25 18:42:00 by mdomnik          ###   ########.fr        #
+#    Updated: 2024/04/25 19:02:49 by mdomnik          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ READFLAG = -lreadline
 
 RM = rm -f
 
-SRC =	src/builtin/env.c\
+SRC =	src/builtin/echo.c\
+		src/builtin/env.c\
 		src/builtin/exit.c\
 		src/builtin/pwd.c\
 		src/execution/execution.c\
