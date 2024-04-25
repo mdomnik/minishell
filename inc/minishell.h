@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/04/24 22:53:19 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/25 18:02:12 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # include "lexer.h"
 # include "expander.h"
 # include "parser.h"
+# include "builtin.h"
 # include "execution.h"
 # include "utils.h"
 
@@ -67,6 +68,7 @@ void	free_shell(t_shell *shell);
 t_shell	*init_shell(t_shell *shell);
 void	shell_loop(t_shell *shell);
 t_shell	*init_shell(t_shell *shell);
+void	reset_loop(t_shell *shell, char *msg);
 
 //signals.c
 void	handle_sigint(int sig);

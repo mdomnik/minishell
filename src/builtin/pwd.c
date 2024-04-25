@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   execution.h                                        :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/20 19:54:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/25 18:09:53 by mdomnik          ###   ########.fr       */
+/*   Created: 2024/04/25 17:59:48 by mdomnik           #+#    #+#             */
+/*   Updated: 2024/04/25 18:06:06 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXECUTION_H
-# define EXECUTION_H
+#include "../../inc/minishell.h"
 
-# include "minishell.h"
+void pwd(t_shell *shell)
+{
+	char	*pwd;
 
-//prototyping prompt struct
-typedef struct s_shell	t_shell;
-
-//execution.c
-void	execute(t_shell *shell);
-void find_builtin(t_shell *shell);
-
-#endif
+	pwd = getcwd(NULL, 0);
+	if (!pwd)
+		reset_loop(shell, ERR_CMD);
+	printf("%s\n", pwd);
+	free(pwd);
+	reset_loop(shell, NULL);
+}

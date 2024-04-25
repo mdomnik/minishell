@@ -1,2 +1,5 @@
-trim_whitespace too long
-
+@^%&()*^&"":"'''
+change exit on error, not quit on invalid input
+"$ < > ? $ * 
+" dwad d wad awd awdaw
+" 

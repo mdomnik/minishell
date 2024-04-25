@@ -6,7 +6,7 @@
 #    By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 21:52:00 by kaan              #+#    #+#              #
-#    Updated: 2024/04/21 19:14:28 by mdomnik          ###   ########.fr        #
+#    Updated: 2024/04/25 18:00:16 by mdomnik          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,8 @@ READFLAG = -lreadline
 
 RM = rm -f
 
-SRC =	src/execution/execution.c\
+SRC =	src/builtin/pwd.c\
+		src/execution/execution.c\
 		src/expander/expander_process.c\
 		src/expander/expander_struct.c\
 		src/expander/expander.c\
@@ -80,7 +81,9 @@ norminette:
 comp: re
 	@./$(NAME)
 
-memcheck: re
-	@valgrind --leak-check=full ./$(NAME)
+memnosupp: re
+	@valgrind -s --leak-check=full --show-leak-kinds=all ./$(NAME)
 
+memcheck: re
+	@valgrind -s --leak-check=full --show-leak-kinds=all --suppressions=suppressions.supp ./$(NAME)
 .PHONY: start all clean fclean re

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:43:18 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/25 12:39:30 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/25 17:40:59 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	tokenizer(t_shell *shell)
 		}
 	}
 	if (!shell->lexer)
-		free_err(ERR_CMD, shell);
+		reset_loop(shell, ERR_CMD);
 	expander(shell);
 }
 
@@ -87,10 +87,8 @@ int	double_quote(t_shell *shell, int i, int split)
 	j = 1;
 	while (shell->line[i + j] != 34 && shell->line[i + j] != '\0')
 		j++;
-	if (shell->line[i + j] == '\0' && shell->line[i + j - 1] == 34)
-		free_err(ERR_QUOTE, shell);
-	if (j == 1)
-		return (2);
+	if (shell->line[i + j] != 34)
+		reset_loop(shell, ERR_QUOTE);
 	temp = ft_substr(shell->line, (i + 1), (j - 1));
 	if (!temp)
 		free_err(ERR_MALLOC, shell);
@@ -117,9 +115,7 @@ int	single_quote(t_shell *shell, int i, int split)
 	while (shell->line[i + j] != 39 && shell->line[i + j] != '\0')
 		j++;
 	if (shell->line[i + j] == '\0' && shell->line[i + j - 1] == 39)
-		free_err(ERR_QUOTE, shell);
-	if (j == 1)
-		return (2);
+		reset_loop(shell, ERR_QUOTE);
 	temp = ft_substr(shell->line, (i + 1), (j - 1));
 	if (!temp)
 		free_err(ERR_MALLOC, shell);

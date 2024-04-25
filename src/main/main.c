@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:27:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/24 23:07:32 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/25 18:10:25 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ void	shell_loop(t_shell *shell)
 	shell->line = readline(CL_NAME);
 	if (!shell->line) 
 	{
+		if (shell->env)
+			free_double(shell->env);
+		free(shell);
 		printf("exit\n");
 		exit(0);
 	}
@@ -58,6 +61,31 @@ void	shell_loop(t_shell *shell)
 	}
 	if (shell->line)
 		free(shell->line);
+	shell_loop(shell);
+}
+
+/**
+ * Resets the loop by freeing the memory allocated for the shell's line
+ * and then calls the shell_loop function.
+ *
+ * @param shell A pointer to the t_shell struct representing the shell.
+ */
+void	reset_loop(t_shell *shell, char *msg)
+{
+	if (msg)
+		printf("%s\n", msg);
+	if (shell->line)
+		free(shell->line);
+	if (shell->lexer)
+		lexerfreelist_ms(&shell->lexer);
+	if (shell->expand)
+		expandfreelist_ms(&shell->expand);
+	if (shell->parser)
+		parserfreelist_ms(&shell->parser);
+	shell->expand = NULL;
+	shell->lexer = NULL;
+	shell->parser = NULL;
+	reset_increment_k(0);
 	shell_loop(shell);
 }
 
