@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 14:39:10 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/28 21:50:16 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/28 23:43:00 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ char	**prep_path(t_shell *shell)
 int	find_path(t_shell *shell)
 {
 	char **path;
+	pid_t pid;
 	int i;
 
 	path = prep_path(shell);
@@ -42,13 +43,11 @@ int	find_path(t_shell *shell)
 		path[i] = ft_strjoin(path[i], shell->parser->cmd);
 		if (access(path[i], F_OK) == 0)
 		{
+			pid = fork();
 			shell->parser->args = append_cmd_front(shell, shell->parser->args);
-			if (execve(path[i], shell->parser->args, shell->env) == 0)
-			{
-				printf("cool\n");
-			}
+			if (pid == 0)
+				execve(path[i], shell->parser->args, shell->env);
 			free_double(path);
-			printf("efafaefaefaE\n");
 			return (0);
 		}
 		i++;

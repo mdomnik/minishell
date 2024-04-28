@@ -2,3 +2,8 @@ if a lot of dollar, change dollar to number and join
 if command not found, print input
 
 environmental variables need to be whitespace_trimmed
+
+
+change -n in echo, cause it newlines even if no n
+implement cd .
+implement cd -
