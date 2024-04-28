@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:12:05 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/26 01:28:18 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/28 19:30:42 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ char	*ft_strjoin_ms(char *s1, char *s2);
 //gen_utils_2.c
 int		cmp_str(char *s1, const char *s2);
 int		count_args(char **args);
-char	**double_join(char *str, t_shell *shell);
+char	**append_cmd_front(t_shell *shell, char **args);
 
 //gen_utils_split.c
 char	**ft_split_ms(const char *s, char c);

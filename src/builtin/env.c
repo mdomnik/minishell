@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:38:32 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/25 18:44:16 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/28 14:29:01 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ void	builtin_env(t_shell *shell)
 	int	i;
 
 	i = 0;
+	if (shell->parser->args[0])
+	{
+		printf("env: '%s': ", shell->parser->args[0]);
+		reset_loop(shell, ERR_CD);
+		return ;
+	}
 	while (shell->env[i])
 	{
 		printf("%s\n", shell->env[i]);

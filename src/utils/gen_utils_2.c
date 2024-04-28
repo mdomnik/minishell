@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:28:06 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/26 01:18:03 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/28 21:45:19 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,22 +51,27 @@ int	count_args(char **args)
 	return (i);
 }
 
-char	**double_join(char *str, t_shell *shell)
+char **append_cmd_front(t_shell *shell, char **args)
 {
-	char	**new_duostr;
+	char	**copy;
 	int		i;
 
 	i = 0;
-	new_duostr = (char **)malloc((count_args(shell->env) + 1) * sizeof(char *));
-	if (!new_duostr)
-		free_err(ERR_MALLOC, shell);
-	while (i <= count_args(shell->env))
+	copy = malloc(sizeof(char *) * (count_args(args) + 2));
+	if (!copy)
+		return (NULL);
+	copy[0] = ft_strdup(shell->parser->cmd);
+	while (args[i] != NULL)
 	{
-		new_duostr[i] = ft_strdup(shell->env[i]);
-		if (!new_duostr[i])
-			free_err(ERR_MALLOC, shell);
+		copy[i + 1] = ft_strdup(args[i]);
+		if (!copy[i])
+		{
+			free_double(copy);
+			return (NULL);
+		}
 		i++;
 	}
-	free_double(shell->env);
-	return (new_duostr);
+	copy[i + 1] = NULL;
+	free_double(args);
+	return (copy);
 }
