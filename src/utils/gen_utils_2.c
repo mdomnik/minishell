@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:28:06 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/28 21:45:19 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/29 00:02:31 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	count_args(char **args)
 	return (i);
 }
 
-char **append_cmd_front(t_shell *shell, char **args)
+char	**append_cmd_front(t_shell *shell, char **args)
 {
 	char	**copy;
 	int		i;
