@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:00:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/26 01:13:05 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/29 23:38:34 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ void	builtin_exit(t_shell *shell);
 
 //export.c
 void	builtin_export(t_shell *shell);
+void	update_env_declare(t_shell *shell);
+int		valid_format(char *str);
+void	add_declare(t_shell *shell, char *str);
+void	add_env(t_shell *shell, char *str);
 
 //pwd.c
 void	builtin_pwd(t_shell *shell);

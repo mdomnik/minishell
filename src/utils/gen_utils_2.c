@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:28:06 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/29 00:02:31 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/29 22:54:22 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,14 @@ int	count_args(char **args)
 	return (i);
 }
 
+/**
+ * Appends the command at the front of the argument array.
+ * 
+ * @param shell The shell structure.
+ * @param args The argument array.
+ * @return The updated argument array with the command appended at the front,
+ *         or NULL if memory allocation fails.
+ */
 char	**append_cmd_front(t_shell *shell, char **args)
 {
 	char	**copy;
@@ -74,4 +82,27 @@ char	**append_cmd_front(t_shell *shell, char **args)
 	copy[i + 1] = NULL;
 	free_double(args);
 	return (copy);
+}
+
+
+/**
+ * Compares two strings.
+ *
+ * This function compares the string pointed to by `s1` to the string pointed to by `s2`.
+ * The comparison is done character by character, until a difference is found or one of the strings ends.
+ *
+ * @param s1 The first string to compare.
+ * @param s2 The second string to compare.
+ * @return 0 if the strings are equal, 1 otherwise.
+ */
+int strcmp_ms(char *s1, char *s2)
+{
+	int i;
+
+	i = 0;
+	while (s1[i] && s2[i] && s1[i] == s2[i])
+		i++;
+	if (s1[i] == '\0' && s2[i] == '\0')
+		return 0;
+	return 1;
 }

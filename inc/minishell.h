@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/04/28 15:12:59 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/29 21:58:48 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ typedef struct s_shell
 {
 	char				*line;
 	char				**env;
+	char				**declare;
 	struct s_expand		*expand;
 	struct s_lexer		*lexer;
 	struct s_parser		*parser;

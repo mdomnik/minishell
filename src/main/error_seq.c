@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:19:13 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/28 15:13:27 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/29 22:00:10 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ void	free_shell(t_shell *shell)
 {
 	if (shell->env)
 		free_double(shell->env);
+	if (shell->declare)
+		free_double(shell->declare);
 	if (shell->line)
 		free(shell->line);
 	if (shell->lexer)

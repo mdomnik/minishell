@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:27:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/28 15:06:41 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/29 22:15:36 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ int	main(int argc, char **argv, char **envp)
 	shell->env = double_dup(envp);
 	if (!shell->env)
 		free_err(ERR_ENV, shell);
+	shell->declare = double_dup(envp);
+	if (!shell->declare)
+		free_err(ERR_ENV, shell);
+	prep_declare(shell);
 	rl_clear_history();
 	shell_loop(shell);
 	return (0);
@@ -50,6 +54,8 @@ void	shell_loop(t_shell *shell)
 	{
 		if (shell->env)
 			free_double(shell->env);
+		if (shell->declare)
+			free_double(shell->declare);
 		free(shell);
 		printf("exit\n");
 		exit(0);
@@ -104,5 +110,6 @@ t_shell	*init_shell(t_shell *shell)
 	shell->lexer = NULL;
 	shell->parser = NULL;
 	shell->env = NULL;
+	shell->declare = NULL;
 	return (shell);
 }

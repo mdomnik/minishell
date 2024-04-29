@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:54:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/29 00:02:23 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/29 19:22:47 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,7 @@
  */
 void	execute(t_shell *shell)
 {
-	t_parser	*parser;
-
-	parser = shell->parser;
-	while (parser != NULL)
-	{
-		if (parser->cmd != NULL)
-			find_builtin(shell);
-		parser = parser->next;
-	}
+	find_builtin(shell);
 }
 
 void	find_builtin(t_shell *shell)

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 14:39:10 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/29 00:02:20 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/29 19:31:33 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	find_path(t_shell *shell)
 			shell->parser->args = append_cmd_front(shell, shell->parser->args);
 			if (pid == 0)
 				execve(path[i], shell->parser->args, shell->env);
+			wait(NULL);
 			free_double(path);
 			return (0);
 		}
