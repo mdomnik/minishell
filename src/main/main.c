@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:27:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/29 22:15:36 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/30 14:40:09 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ void	shell_loop(t_shell *shell)
 	shell->line = readline(CL_NAME);
 	if (!shell->line) 
 	{
-		if (shell->env)
-			free_double(shell->env);
 		if (shell->declare)
 			free_double(shell->declare);
+		if (shell->env)
+			free_double(shell->env);
 		free(shell);
 		printf("exit\n");
 		exit(0);

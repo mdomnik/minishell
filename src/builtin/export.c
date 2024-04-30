@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 01:08:04 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/30 00:12:20 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/30 15:36:54 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,15 @@ void	update_env_declare(t_shell *shell)
 			printf("minishell: export: %s: not a valid identifier\n", shell->parser->args[i]);
 		else if (valid_format(shell->parser->args[i]) == 1)
 		{
-			add_declare(shell, shell->parser->args[i]);
+			if (scan_declare(shell, shell->parser->args[i]) == 0)
+				add_declare(shell, shell->parser->args[i]);
 		}
 		else
 		{
-			add_declare(shell, shell->parser->args[i]);
-			add_env(shell, shell->parser->args[i]);
+			if (scan_env(shell, shell->parser->args[i]) == 0)
+				add_env(shell, shell->parser->args[i]);
+			if (scan_declare(shell, shell->parser->args[i]) == 0)
+				add_declare(shell, shell->parser->args[i]);
 		}
 		i++;
 	}
@@ -84,7 +87,7 @@ void	add_declare(t_shell *shell, char *str)
 	int		i;
 
 	i = 0;
-	u_str = add_value_quotes(str);
+	u_str = add_value_quotes(str, 0);
 	copy = malloc(sizeof(char *) * (count_args(shell->declare) + 2));
 	if (!copy)
 		return ;

@@ -31,3 +31,5 @@ upper, lower, _, nums(but not at the start)
  declare -x D:
 
  if cmd has = no error, if pre = exists, change declare -x
+
+ empty string is command not found automatically

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 22:50:00 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/30 00:24:33 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/30 15:54:34 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,50 +21,36 @@ void	prep_declare(t_shell *shell)
 	sort_declare(shell);
 	while (shell->declare[i])
 	{
-		shell->declare[i] = add_value_quotes(shell->declare[i]);
+		shell->declare[i] = add_value_quotes(shell->declare[i], 1);
 		if (!shell->declare[i])
 			free_err(ERR_MALLOC, shell);
 		i++;
 	}
 }
 
-char *add_value_quotes(char *str)
+char *add_value_quotes(char *str, int var)
 {
+	char	*ret;
+	char	*tmp;
 	int		i;
-	int		j;
-	char	*new_str;
 
 	i = 0;
-	j = 0;
-	new_str = malloc(sizeof(char) * (ft_strlen_ms(str) + 3));
-	if (!new_str)
-		return (NULL);
-	while (str[i] != '=' && str[i] != '\0')
-	{
-		new_str[j] = str[i];
+	ret = NULL;
+	tmp = NULL;
+	while (str[i] != '=' && str[i])
 		i++;
-		j++;
-	}
 	if (str[i] == '\0')
-	{
-		free(new_str);
 		return (str);
-	}
-	new_str[j] = str[i];
-	j++;
-	new_str[j] = '"';
-	j++;
-	i++;
-	while (str[i] != '\0')
-	{
-		new_str[j] = str[i];
-		i++;
-		j++;
-	}
-	new_str[j] = '"';
-	j++;
-	new_str[j] = '\0';
-	return (new_str);
+	tmp = ft_substr(str, i + 1, ft_strlen(str) - i);
+	ret = ft_substr(str, 0, i);
+	ret = ft_strjoin(ret, "=\"");
+	ret = ft_strjoin(ret, tmp);
+	ret = ft_strjoin(ret, "\"");
+	if (var == 1)
+		free(str);
+	free(tmp);
+	return (ret);
+	
 }
 
 void	sort_declare(t_shell *shell)
@@ -90,4 +76,66 @@ void	sort_declare(t_shell *shell)
 		}
 		i++;
 	}
+}
+
+int	scan_env(t_shell *shell, char *str)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	while (str[i] != '=' && str[i])	
+		i++;
+	tmp = ft_substr(str, 0, i);
+	i = 0;
+	while (shell->env[i])
+	{
+		if (ft_strncmp(tmp, shell->env[i], ft_strlen(tmp)) == 0)
+		{
+			free(tmp);
+			free(shell->env[i]);
+			shell->env[i] = ft_strdup(str);
+			return (1);
+		}
+		i++;
+	}
+	free(tmp);
+	return (0);
+}
+
+int	scan_declare(t_shell *shell, char *str)
+{
+	int		i;
+	int		j;
+	char	*tmp;
+	char	*tmp2;
+
+	i = 0;
+	while (str[i] != '=' && str[i])	
+		i++;
+	tmp2 = ft_substr(str, 0, i); //whats before the equal sign
+	if (str[i] != '\0')
+		tmp = add_value_quotes(str, 0); //add quotes to the value key="value"
+	j = i;
+	i = 0;
+	while (shell->declare[i])
+	{
+		if (ft_strncmp(tmp2, shell->declare[i], ft_strlen(tmp2)) == 0)
+		{
+			if (ft_strchr(str, '=') != NULL && tmp)
+			{
+				free(shell->declare[i]);
+				shell->declare[i] = ft_strdup(tmp);
+			}
+			if (str[j] != '\0')
+				free(tmp);
+			free(tmp2);
+			return (1);
+		}
+		i++;
+	}
+	free(tmp2);
+	if (str[j] != '\0')
+		free(tmp);
+	return (0);
 }
