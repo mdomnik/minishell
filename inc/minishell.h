@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/04/29 21:58:48 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/30 18:11:44 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@
 # define ERR_ARG "Error: too many arguments"
 # define ERR_CD " No such file or directory"
 # define ERR_PATH "Error: failed to find path"
+# define ERR_EXP1 "minishell: export: "
+# define ERR_EXP2 ": not a valid identifier"
 
 /*outermost struct of the shell
   contains all other structs and

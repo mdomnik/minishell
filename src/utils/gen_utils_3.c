@@ -6,29 +6,20 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/29 22:50:00 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/30 15:54:34 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/30 21:29:50 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-
-void	prep_declare(t_shell *shell)
-{
-	int		i;
-
-	i = 0;
-	sort_declare(shell);
-	while (shell->declare[i])
-	{
-		shell->declare[i] = add_value_quotes(shell->declare[i], 1);
-		if (!shell->declare[i])
-			free_err(ERR_MALLOC, shell);
-		i++;
-	}
-}
-
-char *add_value_quotes(char *str, int var)
+/**
+ * Adds quotes around the value of a string variable.
+ *
+ * @param str The string variable to add quotes to.
+ * @param var A flag indicating whether to free the original string variable.
+ * @return The modified string with quotes added around the value.
+ */
+char	*add_value_quotes(char *str, int var)
 {
 	char	*ret;
 	char	*tmp;
@@ -50,9 +41,14 @@ char *add_value_quotes(char *str, int var)
 		free(str);
 	free(tmp);
 	return (ret);
-	
 }
 
+/**
+ * Sorts the elements in the `declare` 
+ * array of the `shell` structure in ascending order.
+ * 
+ * @param shell The shell structure containing the `declare` array to be sorted.
+ */
 void	sort_declare(t_shell *shell)
 {
 	int		i;
@@ -66,7 +62,8 @@ void	sort_declare(t_shell *shell)
 		j = i + 1;
 		while (shell->declare[j])
 		{
-			if (ft_strncmp(shell->declare[i], shell->declare[j], ft_strlen(shell->declare[i])) > 0)
+			if (ft_strncmp(shell->declare[i],
+					shell->declare[j], ft_strlen(shell->declare[i])) > 0)
 			{
 				tmp = shell->declare[i];
 				shell->declare[i] = shell->declare[j];
@@ -78,13 +75,21 @@ void	sort_declare(t_shell *shell)
 	}
 }
 
+/**
+ * Scans the environment variables in the shell
+ * and updates the value of a specific variable.
+ *
+ * @param shell The shell structure containing the environment variables.
+ * @param str The string representing the variable to be updated.
+ * @return 1 if the variable was found and updated successfully, 0 otherwise.
+ */
 int	scan_env(t_shell *shell, char *str)
 {
 	int		i;
 	char	*tmp;
 
 	i = 0;
-	while (str[i] != '=' && str[i])	
+	while (str[i] != '=' && str[i])
 		i++;
 	tmp = ft_substr(str, 0, i);
 	i = 0;
@@ -103,39 +108,69 @@ int	scan_env(t_shell *shell, char *str)
 	return (0);
 }
 
+/**
+ * Scans and declares a variable in the shell.
+ *
+ * This function scans a string and extracts the variable name and value.
+ * It then adds the variable to the shell's environment.
+ *
+ * @param shell The shell structure.
+ * @param str The string to scan and declare.
+ * @return 1 if the variable was successfully declared, 0 otherwise.
+ */
 int	scan_declare(t_shell *shell, char *str)
 {
 	int		i;
 	int		j;
-	char	*tmp;
-	char	*tmp2;
+	char	**tmp;
 
 	i = 0;
-	while (str[i] != '=' && str[i])	
+	tmp = malloc(sizeof(char *) * 2);
+	while (str[i] != '=' && str[i])
 		i++;
-	tmp2 = ft_substr(str, 0, i); //whats before the equal sign
+	tmp[1] = ft_substr(str, 0, i);
 	if (str[i] != '\0')
-		tmp = add_value_quotes(str, 0); //add quotes to the value key="value"
+		tmp[0] = add_value_quotes(str, 0);
 	j = i;
+	if (scan_declare_2(shell, tmp, str, j) == 1)
+		return (1);
+	free(tmp[1]);
+	if (str[j] != '\0')
+		free(tmp[0]);
+	free(tmp);
+	return (0);
+}
+
+/**
+ * Scans and updates the declaration array in the shell structure.
+ * 
+ * @param shell The shell structure.
+ * @param tmp The temporary array containing the variable and value.
+ * @param str The string to be scanned for the presence of '='.
+ * @param j The index of the character in the string.
+ * @return 1 if the declaration is found and updated, 0 otherwise.
+ */
+int	scan_declare_2(t_shell *shell, char **tmp, char *str, int j)
+{
+	int	i;
+
 	i = 0;
 	while (shell->declare[i])
 	{
-		if (ft_strncmp(tmp2, shell->declare[i], ft_strlen(tmp2)) == 0)
+		if (ft_strncmp(tmp[1], shell->declare[i], ft_strlen(tmp[1])) == 0)
 		{
-			if (ft_strchr(str, '=') != NULL && tmp)
+			if (ft_strchr(str, '=') != NULL && tmp[0])
 			{
 				free(shell->declare[i]);
-				shell->declare[i] = ft_strdup(tmp);
+				shell->declare[i] = ft_strdup(tmp[0]);
 			}
+			free(tmp[1]);
 			if (str[j] != '\0')
-				free(tmp);
-			free(tmp2);
+				free(tmp[0]);
+			free(tmp);
 			return (1);
 		}
 		i++;
 	}
-	free(tmp2);
-	if (str[j] != '\0')
-		free(tmp);
 	return (0);
 }

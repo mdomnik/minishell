@@ -6,12 +6,19 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 01:08:04 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/30 18:00:34 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/30 21:33:25 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+/**
+ * Executes the built-in export command in the minishell.
+ * If no arguments are provided, it prints all the environment variables.
+ * Otherwise, it updates the environment variables with the provided arguments.
+ *
+ * @param shell The minishell structure.
+ */
 void	builtin_export(t_shell *shell)
 {
 	int	i;
@@ -19,7 +26,7 @@ void	builtin_export(t_shell *shell)
 	i = 0;
 	if (count_args(shell->parser->args) == 0)
 	{
-		while(shell->declare[i])
+		while (shell->declare[i])
 		{
 			printf("declare -x ");
 			printf("%s\n", shell->declare[i]);
@@ -33,6 +40,13 @@ void	builtin_export(t_shell *shell)
 	reset_loop(shell, NULL);
 }
 
+/**
+ * Updates the environment and declares
+ * new variables based on the arguments provided.
+ * 
+ * @param shell The shell structure containing
+ * the parser and other relevant data.
+ */
 void	update_env_declare(t_shell *shell)
 {
 	int	i;
@@ -41,7 +55,7 @@ void	update_env_declare(t_shell *shell)
 	while (shell->parser->args[i])
 	{
 		if (valid_format(shell->parser->args[i]) == -1)
-			printf("minishell: export: %s: not a valid identifier\n", shell->parser->args[i]);
+			printf("%s%s%s\n", ERR_EXP1, shell->parser->args[i], ERR_EXP2);
 		else if (valid_format(shell->parser->args[i]) == 1)
 		{
 			if (scan_declare(shell, shell->parser->args[i]) == 0)
@@ -59,6 +73,17 @@ void	update_env_declare(t_shell *shell)
 	sort_declare(shell);
 }
 
+/**
+ * Checks if the given string has a valid format for an exported variable.
+ * A valid format consists of a letter or underscore as the first character,
+ * followed by zero or more alphanumeric characters or underscores, and
+ * optionally followed by an equal sign (=).
+ *
+ * @param str The string to be checked.
+ * @return -1 if the format is invalid, 0 if the format is valid but does not
+ *         contain an equal sign, and 1 if the format is valid and contains an
+ *         equal sign.
+ */
 int	valid_format(char *str)
 {
 	int	i;
@@ -70,7 +95,7 @@ int	valid_format(char *str)
 	while (str[i] != '=' || str[i] != '\0')
 	{
 		if (str[i] == '=' || str[i] == '\0')
-			break;
+			break ;
 		if (str[i] != '_' && !ft_isalnum(str[i]))
 			return (-1);
 		i++;
@@ -80,6 +105,14 @@ int	valid_format(char *str)
 	return (0);
 }
 
+/**
+ * Adds a new declaration to the shell's declare array.
+ * 
+ * @param shell The shell structure.
+ * @param str The string to be added as a declaration.
+ * @param var The variable indicating whether the string\
+ * is a variable (1) or not (0).
+ */
 void	add_declare(t_shell *shell, char *str, int var)
 {
 	char	**copy;
@@ -105,6 +138,12 @@ void	add_declare(t_shell *shell, char *str, int var)
 	free_double(copy);
 }
 
+/**
+ * Adds a new environment variable to the shell's environment.
+ *
+ * @param shell The shell structure.
+ * @param str The string representing the new environment variable.
+ */
 void	add_env(t_shell *shell, char *str)
 {
 	char	**copy;

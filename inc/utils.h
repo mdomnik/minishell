@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:12:05 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/30 15:09:44 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/30 21:25:43 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,14 @@ int		cmp_str(char *s1, const char *s2);
 int		count_args(char **args);
 char	**append_cmd_front(t_shell *shell, char **args);
 int		strcmp_ms(char *s1, char *s2);
+void	prep_declare(t_shell *shell);
 
 //gen_utils_3.c
-void	prep_declare(t_shell *shell);
 char	*add_value_quotes(char *str, int var);
 void	sort_declare(t_shell *shell);
 int		scan_env(t_shell *shell, char *str);
 int		scan_declare(t_shell *shell, char *str);
+int		scan_declare_2(t_shell *shell, char **tmp, char *str, int j);
 
 //gen_utils_split.c
 char	**ft_split_ms(const char *s, char c);
