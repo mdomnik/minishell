@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:54:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/30 15:57:09 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/30 17:20:39 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
  */
 void	execute(t_shell *shell)
 {
-	print_parser(shell);
 	find_builtin(shell);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:43:18 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/25 17:40:59 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/30 17:10:17 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	tokenizer(t_shell *shell)
 	}
 	if (!shell->lexer)
 		reset_loop(shell, ERR_CMD);
+	delete_empty_nodes(shell);
 	expander(shell);
 }
 
@@ -87,7 +88,7 @@ int	double_quote(t_shell *shell, int i, int split)
 	j = 1;
 	while (shell->line[i + j] != 34 && shell->line[i + j] != '\0')
 		j++;
-	if (shell->line[i + j] != 34)
+	if (shell->line[i + j] == '\0' && shell->line[i + j] != 34)
 		reset_loop(shell, ERR_QUOTE);
 	temp = ft_substr(shell->line, (i + 1), (j - 1));
 	if (!temp)

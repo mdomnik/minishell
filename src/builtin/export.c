@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 01:08:04 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/30 15:36:54 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/30 18:00:34 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ void	update_env_declare(t_shell *shell)
 		else if (valid_format(shell->parser->args[i]) == 1)
 		{
 			if (scan_declare(shell, shell->parser->args[i]) == 0)
-				add_declare(shell, shell->parser->args[i]);
+				add_declare(shell, shell->parser->args[i], 0);
 		}
 		else
 		{
 			if (scan_env(shell, shell->parser->args[i]) == 0)
 				add_env(shell, shell->parser->args[i]);
 			if (scan_declare(shell, shell->parser->args[i]) == 0)
-				add_declare(shell, shell->parser->args[i]);
+				add_declare(shell, shell->parser->args[i], 1);
 		}
 		i++;
 	}
@@ -80,7 +80,7 @@ int	valid_format(char *str)
 	return (0);
 }
 
-void	add_declare(t_shell *shell, char *str)
+void	add_declare(t_shell *shell, char *str, int var)
 {
 	char	**copy;
 	char	*u_str;
@@ -97,9 +97,12 @@ void	add_declare(t_shell *shell, char *str)
 		i++;
 	}
 	copy[i] = ft_strdup(u_str);
+	if (u_str && var == 1)
+		free(u_str);
 	copy[i + 1] = NULL;
 	free_double(shell->declare);
-	shell->declare = copy;
+	shell->declare = double_dup(copy);
+	free_double(copy);
 }
 
 void	add_env(t_shell *shell, char *str)

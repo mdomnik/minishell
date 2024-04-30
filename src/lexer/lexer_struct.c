@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 15:48:02 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/17 20:30:23 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/04/30 17:19:36 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,4 +111,31 @@ t_lexer	*lexerfreelist_ms(t_lexer **lst)
 	*lst = NULL;
 	reset_increment_i(0);
 	return (NULL);
+}
+
+/**
+ * Deletes empty nodes from the lexer linked list.
+ * 
+ * @param shell The shell structure containing the lexer linked list.
+ */
+void delete_empty_nodes(t_shell *shell)
+{
+	t_lexer *current;
+	t_lexer *temp;
+
+	current = shell->lexer;
+	while (current != NULL)
+	{
+		temp = current;
+		current = current->next;
+		if (temp->word != NULL && temp->word[0] == '\0')
+		{
+			if (temp->prev != NULL)
+				temp->prev->next = temp->next;
+			if (temp->next != NULL)
+				temp->next->prev = temp->prev;
+			free(temp->word);
+			free(temp);
+		}
+	}
 }
