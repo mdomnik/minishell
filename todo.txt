@@ -11,25 +11,3 @@ implement cd -
 increase SHLVL with minishell calls
 
 fix minishell within minishell lag
-
-
-
-export
-unset
-redirs
-$? exit code- global
-
-
-name:
-upper, lower, _, nums(but not at the start)
- 
- =
-
- value:
- "anything"
-
- declare -x D:
-
- if cmd has = no error, if pre = exists, change declare -x
-
- empty string is command not found automatically
