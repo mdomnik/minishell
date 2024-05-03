@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:54:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/28 15:10:55 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/03 14:29:02 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,4 +25,6 @@ void	find_builtin(t_shell *shell);
 //pathexec.c
 char	**prep_path(t_shell *shell);
 int		find_path(t_shell *shell);
+void	exec_external(t_shell *shell, char *path);
+
 #endif

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 14:39:10 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/29 19:31:33 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/03 14:38:07 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ char	**prep_path(t_shell *shell)
 int	find_path(t_shell *shell)
 {
 	char	**path;
-	pid_t	pid;
 	int		i;
 
 	path = prep_path(shell);
@@ -40,14 +39,13 @@ int	find_path(t_shell *shell)
 	while (path[i])
 	{
 		path[i] = ft_strjoin(path[i], "/");
-		path[i] = ft_strjoin(path[i], shell->parser->cmd);
+		if (shell->parser->cmd[0] == '.' && shell->parser->cmd[1] == '/')
+			path[i] = ft_strjoin(path[i], "./");
+		else
+			path[i] = ft_strjoin(path[i], shell->parser->cmd);
 		if (access(path[i], F_OK) == 0)
 		{
-			pid = fork();
-			shell->parser->args = append_cmd_front(shell, shell->parser->args);
-			if (pid == 0)
-				execve(path[i], shell->parser->args, shell->env);
-			wait(NULL);
+			exec_external(shell, path[i]);
 			free_double(path);
 			return (0);
 		}
@@ -55,4 +53,15 @@ int	find_path(t_shell *shell)
 	}
 	free_double(path);
 	return (1);
+}
+
+void	exec_external(t_shell *shell, char *path)
+{
+	pid_t	pid;
+
+	pid = fork();
+	shell->parser->args = append_cmd_front(shell, shell->parser->args);
+	if (pid == 0)
+		execve(path, shell->parser->args, shell->env);
+	wait(NULL);
 }
