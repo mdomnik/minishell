@@ -6,6 +6,9 @@ change -n in echo, cause it newlines even if no n
 implement cd .
 implement cd -
 
+fix leak from test.txt
+"hello world"test"<tgest'apple'test>>"
+
 implement ./cmd as a possible command
 
 increase SHLVL with minishell calls
