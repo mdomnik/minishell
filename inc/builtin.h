@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:00:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/30 21:52:43 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/06 17:03:55 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	builtin_cd(t_shell *shell);
 
 //echo.c
 void	builtin_echo(t_shell *shell);
-int		check_echo_option(char **args, int **n_flag, int i, int j);
+int		check_echo_option(char **args, int **n_flag, int i);
+int		find_if_n(char *str);
 
 //env.c
 void	builtin_env(t_shell *shell);

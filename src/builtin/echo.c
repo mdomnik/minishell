@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:59:37 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/25 21:45:52 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/06 17:08:47 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	builtin_echo(t_shell *shell)
 
 	n_flag_value = 0;
 	n_flag = &n_flag_value;
-	i = check_echo_option(shell->parser->args, &n_flag, 0, 1);
+	i = check_echo_option(shell->parser->args, &n_flag, 0);
 	while (shell->parser->args[i])
 	{
 		printf("%s", shell->parser->args[i]);
@@ -48,30 +48,22 @@ void	builtin_echo(t_shell *shell)
  * @param args The array of arguments.
  * @param n_flag A pointer to the integer flag for the '-n' option.
  * @param i The current index in the arguments array.
- * @param j The current index in the current argument string.
  * @return The index of the first argument that is not an option, or the index
  *  of the last argument if all are options.
  */
-int	check_echo_option(char **args, int **n_flag, int i, int j)
+int	check_echo_option(char **args, int **n_flag, int i)
 {
+	int	k;
+
+	k = 0;
 	while (args[i] != NULL)
 	{
 		if (args[i][0] == '-')
 		{
-			j = 1;
-			while (args[i][j] != '\0')
-			{
-				if (args[i][j] != 'n' && args[i][j] != 'e' && args[i][j] != 'E')
-					return (i);
-				if (args[i][j] == 'n')
-					**n_flag = 1;
-				j++;
-			}
-			if (args[i][1] == '\0')
-			{
+			if (find_if_n(args[i]) == 1)
 				**n_flag = 1;
+			else
 				return (i);
-			}
 		}
 		else
 			return (i);
@@ -79,4 +71,31 @@ int	check_echo_option(char **args, int **n_flag, int i, int j)
 	}
 	**n_flag = 1;
 	return (i);
+}
+
+/**
+ * @brief Checks if the given string contains the character 'n'
+ * and returns 1 if found, 0 otherwise.
+ * 
+ * @param str The string to check.
+ * @return int Returns 1 if 'n' is found in the string, 0 otherwise.
+ */
+int	find_if_n(char *str)
+{
+	int	i;
+	int	n_flag;
+
+	i = 1;
+	n_flag = 0;
+	while (str[i] != '\0')
+	{
+		if (str[i] != 'n' && str[i] != 'e' && str[i] != 'E')
+			n_flag = 2;
+		if (str[i] == 'n' && n_flag == 0)
+			n_flag = 1;
+		i++;
+	}
+	if (n_flag == 1)
+		return (1);
+	return (0);
 }
