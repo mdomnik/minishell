@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 14:39:10 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/07 15:27:46 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/07 21:44:34 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,12 @@ char	**prep_path(t_shell *shell)
 {
 	char	**path;
 	char	*env;
+	char	*tmp;
 
-	env = ft_strdup(ft_getenv("PATH", shell->env));
+	tmp = ft_getenv("PATH", shell->env);
+	env = ft_strdup(tmp);
+	if (tmp)
+		free(tmp);
 	path = ft_split_ms(env, ':');
 	if (!path)
 	{

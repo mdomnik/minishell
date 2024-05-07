@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 22:17:43 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/07 15:39:21 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/07 21:42:09 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,26 +35,33 @@ void	builtin_cd(t_shell *shell)
 		reset_loop(shell, NULL);
 		return ;
 	}
+	set_last_dir(shell);
 	if (chdir(shell->parser->args[0]) == -1)
 	{
 		printf("minishell: cd: %s:", shell->parser->args[0]);
 		reset_loop(shell, ERR_CD);
 		return ;
 	}
-	else
-		set_last_dir(shell);
 	reset_loop(shell, NULL);
 }
 
 void	cd_home(t_shell *shell)
 {
-	
-	if (chdir(ft_getenv("HOME", shell->env)) == -1)
+	char *home;
+
+	home = ft_getenv("HOME", shell->env);
+	if (!home)
 	{
-		printf("minishell: cd: %s:", ft_getenv("HOME", shell->env));
+		reset_loop(shell, ERR_CDHOME);
+		return ;
+	}
+	if(chdir(home) == -1)
+	{
+		free(home);
 		reset_loop(shell, ERR_CD);
 		return ;
 	}
+	free(home);
 	reset_loop(shell, NULL);
 }
 

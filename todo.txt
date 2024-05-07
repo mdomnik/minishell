@@ -1,7 +1,5 @@
 if a lot of dollar, change dollar to number and join
 
-implement cd -
-
 fix leak from test.txt
 "hello world"test"<tgest'apple'test>>"
 
@@ -18,10 +16,3 @@ hello test"world$USER"<'quote$USER'|ewaea|ewae
 make sure libft changes update on make
 
 clean non active redirections
-
-ENVIRONMENT IS NOT ENVIROMENTING
-
-Not found env first is  Invalid free() / delete / delete[] / realloc()
-
-unsetting HOME and using cd
-Syscall param chdir(path) points to unaddressable byte(s)
