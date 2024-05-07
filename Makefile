@@ -6,7 +6,7 @@
 #    By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 21:52:00 by kaan              #+#    #+#              #
-#    Updated: 2024/04/30 21:38:07 by mdomnik          ###   ########.fr        #
+#    Updated: 2024/05/07 15:22:17 by mdomnik          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ SRC =	src/builtin/cd.c\
 		src/utils/gen_utils_1.c\
 		src/utils/gen_utils_2.c\
 		src/utils/gen_utils_3.c\
+		src/utils/gen_utils_4.c\
 		src/utils/gen_utils_split.c\
 
 OBJ = $(patsubst %.c,$(OBJ_DIR)%.o,$(SRC))

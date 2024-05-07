@@ -1,17 +1,27 @@
 if a lot of dollar, change dollar to number and join
 
-environmental variables need to be whitespace_trimmed
-
-change -n in echo, cause it newlines even if no n
-implement cd .
 implement cd -
 
 fix leak from test.txt
 "hello world"test"<tgest'apple'test>>"
 
-implement ./cmd as a possible command
+./ launches another instance of minishell with whatever executable name
 
 increase SHLVL with minishell calls
 
-fix minishell within minishell lag
+word: [<] token: [3] join: [1] quote: [0] index: [3]
+word: [quote$SER] token: [0] join: [0] quote: [1] index: [4]
 
+hello test"world$USER"<'quote$USER'|ewaea|ewae
+
+
+make sure libft changes update on make
+
+clean non active redirections
+
+ENVIRONMENT IS NOT ENVIROMENTING
+
+Not found env first is  Invalid free() / delete / delete[] / realloc()
+
+unsetting HOME and using cd
+Syscall param chdir(path) points to unaddressable byte(s)

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/05/02 14:29:17 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/07 14:32:23 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@
 # define ERR_PWDA "pwd: too many arguments"
 # define ERR_ARG "Error: too many arguments"
 # define ERR_CD " No such file or directory"
+# define ERR_CDARG "minishell: cd: too many arguments"
 # define ERR_PATH "Error: failed to find path"
 # define ERR_EXP1 "minishell: export: "
 # define ERR_EXP2 ": not a valid identifier"
@@ -63,6 +64,7 @@ typedef struct s_shell
 	char				*line;
 	char				**env;
 	char				**declare;
+	char				*last_dir;
 	struct s_expand		*expand;
 	struct s_lexer		*lexer;
 	struct s_parser		*parser;
@@ -78,6 +80,7 @@ t_shell	*init_shell(t_shell *shell);
 void	shell_loop(t_shell *shell);
 t_shell	*init_shell(t_shell *shell);
 void	reset_loop(t_shell *shell, char *msg);
+void	starting_dir(t_shell *shell);
 
 //signals.c
 void	handle_sigint(int sig);

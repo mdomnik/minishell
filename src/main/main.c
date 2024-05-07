@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:27:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/30 14:40:09 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/07 14:31:36 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int	main(int argc, char **argv, char **envp)
 	if (!shell->declare)
 		free_err(ERR_ENV, shell);
 	prep_declare(shell);
+	starting_dir(shell);
 	rl_clear_history();
 	shell_loop(shell);
 	return (0);
@@ -56,6 +57,8 @@ void	shell_loop(t_shell *shell)
 			free_double(shell->declare);
 		if (shell->env)
 			free_double(shell->env);
+		if (shell->last_dir)
+			free(shell->last_dir);
 		free(shell);
 		printf("exit\n");
 		exit(0);
@@ -111,5 +114,19 @@ t_shell	*init_shell(t_shell *shell)
 	shell->parser = NULL;
 	shell->env = NULL;
 	shell->declare = NULL;
+	shell->last_dir = NULL;
 	return (shell);
+}
+
+void	starting_dir(t_shell *shell)
+{
+	char	*cwd;
+
+	cwd = getcwd(NULL, 0);
+	if (cwd == NULL)
+		free_err(ERR_PWD, shell);
+	shell->last_dir = ft_strdup(cwd);
+	if (shell->last_dir == NULL)
+		free_err(ERR_MALLOC, shell);
+	free(cwd);
 }

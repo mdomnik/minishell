@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:12:05 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/30 21:25:43 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/07 15:25:23 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ void	sort_declare(t_shell *shell);
 int		scan_env(t_shell *shell, char *str);
 int		scan_declare(t_shell *shell, char *str);
 int		scan_declare_2(t_shell *shell, char **tmp, char *str, int j);
+
+//gen_utils_4.c
+char *ft_getenv(char *key, char **env);
 
 //gen_utils_split.c
 char	**ft_split_ms(const char *s, char c);

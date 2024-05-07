@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:00:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/06 17:03:55 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/07 15:01:49 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ typedef struct s_shell	t_shell;
 
 //cd.c
 void	builtin_cd(t_shell *shell);
+void	cd_home(t_shell *shell);
+void	set_last_dir(t_shell *shell);
+void	change_last_dir(t_shell *shell);
 
 //echo.c
 void	builtin_echo(t_shell *shell);

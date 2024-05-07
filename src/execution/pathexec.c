@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 14:39:10 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/03 14:40:00 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/07 15:27:46 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	**prep_path(t_shell *shell)
 	char	**path;
 	char	*env;
 
-	env = ft_strdup(getenv("PATH"));
+	env = ft_strdup(ft_getenv("PATH", shell->env));
 	path = ft_split_ms(env, ':');
 	if (!path)
 	{
@@ -35,6 +35,8 @@ int	find_path(t_shell *shell)
 	int		i;
 
 	path = prep_path(shell);
+	if (cmp_str(shell->parser->cmd, "./minishell") == 0)
+		printf("raising shlvl\n");
 	i = 0;
 	while (path[i])
 	{
@@ -59,8 +61,8 @@ void	exec_external(t_shell *shell, char *path)
 {
 	pid_t	pid;
 
-	pid = fork();
 	shell->parser->args = append_cmd_front(shell, shell->parser->args);
+	pid = fork();
 	if (pid == 0)
 		execve(path, shell->parser->args, shell->env);
 	wait(NULL);

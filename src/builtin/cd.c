@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 22:17:43 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/26 01:06:33 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/07 15:39:21 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,27 +19,59 @@
  */
 void	builtin_cd(t_shell *shell)
 {
-	if (count_args(shell->parser->args) > 2)
+	if (count_args(shell->parser->args) > 1)
 	{
-		reset_loop(shell, ERR_ARG);
+		reset_loop(shell, ERR_CDARG);
 		return ;
 	}
 	else if (count_args(shell->parser->args) == 0)
 	{
-		if (chdir(getenv("HOME")) == -1)
-		{
-			printf("minishell: cd: %s:", getenv("HOME"));
-			reset_loop(shell, ERR_CD);
-			return ;
-		}
+		cd_home(shell);
+		return ;
+	}
+	else if (cmp_str(shell->parser->args[0], "-") == 0)
+	{
+		change_last_dir(shell);
 		reset_loop(shell, NULL);
 		return ;
 	}
-	else if (chdir(shell->parser->args[0]) == -1)
+	if (chdir(shell->parser->args[0]) == -1)
 	{
 		printf("minishell: cd: %s:", shell->parser->args[0]);
 		reset_loop(shell, ERR_CD);
 		return ;
 	}
+	else
+		set_last_dir(shell);
 	reset_loop(shell, NULL);
+}
+
+void	cd_home(t_shell *shell)
+{
+	
+	if (chdir(ft_getenv("HOME", shell->env)) == -1)
+	{
+		printf("minishell: cd: %s:", ft_getenv("HOME", shell->env));
+		reset_loop(shell, ERR_CD);
+		return ;
+	}
+	reset_loop(shell, NULL);
+}
+
+void	set_last_dir(t_shell *shell)
+{
+	if (shell->last_dir)
+		free(shell->last_dir);
+	shell->last_dir = getcwd(NULL, 0);
+}
+void	change_last_dir(t_shell *shell)
+{
+	char *temp;
+
+	printf("%s\n", shell->last_dir);
+	temp = getcwd(NULL, 0);
+	chdir(shell->last_dir);
+	free(shell->last_dir);
+	shell->last_dir = ft_strdup(temp);
+	free(temp);
 }
