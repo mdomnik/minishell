@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:28:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/06 18:11:33 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/07 23:36:00 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,10 @@ void	group_redir(t_shell *shell)
 	while (cur->next != NULL)
 	{
 		if (cur->token != T_WORD && (cur->next->token != T_WORD || !cur->next))
-			free_err(ERR_SYNTAX, shell);
+		{
+			free_double(io);
+			reset_loop(shell, ERR_SYNTAX);
+		}
 		if (cur->token != T_WORD && cur->next->token == T_WORD)
 		{
 			if (cur->token == T_PIPE)
@@ -54,7 +57,10 @@ void	group_redir(t_shell *shell)
 		cur = cur->next;
 	}
 	if (cur->token != T_WORD && cur->token != T_PIPE)
-		free_err(ERR_SYNTAX, shell);
+	{
+		free_double(io);
+		reset_loop(shell, ERR_SYNTAX);
+	}
 	group_files(shell, io, file_num);
 }
 

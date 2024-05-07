@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:58:23 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/07 15:42:49 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/07 23:39:33 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	expander(t_shell *shell)
 	string = NULL;
 	lexer = shell->lexer;
 	if (lexer->next == NULL && lexer->token == T_PIPE)
-		free_err(ERR_SYNTAX, shell);
+		reset_loop(shell, ERR_SYNTAX);
 	env_expander(lexer, 0, shell);
 	process_lexer(shell, lexer, string, boolean);
 	lexerfreelist_ms(&shell->lexer);
