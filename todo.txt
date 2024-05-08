@@ -9,3 +9,5 @@ make sure libft changes update on make
 clean non active redirections
 
 fix pipe and redir next to eachother
+
+grep 1 infile | > outfile cat -e FIXX LEAK
