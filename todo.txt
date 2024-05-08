@@ -7,3 +7,5 @@ increase SHLVL with minishell calls
 make sure libft changes update on make
 
 clean non active redirections
+
+fix pipe and redir next to eachother
