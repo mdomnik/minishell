@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:09:18 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/10 14:32:21 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/10 14:39:39 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	purge_redir(t_shell *shell)
 	{
 		if (current->token == T_PIPE)
 			break ;
-		if ((current->token != T_WORD) && current->next->token == T_WORD)
+		if (current->token != T_WORD && current->next->token == T_WORD)
 		{
 			ptr = current->next;
 			delete_node(shell, current);
