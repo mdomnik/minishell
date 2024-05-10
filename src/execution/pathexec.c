@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 14:39:10 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/10 14:39:26 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/10 17:45:39 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,19 @@ int	find_path(t_shell *shell)
 	path = prep_path(shell);
 	if (cmp_str(shell->parser->cmd, "./minishell") == 0)
 		printf("raising shlvl\n");
+	if (access(shell->parser->cmd, F_OK | X_OK) == 0)
+	{
+		exec_external(shell, shell->parser->cmd);
+		free_double(path);
+		return (0);
+	}
 	i = 0;
 	while (path[i])
 	{
 		path[i] = ft_strjoin(path[i], "/");
-		if (shell->parser->cmd[0] == '.' && shell->parser->cmd[1] == '/')
-			path[i] = ft_strjoin(path[i], "./");
-		else
-			path[i] = ft_strjoin(path[i], shell->parser->cmd);
-		if (access(path[i], F_OK) == 0)
+		path[i] = ft_strjoin(path[i], shell->parser->cmd);
+		printf("path: %s\n", path[i]);
+		if (access(path[i], F_OK | X_OK) == 0)
 		{
 			exec_external(shell, path[i]);
 			free_double(path);
@@ -68,6 +72,9 @@ void	exec_external(t_shell *shell, char *path)
 	shell->parser->args = append_cmd_front(shell, shell->parser->args);
 	pid = fork();
 	if (pid == 0)
-		execve(path, shell->parser->args, shell->env);
+	{
+		if (execve(path, shell->parser->args, shell->env) == -1)
+			exit(1);
+	}
 	wait(NULL);
 }

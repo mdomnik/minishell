@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 16:14:01 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/21 16:21:50 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/10 16:42:28 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	set_input(char **io, t_parser *element)
 
 void	set_output(char **io, t_parser *element)
 {
-	if (!io[2]) 
+	if (io[2] == 0 || io[3] == 0) 
 	{
 		element->output = O_STDOUT;
 		element->o_str = NULL;

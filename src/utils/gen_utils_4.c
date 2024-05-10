@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:21:56 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/07 23:29:37 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/10 17:16:26 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,19 @@ void	adjust_lexer_redir(t_shell *shell)
 		}
 		lexer = lexer->next;
 	}
+}
+
+void check_final_lexer(t_shell *shell)
+{
+	t_lexer *lexer;
+
+	lexer = shell->lexer;
+	while (lexer->next != NULL)
+	{
+		if (find_redir(lexer->word) != 0 && lexer->next->token == T_PIPE)
+			reset_loop(shell, ERR_SYNTAX);
+		lexer = lexer->next;
+	}
+	if (find_redir(lexer->word) != 0)
+		reset_loop(shell, ERR_SYNTAX);
 }

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:12:05 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/07 23:29:57 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/10 17:11:05 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int		scan_declare_2(t_shell *shell, char **tmp, char *str, int j);
 //gen_utils_4.c
 char	*ft_getenv(char *key, char **env);
 void	adjust_lexer_redir(t_shell *shell);
+void 	check_final_lexer(t_shell *shell);
 //gen_utils_split.c
 char	**ft_split_ms(const char *s, char c);
 

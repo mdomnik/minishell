@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 16:53:27 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/30 17:36:23 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/10 16:38:09 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ char	**remove_first(char **args)
 	int		i;
 
 	i = 0;
+	if (args == NULL || args[0] == NULL)
+		return (NULL);
 	while (args[i] != NULL)
 		i++;
 	temp = (char **)malloc((i) * sizeof(char *));

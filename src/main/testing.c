@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:40:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/10 15:21:26 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/10 16:39:15 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,14 @@ void	print_parser(t_shell *shell)
 		printf("cmd: [%s] ", current->cmd);
 		printf("args: ");
 		i = 0;
-		while (current->args[i] != NULL)
+		if (current->args != NULL)
 		{
-			printf("[%s] ", current->args[i]);
-			i++;
-		}
+			while (current->args[i] != NULL)
+			{
+				printf("[%s] ", current->args[i]);
+				i++;
+			}		
+		}	
 		printf("\n");
 		printf("input: [%d] [%s]\n", current->input, current->i_str);
 		printf("output: [%d] [%s]\n", current->output, current->o_str);
