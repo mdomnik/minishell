@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 14:39:10 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/08 15:15:07 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/10 14:23:17 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,7 @@ int	find_path(t_shell *shell)
 	while (path[i])
 	{
 		path[i] = ft_strjoin(path[i], "/");
-		if (shell->parser->cmd[0] == '.' && shell->parser->cmd[1] == '/')
-		{
-			free(path[i]);
-			path[i] = ft_strdup(shell->parser->cmd);
-		}
-		else
-			path[i] = ft_strjoin(path[i], shell->parser->cmd);
+		path[i] = ft_strjoin(path[i], shell->parser->cmd);
 		if (access(path[i], F_OK) == 0)
 		{
 			printf("executing %s\n", path[i]);

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:28:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/08 17:50:40 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/10 14:18:16 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	group_redir(t_shell *shell)
 		return ;
 	io = (char **)ft_calloc(4, sizeof(char *));
 	file_num = 0;
-	print_expand(shell);
 	while (cur->next != NULL)
 	{
 		if ((cur->token != T_WORD && cur->token != T_PIPE) && (cur->next->token != T_WORD || !cur->next))

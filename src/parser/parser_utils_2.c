@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:09:18 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/08 17:55:48 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/10 14:32:21 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	purge_redir(t_shell *shell)
 	temp = shell->expand;
 	while (current != NULL)
 	{
-		printf("current->token: %d\n", current->token);
 		if (current->token == T_PIPE)
 			break ;
 		if ((current->token != T_WORD) && current->next->token == T_WORD)
