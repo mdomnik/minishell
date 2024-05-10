@@ -11,3 +11,6 @@ clean non active redirections
 fix pipe and redir next to eachother
 
 grep 1 infile | > outfile cat -e FIXX LEAK
+
+ohh shit - "> outfile" is 156 leaks
+		 - "> outfile cat" is infinite loop

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:40:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/20 20:21:51 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/10 15:21:26 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	print_expand(t_shell *shell)
 	current = shell->expand;
 	if (shell->expand == NULL)
 		printf("Stack is empty\n");
-	printf("Stack contents:\n");
+	printf("expander Stack contents:\n");
 	while (current != NULL)
 	{
 		printf("word: [%s] ", current->word);
