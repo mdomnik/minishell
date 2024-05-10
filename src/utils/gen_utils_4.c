@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:21:56 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/10 17:16:26 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/10 21:23:34 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,40 @@ void check_final_lexer(t_shell *shell)
 	}
 	if (find_redir(lexer->word) != 0)
 		reset_loop(shell, ERR_SYNTAX);
+}
+
+void	raise_shlvl(t_shell *shell)
+{
+	char	*shlvl;
+	int		i;
+	int		j;
+	int		lvl;
+
+	shlvl = ft_getenv("SHLVL", shell->env);
+	lvl = ft_atoi(shlvl);
+	lvl++;
+	free(shlvl);
+	shlvl = ft_itoa(lvl);
+	i = 0;
+	while(shell->env[i])
+	{
+		if (ft_strncmp(shell->env[i], "SHLVL=", 6) == 0)
+		{
+			free(shell->env[i]);
+			shell->env[i] = ft_strjoin_ms("SHLVL=", shlvl);
+			break ;
+		}
+		i++;
+	}
+	j = 0;
+	while (shell->declare[j])
+	{
+		if (ft_strncmp(shell->declare[j], "SHLVL=", 6) == 0)
+		{
+			free(shell->declare[i]);
+			shell->declare[i] = ft_strdup(shell->env[i]);
+			break ;
+		}
+		j++;
+	}
 }

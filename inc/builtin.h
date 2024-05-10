@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:00:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/07 15:01:49 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/10 19:16:52 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ void	add_env(t_shell *shell, char *str);
 
 //pwd.c
 void	builtin_pwd(t_shell *shell);
+void	update_pwd_env_declare(t_shell *shell, char *str);
 
 //unset.c
 void	builtin_unset(t_shell *shell);

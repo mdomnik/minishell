@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 14:39:10 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/10 17:45:39 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/10 21:12:17 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	find_path(t_shell *shell)
 
 	path = prep_path(shell);
 	if (cmp_str(shell->parser->cmd, "./minishell") == 0)
-		printf("raising shlvl\n");
+		raise_shlvl(shell);
 	if (access(shell->parser->cmd, F_OK | X_OK) == 0)
 	{
 		exec_external(shell, shell->parser->cmd);
@@ -52,7 +52,6 @@ int	find_path(t_shell *shell)
 	{
 		path[i] = ft_strjoin(path[i], "/");
 		path[i] = ft_strjoin(path[i], shell->parser->cmd);
-		printf("path: %s\n", path[i]);
 		if (access(path[i], F_OK | X_OK) == 0)
 		{
 			exec_external(shell, path[i]);

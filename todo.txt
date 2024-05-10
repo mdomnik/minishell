@@ -1,9 +1,7 @@
 if a lot of dollar, change dollar to number and join
 
-increase SHLVL with minishell calls
-
 make sure libft changes update on make
 
-clean non active redirections
+clean greater redirs if not active
 
-change pwd in env
+lower shlvl on exit
