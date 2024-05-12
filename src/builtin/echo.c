@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:59:37 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/06 17:08:47 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/12 02:56:04 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,6 @@ void	builtin_echo(t_shell *shell)
  */
 int	check_echo_option(char **args, int **n_flag, int i)
 {
-	int	k;
-
-	k = 0;
 	while (args[i] != NULL)
 	{
 		if (args[i][0] == '-')

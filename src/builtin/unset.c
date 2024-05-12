@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 21:35:04 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/30 21:52:21 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/12 02:56:16 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,8 @@ void	builtin_unset(t_shell *shell)
 void	unset_declare(t_shell *shell, char *str)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	while (shell->declare[i])
 	{
 		if (ft_strncmp(str, shell->declare[i], ft_strlen(str)) == 0)
@@ -54,10 +52,8 @@ void	unset_declare(t_shell *shell, char *str)
 void	unset_env(t_shell *shell, char *str)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	while (shell->env[i])
 	{
 		if (ft_strncmp(str, shell->env[i], ft_strlen(str)) == 0)
