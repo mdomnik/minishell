@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/05/28 14:47:10 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/28 15:06:17 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@
 # define ERR_PATH "Error: failed to find path"
 # define ERR_EXP1 "minishell: export: "
 # define ERR_EXP2 ": not a valid identifier"
+# define ERR_DOLLAR "minishell: $$: not valid in this context"
 
 /*outermost struct of the shell
   contains all other structs and

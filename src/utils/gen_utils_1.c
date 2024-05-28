@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:41:28 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/30 17:08:21 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/28 15:05:37 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,8 @@ char	**add_delim_split(char *str, t_shell *shell)
 		is_env = 1;
 	else
 		is_env = 0;
+	if (str[0] == '$' && str[1] == '$')
+		reset_loop(shell, ERR_DOLLAR);
 	ret = ft_split_ms(str, '$');
 	if (ret[0] == NULL)
 	{
