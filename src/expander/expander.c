@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:58:23 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/07 23:39:33 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/28 14:54:43 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,11 @@ char	*search_replace_env(char *str, t_shell *shell)
 	if (str[i] == '\0')
 		return (str);
 	else if (str[i + 1] == '?')
+	{
+		free (str);
+		str = ft_itoa(*shell->exit_status);
 		return (str);
+	}
 	temp = ft_substr(str, (i + 1), ft_strlen(str));
 	if (ft_memcmp_ms(temp, "?") == 0)
 		ret = ft_strdup("$?");

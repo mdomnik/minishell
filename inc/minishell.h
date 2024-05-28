@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/05/10 17:30:23 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/28 14:47:10 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <sys/stat.h>
 # include <sys/types.h>
 # include <sys/wait.h>
+# include <fcntl.h>
 # include "lexer.h"
 # include "expander.h"
 # include "parser.h"
@@ -70,6 +71,10 @@ typedef struct s_shell
 	struct s_expand		*expand;
 	struct s_lexer		*lexer;
 	struct s_parser		*parser;
+	int					*exit_status;
+	int					*fd;
+	int					*cmd_count;
+	int					pid;
 }			t_shell;
 
 //error_seq.c

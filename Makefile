@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+         #
+#    By: kaan <kaan@student.42.de>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 21:52:00 by kaan              #+#    #+#              #
-#    Updated: 2024/05/07 15:22:17 by mdomnik          ###   ########.fr        #
+#    Updated: 2024/05/14 13:49:17 by kaan             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ SRC =	src/builtin/cd.c\
 		src/utils/gen_utils_3.c\
 		src/utils/gen_utils_4.c\
 		src/utils/gen_utils_split.c\
+		src/builtin/pipe.c\
 
 OBJ = $(patsubst %.c,$(OBJ_DIR)%.o,$(SRC))
 

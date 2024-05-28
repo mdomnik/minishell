@@ -1,5 +1,0 @@
-cmd1 >out1 "arg1$USER" arg2 >>out2 <in1 <<in2 | cmd2 >out3 "arg2$SHLVL" <<in3 >>out4 <in4 | cmd3 arg3 arg4
-hello world"test"<tgest'apple'test>> --leak
-hello$SHLVL$USER
-hello$SHLVL$USER"$USER" '$USER'USER"PATH""$USER"
-cmd1 >out1 "arg1$PATH" arg2 >>out2 <in1 <<in2 >>    

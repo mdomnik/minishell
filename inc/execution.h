@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:54:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/03 14:29:02 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/25 15:45:27 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,5 +26,9 @@ void	find_builtin(t_shell *shell);
 char	**prep_path(t_shell *shell);
 int		find_path(t_shell *shell);
 void	exec_external(t_shell *shell, char *path);
+
+//pipe.c
+void 	pipex(t_shell *shell);
+void	operator_exe(t_shell *shell);
 
 #endif

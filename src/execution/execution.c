@@ -3,14 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:54:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/10 16:56:35 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/27 13:49:59 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	great(t_shell *shell)
+{
+	int		fd;
+	char	*file;
+
+	file = *(shell->parser->files);
+	fd = open(file, O_WRONLY | O_CREAT | O_TRUNC, 0777);
+	if (fd == -1)
+	{
+        perror("Open Error");
+		return ;
+	}
+	close(fd);
+	reset_loop(shell, NULL);
+}
 
 /**
  * Take output from parser and executes it. The final part of the shell.
@@ -19,8 +35,19 @@
  */
 void	execute(t_shell *shell)
 {
-	if (shell->parser->cmd != NULL)
+	//print_parser(shell);
+	if (cmp_str(shell->parser->o_str, "PIPE") == 0)
+        pipex(shell);
+	else if (shell->parser->cmd != NULL && shell->parser->output != 1)
 		find_builtin(shell);
+	else
+		reset_loop(shell, NULL);
+}
+
+void	operator_exe(t_shell *shell)
+{
+	if (shell->parser->output == 2)
+		great(shell);
 	else
 		reset_loop(shell, NULL);
 }
@@ -54,6 +81,8 @@ void	find_builtin(t_shell *shell)
 		builtin_pwd(shell);
 	else if (cmp_str(cmd, "unset") == 0)
 		builtin_unset(shell);
+	else if (shell->parser->output == 2)
+		operator_exe(shell);
 	else
 	{
 		if (find_path(shell) != 0)
