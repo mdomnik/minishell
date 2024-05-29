@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:59:37 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/25 15:51:01 by kaan             ###   ########.fr       */
+/*   Updated: 2024/05/29 21:04:54 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	builtin_echo(t_shell *shell)
 	}
 	if (n_flag_value == 0)
 		printf("\n");
-	reset_loop(shell, NULL);
+	// reset_loop(shell, NULL);
 }
 
 /**

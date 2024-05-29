@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:28:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/10 16:31:53 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/29 14:06:33 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,13 @@ void	group_files(t_shell *shell, char **io, int file_num)
 {
 	t_expand	*current;
 	char		**files;
+	int			*file_types;
 
 	current = shell->expand;
 	if (!current)
 		return ;
 	files = (char **)ft_calloc((file_num + 1), sizeof(char *));
+	file_types = (int *)ft_calloc((file_num + 1), sizeof(int));
 	file_num = 0;
 	while (current->next != NULL)
 	{
@@ -99,14 +101,17 @@ void	group_files(t_shell *shell, char **io, int file_num)
 			if (current->token == T_PIPE)
 				break ;
 			else if (current->token == T_GREATER || current->token == T_APPEND)
+			{
+				file_types[file_num] = current->token;
 				files[file_num++] = ft_strdup(current->next->word);
+			}
 		}
 		if (current->next == NULL)
 			break ;
 		current = current->next;
 	}
 	purge_redir(shell);
-	group_args(shell, io, files);
+	group_args(shell, io, files, file_types);
 }
 
 /**
@@ -116,10 +121,11 @@ void	group_files(t_shell *shell, char **io, int file_num)
  * @param io An array of input/output redirections.
  * @param files An array of file names for redirections.
  */
-void	group_args(t_shell *shell, char **io, char **files)
+void	group_args(t_shell *shell, char **io, char **files, int *file_types)
 {
 	char		**args;
 	t_expand	*current;
+	t_info		info;
 	int			arg_num;
 
 	current = shell->expand;
@@ -137,7 +143,11 @@ void	group_args(t_shell *shell, char **io, char **files)
 		delete_node(shell, current);
 		current = shell->expand;
 	}
-	create_parser_node(shell, args, io, files);
+	info.args = args;
+	info.io = io;
+	info.files = files;
+	info.file_types = file_types;
+	create_parser_node(shell, info);
 	if (current != NULL)
 	{
 		delete_node(shell, current);

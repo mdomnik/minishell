@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:40:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/10 16:39:15 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/29 14:13:11 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,14 @@ void	print_parser(t_shell *shell)
 		while (current->files[i] != NULL)
 		{
 			printf("[%s] ", current->files[i]);
+			i++;
+		}
+		printf("\n");
+		i = 0;
+		printf("file_types: ");
+		while (current->file_types[i] != 0)
+		{
+			printf("[%d] ", current->file_types[i]);
 			i++;
 		}
 		printf("\n");

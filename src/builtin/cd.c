@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 22:17:43 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/10 21:08:31 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/29 21:04:50 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	builtin_cd(t_shell *shell)
 		reset_loop(shell, ERR_CD);
 		return ;
 	}
-	reset_loop(shell, NULL);
+	// reset_loop(shell, NULL);
 }
 
 void	cd_home(t_shell *shell)

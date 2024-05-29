@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 21:35:04 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/12 02:56:16 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/29 21:05:17 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	builtin_unset(t_shell *shell)
 		i++;
 	}
 	sort_declare(shell);
-	reset_loop(shell, NULL);
+	// reset_loop(shell, NULL);
 }
 
 void	unset_declare(t_shell *shell, char *str)

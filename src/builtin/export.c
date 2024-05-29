@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 01:08:04 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/30 21:33:25 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/29 21:05:06 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	builtin_export(t_shell *shell)
 	}
 	else
 		update_env_declare(shell);
-	reset_loop(shell, NULL);
+	// reset_loop(shell, NULL);
 }
 
 /**

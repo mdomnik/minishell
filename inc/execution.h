@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:54:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/25 15:45:27 by kaan             ###   ########.fr       */
+/*   Updated: 2024/05/29 20:51:22 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ typedef struct s_shell	t_shell;
 
 //execution.c
 void	execute(t_shell *shell);
-void	find_builtin(t_shell *shell);
+int find_builtin(t_shell *shell);
 
 //pathexec.c
 char	**prep_path(t_shell *shell);

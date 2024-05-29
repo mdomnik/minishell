@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:09:18 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/10 16:24:48 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/29 14:07:37 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,15 +106,15 @@ void	free_io(char **double_str)
  * @param io An array of I/O redirections.
  * @param files An array of file names.
  */
-void	create_parser_node(t_shell *shell, char **args, char **io, char **files)
+void	create_parser_node(t_shell *shell, t_info info)
 {
 	t_parser	*element;
 
-	element = parsernew_ms(args, io, files);
+	element = parsernew_ms(info.args, info.io, info.files, info.file_types);
 	parseraddback_ms(&shell->parser, element);
-	free_io(io);
-	free_double(files);
-	free_double(args);
+	free_io(info.io);
+	free_double(info.files);
+	free_double(info.args);
 }
 
 /**

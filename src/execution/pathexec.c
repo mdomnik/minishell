@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pathexec.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/28 14:39:10 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/27 14:27:02 by kaan             ###   ########.fr       */
+/*   Updated: 2024/05/29 20:45:52 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,16 +66,6 @@ int	find_path(t_shell *shell)
 
 void	exec_external(t_shell *shell, char *path)
 {
-	pid_t	pid;
-	int		status;
-
 	shell->parser->args = append_cmd_front(shell, shell->parser->args);
-	pid = fork();
-	if (pid == 0)
-	{
-		status = execve(path, shell->parser->args, shell->env);
-		if (status == -1)
-			exit(status);
-	}
-	wait(&status);
+	execve(path, shell->parser->args, shell->env);
 }

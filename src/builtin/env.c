@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:38:32 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/28 14:29:01 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/29 21:04:57 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,5 @@ void	builtin_env(t_shell *shell)
 		printf("%s\n", shell->env[i]);
 		i++;
 	}
-	reset_loop(shell, NULL);
+	// reset_loop(shell, NULL);
 }

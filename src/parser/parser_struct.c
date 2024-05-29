@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser_struct.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:37:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/26 11:55:24 by kaan             ###   ########.fr       */
+/*   Updated: 2024/05/29 14:15:56 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-t_parser	*parsernew_ms(char **args, char **io, char **files)
+t_parser	*parsernew_ms(char **args, char **io, char **files, int *file_types)
 {
 	t_parser		*element;
 
@@ -27,6 +27,7 @@ t_parser	*parsernew_ms(char **args, char **io, char **files)
 	element->args = remove_first(args);
 	set_io(io, element);
 	element->files = double_dup(files);
+	element->file_types = file_types;
 	element->prev = NULL;
 	element->next = NULL;
 	return (element);
@@ -102,6 +103,8 @@ t_parser	*parserfreelist_ms(t_parser **lst)
 		if (ft_memcmp_ms((*lst)->o_str, "STDOUT") 
 			&& ft_memcmp_ms((*lst)->o_str, "PIPE") && (*lst)->o_str != NULL)
 			free((*lst)->o_str);
+		if ((*lst)->file_types != NULL)
+			free((*lst)->file_types);
 		free(*lst);
 		*lst = temp;
 	}
