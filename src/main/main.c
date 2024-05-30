@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:27:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/28 14:58:23 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/30 18:29:09 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,6 @@ void	reset_loop(t_shell *shell, char *msg)
 	shell->lexer = NULL;
 	shell->parser = NULL;
 	reset_increment_k(0);
-	if (shell->pid == 0)
-		exit(0);
 	shell_loop(shell);
 }
 

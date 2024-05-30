@@ -7,3 +7,24 @@ clean greater redirs if not active
 lower shlvl on exit
 
 testing
+
+
+[minishell]$ ls >test >test1 >test2 >>test3
+parser contents:
+cmd: [ls] args: 
+input: [10] [STDIN]
+output: [5] [test3]
+files: [test] [test1] [test2] [test3] 
+file_types: [2] [2] [2] [5] 
+index: 0
+
+for files in files: compare array position to file_type array position (if 2 and exists, wipe)(if 2 or 5 and doesnt exist, create new)
+
+
+
+PRIOTITY FOR REDIRECTION:
+1.IF OUTPUT EXISTS OF > OR >>: THIS IS THE MOST IMPORTANT (YOU TAKE THE RIGHTMOST ACTIVE ONE)
+2.IF NOT ABOVE STATED REDIRECTIONS, IF PIPE EXISTS (OUTPUT TO PIPE)
+3. IF NO REDIRECTIONS OR PIPES, STDOUT
+
+CHANGE EXIT CODES

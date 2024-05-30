@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:54:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/29 22:53:16 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/30 19:02:29 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void execute(t_shell *shell) {
     int status;
     int is_pipe = 0;
 
+    print_parser(shell);
     current = shell->parser;
 
     while (current != NULL) {
