@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:00:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/03 14:33:36 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/03 20:30:37 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	builtin_env(t_shell *shell);
 
 //exit.c
 void	builtin_exit(t_shell *shell);
+int 	ft_isnum(char *str);
+int get_exit(int exit_code);
 
 //export.c
 void	builtin_export(t_shell *shell);

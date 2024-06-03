@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 17:35:00 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/03 14:56:08 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/03 20:04:17 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	child_proc(t_shell *shell)
 			&& shell->parser->cmd == NULL)
 		{
 			fd_close(shell);
-			reset_loop(shell, "command not found here");
+			reset_loop(shell, ERR_NCMD, shell->parser->cmd, 1);
 		}
 		else if (shell->parser->index == 0 || shell->parser->index == 1)
 			great(shell, 0);
@@ -61,7 +61,7 @@ void	child_proc(t_shell *shell)
 		|| shell->parser->input == T_HEREDOC)
 		less(shell, 1);
 	else
-		reset_loop(shell, NULL);
+		reset_loop(shell, NULL, shell->parser->cmd, 0);
 }
 
 void	pipex(t_shell *shell)
@@ -85,5 +85,5 @@ void	pipex(t_shell *shell)
 	}
 	waitpid(-1, &status, 0);
 	fd_close(shell);
-	reset_loop(shell, NULL);
+	reset_loop(shell, NULL, shell->parser->cmd, 0);
 }

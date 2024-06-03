@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:43:18 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/03 15:30:27 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/03 20:06:50 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	tokenizer(t_shell *shell)
 		}
 	}
 	if (!shell->lexer)
-		reset_loop(shell, ERR_CMD);
+		reset_loop(shell, ERR_CMD, shell->parser->cmd, 1);
 	adjust_lexer_redir(shell);
 	delete_empty_nodes(shell);
 	check_final_lexer(shell);
@@ -91,7 +91,7 @@ int	double_quote(t_shell *shell, int i, int split)
 	while (shell->line[i + j] != 34 && shell->line[i + j] != '\0')
 		j++;
 	if (shell->line[i + j] == '\0' && shell->line[i + j] != 34)
-		reset_loop(shell, ERR_QUOTE);
+		reset_loop(shell, ERR_QUOTE, shell->parser->cmd, 1);
 	temp = ft_substr(shell->line, (i + 1), (j - 1));
 	if (!temp)
 		free_err(ERR_MALLOC, shell);
@@ -118,7 +118,7 @@ int	single_quote(t_shell *shell, int i, int split)
 	while (shell->line[i + j] != 39 && shell->line[i + j] != '\0')
 		j++;
 	if (shell->line[i + j] == '\0' && shell->line[i + j] != 39)
-		reset_loop(shell, ERR_QUOTE);
+		reset_loop(shell, ERR_QUOTE, shell->parser->cmd, 1);
 	temp = ft_substr(shell->line, (i + 1), (j - 1));
 	if (!temp)
 		free_err(ERR_MALLOC, shell);

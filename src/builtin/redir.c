@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:00:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/03 14:40:54 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/03 20:04:55 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	great(t_shell *shell, int i)
 		&& shell->parser->cmd == NULL)
 	{
 		fd_close(shell);
-		reset_loop(shell, NULL);
+		reset_loop(shell, NULL, shell->parser->cmd, 0);
 	}
 	if (dup2(shell->fd[i], 0) == -1)
 		perror("great error1");
@@ -99,4 +99,6 @@ void	handle_here_document(t_shell *shell)
 		perror("open temp file for read");
 		exit(EXIT_FAILURE);
 	}
+	close(*(shell->red_fd));
+	fd_close(shell);
 }

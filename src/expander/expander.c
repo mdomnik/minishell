@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:58:23 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/28 14:54:43 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/03 20:06:19 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	expander(t_shell *shell)
 	string = NULL;
 	lexer = shell->lexer;
 	if (lexer->next == NULL && lexer->token == T_PIPE)
-		reset_loop(shell, ERR_SYNTAX);
+		reset_loop(shell, ERR_SYNTAX, shell->parser->cmd, 1);
 	env_expander(lexer, 0, shell);
 	process_lexer(shell, lexer, string, boolean);
 	lexerfreelist_ms(&shell->lexer);
@@ -84,27 +84,33 @@ void	env_expander(t_lexer *lexer, int i, t_shell *shell)
 char	*search_replace_env(char *str, t_shell *shell)
 {
 	int		i;
+	int		j;
 	char	*temp;
 	char	*ret;
 
 	i = 0;
-	while (str[i] != '$' && str[i] != '\0')
+	j = 1;
+	while (str[i] != '$' && str[i] != '\0') 
 		i++;
-	if (str[i] == '\0')
+	if (str[i] == '\0') 
 		return (str);
-	else if (str[i + 1] == '?')
+	while(str[i + j] != '$' && str[i + j] != '\0' && str[i + j] != ' ')
+		j++;
+	if (j == 1)
+		return (str);
+	temp = ft_substr(str, (i + 1), j - 1);
+	if (temp[0] == '?')
 	{
-		free (str);
-		str = ft_itoa(*shell->exit_status);
-		return (str);
+		ret = ft_itoa(*shell->exit_status);
+		ret = ft_strjoin(ret, ft_substr(temp, 1, ft_strlen(temp) - 1));
 	}
-	temp = ft_substr(str, (i + 1), ft_strlen(str));
-	if (ft_memcmp_ms(temp, "?") == 0)
-		ret = ft_strdup("$?");
 	else
 		ret = ft_getenv(temp, shell->env);
 	if (!ret)
 		ret = ft_strdup("");
+	free(temp);
+	temp = ft_substr(str, (i + j), (ft_strlen(str) - (i + j)));
+	ret = ft_strjoin(ret, temp);
 	free(str);
 	str = ft_strdup(ret);
 	if (ret)

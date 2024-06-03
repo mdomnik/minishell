@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:27:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/01 17:48:54 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/03 19:58:47 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,10 @@ void	shell_loop(t_shell *shell)
  *
  * @param shell A pointer to the t_shell struct representing the shell.
  */
-void	reset_loop(t_shell *shell, char *msg)
+void	reset_loop(t_shell *shell, char *msg, char *cmd, unsigned int err)
 {
 	if (msg)
-		printf("%s\n", msg);
+		ft_perror(msg, cmd, err, shell);
 	if (shell->line)
 		free(shell->line);
 	if (shell->lexer)

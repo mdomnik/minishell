@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:16:07 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/02 15:17:21 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/03 20:31:59 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,22 @@
  */
 void	builtin_exit(t_shell *shell)
 {
+	int exit_code;
+	if (count_args(shell->parser->args) > 1)
+	{
+		reset_loop(shell, ERR_ARG, shell->parser->cmd, 1);
+		return ;
+	}
+	else if (count_args(shell->parser->args) == 1)
+	{
+		if (ft_isnum(shell->parser->args[0]) == 0)
+		{
+			reset_loop(shell, ERR_NUM, shell->parser->cmd, 2);
+			return ;
+		}
+		exit_code = get_exit(ft_atoi(shell->parser->args[0]));
+		*(shell->exit_status) = exit_code;
+	}
 	if (shell->env)
 		free_double(shell->env);
 	if (shell->line)
@@ -35,4 +51,29 @@ void	builtin_exit(t_shell *shell)
 	free(shell);
 	printf("exit\n");
 	exit(0);
+}
+
+int get_exit(int exit_code)
+{
+	if (exit_code < 0)
+		exit_code = 256 + (exit_code % 256);
+	else if (exit_code > 255)
+		exit_code = exit_code % 256;
+	return (exit_code);
+}
+
+int ft_isnum(char *str)
+{
+	int i;
+
+	i = 0;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 01:08:04 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/03 14:41:31 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/03 20:02:52 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	builtin_export(t_shell *shell)
 			printf("%s\n", shell->declare[i]);
 			i++;
 		}
-		reset_loop(shell, NULL);
+		reset_loop(shell, NULL, shell->parser->cmd, 1);
 		return ;
 	}
 	else
@@ -54,7 +54,9 @@ void	update_env_declare(t_shell *shell)
 	while (shell->parser->args[i])
 	{
 		if (valid_format(shell->parser->args[i]) == -1)
-			printf("%s%s%s\n", ERR_EXP1, shell->parser->args[i], ERR_EXP2);
+		{
+			reset_loop(shell, ERR_EXP2, shell->parser->cmd, 1);
+		}
 		else if (valid_format(shell->parser->args[i]) == 1)
 		{
 			if (scan_declare(shell, shell->parser->args[i]) == 0)
@@ -95,7 +97,7 @@ int	valid_format(char *str)
 	{
 		if (str[i] == '=' || str[i] == '\0')
 			break ;
-		if (str[i] != '_' && !ft_isalnum(str[i]))
+		if (str[i] != '_' && !ft_isalnum(str[i]) && str[i])
 			return (-1);
 		i++;
 	}

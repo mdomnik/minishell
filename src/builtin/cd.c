@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 22:17:43 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/03 14:41:06 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/03 20:00:21 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	builtin_cd(t_shell *shell)
 {
 	if (count_args(shell->parser->args) > 1)
 	{
-		reset_loop(shell, ERR_CDARG);
+		reset_loop(shell, ERR_CDARG, shell->parser->cmd, 1);
 		return ;
 	}
 	else if (count_args(shell->parser->args) == 0)
@@ -32,14 +32,14 @@ void	builtin_cd(t_shell *shell)
 	else if (cmp_str(shell->parser->args[0], "-") == 0)
 	{
 		change_last_dir(shell);
-		reset_loop(shell, NULL);
+		reset_loop(shell, NULL, shell->parser->cmd, 1);
 		return ;
 	}
 	set_last_dir(shell);
 	if (chdir(shell->parser->args[0]) == -1)
 	{
 		printf("minishell: cd: %s:", shell->parser->args[0]);
-		reset_loop(shell, ERR_CD);
+		reset_loop(shell, ERR_CD, shell->parser->cmd, 1);
 		return ;
 	}
 }
@@ -51,17 +51,17 @@ void	cd_home(t_shell *shell)
 	home = ft_getenv("HOME", shell->env);
 	if (!home)
 	{
-		reset_loop(shell, ERR_CDHOME);
+		reset_loop(shell, ERR_CDHOME, shell->parser->cmd, 1);
 		return ;
 	}
 	if (chdir(home) == -1)
 	{
 		free(home);
-		reset_loop(shell, ERR_CD);
+		reset_loop(shell, ERR_CD, shell->parser->cmd, 1);
 		return ;
 	}
 	free(home);
-	reset_loop(shell, NULL);
+	reset_loop(shell, NULL, shell->parser->cmd, 1);
 }
 
 void	set_last_dir(t_shell *shell)

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:54:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/03 15:20:35 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/03 20:33:25 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	single_cmd_exe(t_shell *shell)
 		}
 		if (find_path(shell) == 1)
 			exit(EXIT_SUCCESS);
-		reset_loop(shell, NULL);
+		reset_loop(shell, NULL, shell->parser->cmd, 0);
 	}
 	waitpid(pid, &status, 0);
 	if (input_fd != STDIN_FILENO)
@@ -61,7 +61,7 @@ void	single_cmd_exe(t_shell *shell)
 	{
 		close(output_fd);
 	}
-	reset_loop(shell, NULL);
+	reset_loop(shell, NULL, shell->parser->cmd, 0);
 }
 
 /**
@@ -82,7 +82,7 @@ void	execute(t_shell *shell)
 	else if (shell->parser->cmd != NULL && shell->parser->output != 1)
 		find_builtin(shell);
 	else
-		reset_loop(shell, NULL);
+		reset_loop(shell, NULL, shell->parser->cmd, 0);
 }
 
 /* Finds and executes the appropriate built-in
@@ -117,6 +117,6 @@ int	find_builtin(t_shell *shell)
 		single_cmd_exe(shell);
 	if (shell->pid != -2)
 		proc_termination(shell);
-	reset_loop(shell, NULL);
+	reset_loop(shell, NULL, shell->parser->cmd, 0);
 	return (1);
 }

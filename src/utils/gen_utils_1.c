@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:41:28 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/28 15:05:37 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/03 20:07:24 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,28 @@ char	**add_delim_split(char *str, t_shell *shell)
 	else
 		is_env = 0;
 	if (str[0] == '$' && str[1] == '$')
-		reset_loop(shell, ERR_DOLLAR);
+	{
+		ret = (char **)malloc(2 * sizeof(char *));
+		if (!ret)
+			return (NULL);
+		ret[0] = ft_strdup("201088");
+		ret[1] = NULL;
+		return (ret);
+	}
+	if (str[0] == '$' && str[1] == '\0')
+	{
+		ret = (char **)malloc(2 * sizeof(char *));
+		if (!ret)
+			return (NULL);
+		ret[0] = ft_strdup("$");
+		ret[1] = NULL;
+		return (ret);
+	}
 	ret = ft_split_ms(str, '$');
 	if (ret[0] == NULL)
 	{
 		free_double(ret);
-		reset_loop(shell, ERR_CMD);
+		reset_loop(shell, ERR_CMD, shell->parser->cmd, 1);
 	}
 	while (ret[i] != NULL)
 	{

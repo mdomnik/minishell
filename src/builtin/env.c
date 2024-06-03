@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:38:32 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/03 14:41:20 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/03 20:01:40 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ void	builtin_env(t_shell *shell)
 	i = 0;
 	if (shell->parser->args[0])
 	{
-		printf("env: '%s': ", shell->parser->args[0]);
-		reset_loop(shell, ERR_CD);
+		reset_loop(shell, ERR_CD, shell->parser->cmd, 1);
 		return ;
 	}
 	while (shell->env[i])

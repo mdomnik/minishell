@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gen_utils_4.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:21:56 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/03 13:35:36 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/03 20:08:45 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,11 @@ char *ft_getenv(char *key, char **env)
 	while (env[i] != NULL)
 	{
 		if (ft_strncmp(env[i], key, ft_strlen(key)) == 0)
-		{
-			value = ft_strdup(ft_strchr(env[i], '=') + 1);
-			return (value);
-		}
+			if(env[i][ft_strlen(key)] == '=')
+			{
+				value = ft_strdup(ft_strchr(env[i], '=') + 1);
+				return (value);
+			}
 		i++;
 	}
 	return (NULL);
@@ -54,11 +55,11 @@ void check_final_lexer(t_shell *shell)
 	while (lexer->next != NULL)
 	{
 		if (find_redir(lexer->word) != 0 && lexer->next->token == T_PIPE)
-			reset_loop(shell, ERR_SYNTAX);
+			reset_loop(shell, ERR_SYNTAX, shell->parser->cmd, 1);
 		lexer = lexer->next;
 	}
 	if (find_redir(lexer->word) != 0)
-		reset_loop(shell, ERR_SYNTAX);
+		reset_loop(shell, ERR_SYNTAX, shell->parser->cmd, 1);
 }
 
 void	raise_shlvl(t_shell *shell)
@@ -97,23 +98,3 @@ void	raise_shlvl(t_shell *shell)
 	}
 }
 
-void	ft_perror(char *msg1, char *msg2)
-{
-	if (msg1 != NULL)
-	{
-		while (*msg1)
-		{
-			write(2, msg1, 1);
-			msg1++;
-		}
-	}
-	if (msg2 != NULL)
-	{
-		while (*msg2)
-		{
-			write(2, msg2, 1);
-			msg2++;
-		}
-	}
-	//exit(EXIT_FAILURE);
-}

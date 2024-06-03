@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/05/31 19:04:43 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/03 20:19:09 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,28 +37,28 @@
 # define CL_NAME "[minishell]$ "
 
 //ERROR DEFINES
-# define ERR_I "Error: launch program with ./minishell and no arguments"
-# define ERR_SHELL "Error: failed to initialize shell"
-# define ERR_ENV "Error: failed to load environmental variables"
-# define ERR_MALLOC "Error: failed to allocate memory"
-# define ERR_LEXER "Error: failed to initialize lexer node"
-# define ERR_EXPAND "Error: failed to initialize expand node"
-# define ERR_EMPTY "Error: no nodes found in the lexer list"
-# define ERR_INDEX "Error: Index out of range. Cannot delete node"
-# define ERR_SYNTAX "Error: syntax error near unexpected token"
-# define ERR_QUOTE "Error: quote not terminated by another quote"
-# define ERR_CMD "Error: command not found"
-# define ERR_NCMD ": command not found"
-# define ERR_PWD "Error: failed to get current working directory"
-# define ERR_PWDA "pwd: too many arguments"
-# define ERR_ARG "Error: too many arguments"
+# define ERR_I " launch program with ./minishell and no arguments"
+# define ERR_SHELL " failed to initialize shell"
+# define ERR_ENV " failed to load environmental variables"
+# define ERR_MALLOC " failed to allocate memory"
+# define ERR_LEXER " failed to initialize lexer node"
+# define ERR_EXPAND " failed to initialize expand node"
+# define ERR_EMPTY " no nodes found in the lexer list"
+# define ERR_INDEX " Index out of range. Cannot delete node"
+# define ERR_SYNTAX " syntax error near unexpected token"
+# define ERR_QUOTE " quote not terminated by another quote"
+# define ERR_CMD " command not found"
+# define ERR_NCMD " command not found"
+# define ERR_PWD " failed to get current working directory"
+# define ERR_PWDA " too many arguments"
+# define ERR_ARG " too many arguments"
 # define ERR_CD " No such file or directory"
-# define ERR_CDARG "minishell: cd: too many arguments"
-# define ERR_CDHOME "minishell: cd: HOME not set"
-# define ERR_PATH "Error: failed to find path"
-# define ERR_EXP1 "minishell: export: "
-# define ERR_EXP2 ": not a valid identifier"
-# define ERR_DOLLAR "minishell: $$: not valid in this context"
+# define ERR_CDARG " too many arguments"
+# define ERR_CDHOME "HOME not set"
+# define ERR_PATH " failed to find path"
+# define ERR_EXP2 " not a valid identifier"
+# define ERR_DOLLAR " not valid in this context"
+# define ERR_NUM " numeric argument required"
 
 /*outermost struct of the shell
   contains all other structs and
@@ -81,6 +81,7 @@ typedef struct s_shell
 
 //error_seq.c
 void	simple_err(char *err_str);
+void	ft_perror(const char *msg, char *cmd, unsigned int err, t_shell *shell);
 void	free_err(char *err_str, t_shell *shell);
 void	free_shell(t_shell *shell);
 
@@ -88,7 +89,7 @@ void	free_shell(t_shell *shell);
 t_shell	*init_shell(t_shell *shell);
 void	shell_loop(t_shell *shell);
 t_shell	*init_shell(t_shell *shell);
-void	reset_loop(t_shell *shell, char *msg);
+void	reset_loop(t_shell *shell, char *msg, char *cmd, unsigned int err);
 void	starting_dir(t_shell *shell);
 
 //signals.c
