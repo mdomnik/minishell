@@ -1,0 +1,11 @@
+comp
+echo
+inc
+lib
+Makefile
+minishell
+obj
+src
+suppressions.supp
+test_to_do.txt
+todo.txt

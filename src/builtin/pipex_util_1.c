@@ -1,36 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   pipex_util_1.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/25 18:38:32 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/03 14:41:20 by kaan             ###   ########.fr       */
+/*   Created: 2024/06/02 15:54:29 by kaan              #+#    #+#             */
+/*   Updated: 2024/06/02 15:54:54 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/**
- * Prints the environment variables stored in the shell.
- *
- * @param shell The shell structure containing the environment variables.
- */
-void	builtin_env(t_shell *shell)
+void	err_fd(void)
+{
+	perror("Open Error");
+	exit(EXIT_FAILURE);
+}
+
+void	fd_close(t_shell *shell)
 {
 	int	i;
 
 	i = 0;
-	if (shell->parser->args[0])
+	if (*(shell->fd) != -2)
 	{
-		printf("env: '%s': ", shell->parser->args[0]);
-		reset_loop(shell, ERR_CD);
-		return ;
+		while (i != (*(shell->cmd_count) - 1) * 2)
+		{
+			if (close(shell->fd[i]) == -1)
+				perror("fd close error");
+			i++;
+		}
 	}
-	while (shell->env[i])
+	if (*(shell->red_fd) != -2)
 	{
-		printf("%s\n", shell->env[i]);
-		i++;
+		if (close(*(shell->red_fd)) == -1)
+			perror("red_fd close error");
 	}
 }

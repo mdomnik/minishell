@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:43:18 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/28 15:02:06 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/03 15:30:27 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,7 +117,7 @@ int	single_quote(t_shell *shell, int i, int split)
 	j = 1;
 	while (shell->line[i + j] != 39 && shell->line[i + j] != '\0')
 		j++;
-	if (shell->line[i + j] == '\0' && shell->line[i + j - 1] == 39)
+	if (shell->line[i + j] == '\0' && shell->line[i + j] != 39)
 		reset_loop(shell, ERR_QUOTE);
 	temp = ft_substr(shell->line, (i + 1), (j - 1));
 	if (!temp)

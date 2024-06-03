@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/05/30 17:33:37 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/05/31 19:04:43 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,9 @@ typedef struct s_shell
 	struct s_lexer		*lexer;
 	struct s_parser		*parser;
 	int					*exit_status;
+	int					*fd;
+	int					*red_fd;
+	int					*cmd_count;
 	int					pid;
 }			t_shell;
 

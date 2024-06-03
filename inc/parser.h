@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:37:46 by kaan              #+#    #+#             */
-/*   Updated: 2024/05/29 14:08:04 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/01 16:45:53 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,8 @@ void		set_input(char **io, t_parser *element);
 void		set_output(char **io, t_parser *element);
 
 //parser_struct.c
-t_parser	*parsernew_ms(char **args, char **io, char **files, int *file_types);
+t_parser	*parsernew_ms(char **args, char **io,
+				char **files, int *file_types);
 int			reset_increment_k(int x);
 void		parseraddback_ms(t_parser **lst, t_parser *new);
 t_parser	*parserfreelist_ms(t_parser **lst);
@@ -81,6 +82,7 @@ int			count_args_before_pipe(t_expand *expand);
 void		parser(t_shell *shell);
 void		group_redir(t_shell *shell);
 void		group_files(t_shell *shell, char **io, int file_num);
-void	group_args(t_shell *shell, char **io, char **files, int *file_types);
+void		group_args(t_shell *shell, char **io,
+				char **files, int *file_types);
 
 #endif

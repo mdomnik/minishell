@@ -1,0 +1,36 @@
+ls -l>file_test.txt
+ls -l>file1>>file2>file3
+echo 1234 > out.txt
+echo 12345 iop > out.txt
+echo 1234 yui > cat
+echo 1234 > echo qwer
+echo kaan>>file_test.txt
+ls -l | >file1>file2>file3
+ls -l | >out.txt
+ls -l | >out.txt | >at.txt
+
+echo "cat lol.c | cat > lol.c"
+cat file | grep bla | more
+ls -l | cat | cat | cat | cat -e
+ls -l | cat | cat | echo 1234 | cat -e
+echo 1234 | cat -e
+cat | cat | ls
+
+ls -l | >file2 grep a | >file3 grep a
+ls -l | >file2 grep a 
+
+ls | > file1 >> file2
+ls | > file1 > file2
+ls | cat | cat > file
+
+< comp cat
+< comp cat | cat
+< comp | cat
+< comp cat | < cat
+
+echo 123 | echo 123 | cat
+
+ls | cat
+
+< comp | cat
+< comp cat | cat

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gen_utils_4.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:21:56 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/10 21:23:34 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/03 13:35:36 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	raise_shlvl(t_shell *shell)
 	free(shlvl);
 	shlvl = ft_itoa(lvl);
 	i = 0;
-	while(shell->env[i])
+	while (shell->env[i])
 	{
 		if (ft_strncmp(shell->env[i], "SHLVL=", 6) == 0)
 		{
@@ -95,4 +95,25 @@ void	raise_shlvl(t_shell *shell)
 		}
 		j++;
 	}
+}
+
+void	ft_perror(char *msg1, char *msg2)
+{
+	if (msg1 != NULL)
+	{
+		while (*msg1)
+		{
+			write(2, msg1, 1);
+			msg1++;
+		}
+	}
+	if (msg2 != NULL)
+	{
+		while (*msg2)
+		{
+			write(2, msg2, 1);
+			msg2++;
+		}
+	}
+	//exit(EXIT_FAILURE);
 }

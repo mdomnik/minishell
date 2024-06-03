@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:00:12 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/07 15:26:12 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/01 16:44:32 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ t_expand	*expandfreelist_ms(t_expand **lst);
 //expander.c
 void		expander(t_shell *shell);
 void		env_expander(t_lexer *lexer, int i, t_shell *shell);
-char	*search_replace_env(char *str, t_shell *shell);
+char		*search_replace_env(char *str, t_shell *shell);
 
 
 #endif

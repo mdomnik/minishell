@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 17:59:48 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/29 21:05:14 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/03 14:41:38 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	builtin_pwd(t_shell *shell)
 	printf("%s\n", pwd);
 	update_pwd_env_declare(shell, pwd);
 	free(pwd);
-	// reset_loop(shell, NULL);
 }
 
 void	update_pwd_env_declare(t_shell *shell, char *str)
@@ -37,7 +36,7 @@ void	update_pwd_env_declare(t_shell *shell, char *str)
 
 	i = 0;
 	tmp = ft_strdup("PWD=");
-	while(shell->env[i])
+	while (shell->env[i])
 	{
 		if (ft_strncmp(shell->env[i], "PWD=", 4) == 0)
 		{
@@ -49,7 +48,7 @@ void	update_pwd_env_declare(t_shell *shell, char *str)
 	}
 	i = 0;
 	tmp = ft_strdup("PWD=");
-	while(shell->declare[i])
+	while (shell->declare[i])
 	{
 		if (ft_strncmp(shell->declare[i], "PWD=", 4) == 0)
 		{

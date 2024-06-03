@@ -28,3 +28,11 @@ PRIOTITY FOR REDIRECTION:
 3. IF NO REDIRECTIONS OR PIPES, STDOUT
 
 CHANGE EXIT CODES
+
+ps disfunctional
+exit generate new minishell with each execution
+
+
+exit codes need to be implemented
+on cat, ctrl + c prints terminal twice 
+>> still wipes not active redirection

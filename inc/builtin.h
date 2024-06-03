@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:00:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/10 19:16:52 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/03 14:33:36 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,18 @@ void	update_pwd_env_declare(t_shell *shell, char *str);
 void	builtin_unset(t_shell *shell);
 void	unset_declare(t_shell *shell, char *str);
 void	unset_env(t_shell *shell, char *str);
+
+//redirection
+void	pipex(t_shell *shell);
+void	pip_exe(t_shell *shell, int i, int j);
+void	great(t_shell *shell, int i);
+void	less(t_shell *shell, int i);
+void	handle_here_document(t_shell *shell);
+
+//redirection utils
+void	err_fd(void);
+void	fd_close(t_shell *shell);
+void	cmd_count(t_shell *shell);
+void	proc_termination(t_shell *shell);
 
 #endif
