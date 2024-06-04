@@ -6,11 +6,36 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/01 17:35:00 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/03 20:04:17 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/04 17:49:17 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+void	wait_processes(t_shell *shell)
+{
+	int		status;
+	pid_t	pid;
+	int		remaining_children;
+
+	remaining_children = 1;
+	if (*(shell->cmd_count) != -1)
+		remaining_children = *(shell->cmd_count);
+	while (remaining_children > 0)
+	{
+		pid = waitpid(-1, &status, 0);
+		if (pid > 0)
+		{
+			if (WIFEXITED(status))
+				status = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				status = WTERMSIG(status);
+			remaining_children--;
+		}
+		else
+			reset_loop(shell, NULL, shell->parser->cmd, 0);
+	}
+}
 
 void	proc_termination(t_shell *shell)
 {
@@ -57,11 +82,12 @@ void	child_proc(t_shell *shell)
 		else
 			great(shell, (shell->parser->index - 1) * 2);
 	}
-	else if (shell->parser->input == T_LESSER
-		|| shell->parser->input == T_HEREDOC)
+	else if (shell->parser->input == T_LESSER)
 		less(shell, 1);
+	else if (shell->parser->input == T_HEREDOC)
+		heredoc(shell);
 	else
-		reset_loop(shell, NULL, shell->parser->cmd, 0);
+		proc_termination(shell);
 }
 
 void	pipex(t_shell *shell)
@@ -84,6 +110,7 @@ void	pipex(t_shell *shell)
 		shell->parser = shell->parser->next;
 	}
 	waitpid(-1, &status, 0);
+	//wait_processes(shell);
 	fd_close(shell);
-	reset_loop(shell, NULL, shell->parser->cmd, 0);
+	reset_loop(shell, NULL, NULL, 0);
 }

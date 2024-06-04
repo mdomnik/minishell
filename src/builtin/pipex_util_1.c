@@ -6,7 +6,7 @@
 /*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 15:54:29 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/02 15:54:54 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/04 15:21:33 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	fd_close(t_shell *shell)
 	i = 0;
 	if (*(shell->fd) != -2)
 	{
-		while (i != (*(shell->cmd_count) - 1) * 2)
+		while (i != *(shell->cmd_count) * 2)
 		{
 			if (close(shell->fd[i]) == -1)
 				perror("fd close error");

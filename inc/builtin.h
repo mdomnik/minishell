@@ -59,11 +59,13 @@ void	pip_exe(t_shell *shell, int i, int j);
 void	great(t_shell *shell, int i);
 void	less(t_shell *shell, int i);
 void	handle_here_document(t_shell *shell);
+void    heredoc(t_shell *shell);
 
 //redirection utils
 void	err_fd(void);
 void	fd_close(t_shell *shell);
 void	cmd_count(t_shell *shell);
 void	proc_termination(t_shell *shell);
+void	wait_processes(t_shell *shell);
 
 #endif

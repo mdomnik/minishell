@@ -6,7 +6,7 @@
 /*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/02 15:54:22 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/02 16:21:44 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/04 17:13:55 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,6 @@ void	c_c_less(t_shell *shell, t_parser *current)
 		err_fd();
 }
 
-void	c_c_heredoc(t_shell *shell, t_parser *current)
-{
-	(void)current;
-	/*if (current->cmd == NULL)
-		reset_loop(shell, "command not found");*/
-	handle_here_document(shell);
-}
-
 void	c_c_cmd_count_value_store(t_shell *shell, int i)
 {
 	int		n;
@@ -67,7 +59,6 @@ void	c_c_cmd_count_value_store(t_shell *shell, int i)
 		pipe(shell->fd + n * 2);
 		n++;
 	}
-	shell->cmd_count = malloc(sizeof(int));
 	*(shell->cmd_count) = i;
 }
 
@@ -92,7 +83,7 @@ void	cmd_count(t_shell *shell)
 		else if (current->input == T_LESSER)
 			c_c_less(shell, current);
 		else if (current->input == T_HEREDOC)
-			c_c_heredoc(shell, current);
+			handle_here_document(shell);
 		current = current->next;
 	}
 	c_c_cmd_count_value_store(shell, i);

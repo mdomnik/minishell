@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/04 17:19:15 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/04 17:35:08 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,9 @@ void	reset_loop(t_shell *shell, char *msg, char *cmd, unsigned int err);
 void	starting_dir(t_shell *shell);
 
 //signals.c
-void	handle_sigint(int sig);
-void	set_signals(void);
+void	set_signals_parent(void);
+void	set_signals_child(void);
+void	sigquit_handler(int num);
 
 //testing.c
 void	print_lexer(t_shell *shell);

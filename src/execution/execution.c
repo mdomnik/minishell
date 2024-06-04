@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:54:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/03 20:33:25 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/04 17:37:11 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	single_cmd_exe(t_shell *shell)
 	t_parser	*current;
 	int			input_fd;
 	int			output_fd;
-	int			status;
+	//int			status;
 
 	input_fd = STDIN_FILENO;
 	output_fd = STDOUT_FILENO;
@@ -32,6 +32,7 @@ void	single_cmd_exe(t_shell *shell)
 	}
 	if (pid == 0)
 	{
+		set_signals_child();
 		if (input_fd != STDIN_FILENO)
 		{
 			if (dup2(input_fd, STDIN_FILENO) == -1)
@@ -52,9 +53,10 @@ void	single_cmd_exe(t_shell *shell)
 		}
 		if (find_path(shell) == 1)
 			exit(EXIT_SUCCESS);
-		reset_loop(shell, NULL, shell->parser->cmd, 0);
+		proc_termination(shell);
 	}
-	waitpid(pid, &status, 0);
+	//waitpid(-1, &status, 0);
+	wait_processes(shell);
 	if (input_fd != STDIN_FILENO)
 		close(input_fd);
 	if (output_fd != STDOUT_FILENO)
@@ -72,6 +74,7 @@ void	single_cmd_exe(t_shell *shell)
 
 void	execute(t_shell *shell)
 {
+	//print_parser(shell);
 	shell->pid = -2;
 	if (shell->parser->output == T_PIPE
 		|| shell->parser->output == T_GREATER
@@ -82,7 +85,7 @@ void	execute(t_shell *shell)
 	else if (shell->parser->cmd != NULL && shell->parser->output != 1)
 		find_builtin(shell);
 	else
-		reset_loop(shell, NULL, shell->parser->cmd, 0);
+		reset_loop(shell, ERR_NUM, shell->parser->cmd, 0);
 }
 
 /* Finds and executes the appropriate built-in
@@ -98,6 +101,7 @@ int	find_builtin(t_shell *shell)
 {
 	char	*cmd;
 
+	//printf("pid_error:%d\n", shell->pid);
 	cmd = shell->parser->cmd;
 	if (cmp_str(cmd, "echo") == 0)
 		builtin_echo(shell);
@@ -116,7 +120,10 @@ int	find_builtin(t_shell *shell)
 	else
 		single_cmd_exe(shell);
 	if (shell->pid != -2)
+	{
+		perror("error!");
 		proc_termination(shell);
+	}
 	reset_loop(shell, NULL, shell->parser->cmd, 0);
 	return (1);
 }
