@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/03 20:19:09 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/04 17:19:15 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@
 # define ERR_PATH " failed to find path"
 # define ERR_EXP2 " not a valid identifier"
 # define ERR_DOLLAR " not valid in this context"
-# define ERR_NUM " numeric argument required"
+# define ERR_NUM " numeric argument required\n"
 
 /*outermost struct of the shell
   contains all other structs and

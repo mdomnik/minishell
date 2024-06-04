@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:16:07 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/03 20:31:59 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/04 17:21:33 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 void	builtin_exit(t_shell *shell)
 {
 	int exit_code;
+
+	exit_code = 0;
 	if (count_args(shell->parser->args) > 1)
 	{
 		reset_loop(shell, ERR_ARG, shell->parser->cmd, 1);
@@ -50,7 +52,7 @@ void	builtin_exit(t_shell *shell)
 		parserfreelist_ms(&shell->parser);
 	free(shell);
 	printf("exit\n");
-	exit(0);
+	exit(exit_code);
 }
 
 int get_exit(int exit_code)
