@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:37:46 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/01 16:45:53 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/16 14:27:21 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@ typedef struct s_shell	t_shell;
 
 typedef enum e_io
 {
-	I_STDIN = 10,
-	O_STDOUT = 20,
-	I_PIPE = 30,
-	O_PIPE = 40,
+	NONE,
+	GREAT,
+	APPEND,
+	LESS,
+	HEREDOC,
+	PIPE,
 }	t_io;
 
 typedef struct s_parser
@@ -40,6 +42,14 @@ typedef struct s_parser
 	struct s_parser	*prev;
 	struct s_parser	*next;
 }	t_parser;
+
+typedef struct s_exec
+{
+	char			**token;
+	t_io			operator;
+	struct	s_exec	*next;
+
+}	t_exec;
 
 typedef struct s_info
 {
@@ -84,5 +94,8 @@ void		group_redir(t_shell *shell);
 void		group_files(t_shell *shell, char **io, int file_num);
 void		group_args(t_shell *shell, char **io,
 				char **files, int *file_types);
+
+//prep_exec.c
+void prep_exec(t_shell *shell);
 
 #endif

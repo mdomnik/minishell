@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/04 17:35:08 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/16 13:33:11 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 # define ERR_EXPAND " failed to initialize expand node"
 # define ERR_EMPTY " no nodes found in the lexer list"
 # define ERR_INDEX " Index out of range. Cannot delete node"
-# define ERR_SYNTAX " syntax error near unexpected token"
+# define ERR_SYNTAX "syntax error near unexpected token\n"
 # define ERR_QUOTE " quote not terminated by another quote"
 # define ERR_CMD " command not found"
 # define ERR_NCMD " command not found"

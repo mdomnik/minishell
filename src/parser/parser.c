@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:28:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/03 20:07:10 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/16 14:38:15 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	parser(t_shell *shell)
 {
 	group_redir(shell);
 	adjust_output(shell);
+	// prep_exec(shell);
 	execute(shell);
 }
 

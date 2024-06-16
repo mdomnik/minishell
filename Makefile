@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+         #
+#    By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 21:52:00 by kaan              #+#    #+#              #
-#    Updated: 2024/06/02 15:57:10 by kaan             ###   ########.fr        #
+#    Updated: 2024/06/16 14:26:25 by mdomnik          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,6 +52,7 @@ SRC =	src/builtin/cd.c\
 		src/parser/parser_utils_2.c\
 		src/parser/parser_utils_3.c\
 		src/parser/parser.c\
+		src/parser/prep_exec.c\
 		src/utils/gen_utils_1.c\
 		src/utils/gen_utils_2.c\
 		src/utils/gen_utils_3.c\
