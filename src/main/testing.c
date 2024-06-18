@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:40:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/29 14:13:11 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/18 19:29:44 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,4 +144,40 @@ void	test_parser_pointers(char **args, char **io, char **files)
 	printf("io[2]: %s\n", io[2]);
 	printf("io[3]: %s\n", io[3]);
 	printf("----------------\n");
+}
+
+void print_exec(t_shell *shell)
+{
+	t_exec	*current;
+	int	i;
+
+	i = 0;
+	current = shell->exec;
+	if (shell->exec == NULL)
+		printf("Stack is empty\n");
+	printf("exec Stack contents:\n");
+	while (current != NULL)
+	{
+		printf("tokens :");
+		i = 0;
+		while (current->token[i] != NULL)
+		{
+			printf(" %s", current->token[i]);
+			i++;
+		}
+		if (current->operator == NONE)
+			printf(" [NONE]\n");
+		else if (current->operator == GREAT)
+			printf(" [GREAT]\n");
+		else if (current->operator == APPEND)
+			printf(" [APPEND]\n");
+		else if (current->operator == LESS)
+			printf(" [LESS]\n");
+		else if (current->operator == HEREDOC)
+			printf(" [HEREDOC]\n");
+		else if (current->operator == PIPE)
+			printf(" [PIPE]\n");
+		current = current->next;
+	}
+	printf("----------------------\n");
 }

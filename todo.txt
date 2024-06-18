@@ -36,3 +36,9 @@ exit generate new minishell with each execution
 exit codes need to be implemented
 on cat, ctrl + c prints terminal twice 
 >> still wipes not active redirection
+
+
+echo test hello <in1 <<in2 world | cat >out4 >>out5 world
+
+echo test hello world <<in2 | cat world >>out5
+

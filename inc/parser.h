@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:37:46 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/16 14:27:21 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/18 19:47:00 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,18 @@ void		group_args(t_shell *shell, char **io,
 				char **files, int *file_types);
 
 //prep_exec.c
-void prep_exec(t_shell *shell);
+void	prep_exec(t_shell *shell);
+void	create_exec_node(t_shell *shell, t_parser *parser,char **args, char *cmd);
+void	create_input_node(t_shell *shell, t_parser *parser);
+void create_output_node(t_shell *shell, t_parser *parser);
+int	count_dblptr(char **args);
+
+//prep_exec_2.c
+void	remove_pipe_on_input(t_shell *shell);
+void	free_nodes_on_pipe(t_shell *shell, int pipe_count);
+
+//exec_struct.c
+t_exec	*execfreelist_ms(t_exec **lst);
+void	execaddback_ms(t_exec **lst, t_exec *new);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 15:09:18 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/29 14:07:37 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/18 14:18:15 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,14 +132,14 @@ void	adjust_output(t_shell *shell)
 	{
 		if (current->next != NULL && current->o_str == NULL)
 		{
-			current->output = T_PIPE;
+			current->output = PIPE;
 			current->o_str = "PIPE";
 		}
 		current = current->next;
 	}
 	if (current->next == NULL && current->o_str == NULL)
 	{
-		current->output = O_STDOUT;
-		current->o_str = "STDOUT";
+		current->output = NONE;
+		current->o_str = "NONE";
 	}
 }

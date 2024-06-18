@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 16:53:27 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/10 16:38:09 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/18 15:53:18 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,18 +80,18 @@ char	**remove_first(char **args)
 int	find_redir(char *str)
 {
 	if (!ft_memcmp_ms(str, "|"))
-		return (T_PIPE);
+		return (PIPE);
 	else if (!ft_memcmp_ms(str, ">"))
-		return (T_GREATER);
+		return (GREAT);
 	else if (!ft_memcmp_ms(str, "<"))
-		return (T_LESSER);
+		return (LESS);
 	else if (!ft_memcmp_ms(str, "<<"))
-		return (T_HEREDOC);
+		return (HEREDOC);
 	else if (!ft_memcmp_ms(str, ">>"))
-		return (T_APPEND);
+		return (APPEND);
 	else if (!ft_memcmp_ms(str, "<>"))
 		return (T_MISTAKE);
-	return (T_WORD);
+	return (NONE);
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:27:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/04 17:46:39 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/18 20:53:32 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	shell_loop(t_shell *shell)
 			free(shell->last_dir);
 		if (shell->exit_status)
 			free(shell->exit_status);
+		if (shell->cmd_count)
+			free(shell->cmd_count);
 		free(shell);
 		printf("exit\n");
 		exit(0);
@@ -93,9 +95,12 @@ void	reset_loop(t_shell *shell, char *msg, char *cmd, unsigned int err)
 		expandfreelist_ms(&shell->expand);
 	if (shell->parser)
 		parserfreelist_ms(&shell->parser);
+	if (shell->exec)
+		execfreelist_ms(&shell->exec);
 	shell->expand = NULL;
 	shell->lexer = NULL;
 	shell->parser = NULL;
+	shell->exec = NULL;
 	reset_increment_k(0);
 	if (shell->pid == 0)
 		exit(1);
@@ -116,6 +121,7 @@ t_shell	*init_shell(t_shell *shell)
 	shell->expand = NULL;
 	shell->lexer = NULL;
 	shell->parser = NULL;
+	shell->exec = NULL;
 	shell->env = NULL;
 	shell->declare = NULL;
 	shell->last_dir = NULL;

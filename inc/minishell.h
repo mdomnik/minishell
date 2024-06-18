@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/16 13:33:11 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/18 15:08:51 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_shell
 	struct s_expand		*expand;
 	struct s_lexer		*lexer;
 	struct s_parser		*parser;
+	struct s_exec		*exec;
 	int					*exit_status;
 	int					*fd;
 	int					*red_fd;
@@ -102,5 +103,6 @@ void	print_lexer(t_shell *shell);
 void	print_expand(t_shell *shell);
 void	print_parser(t_shell *shell);
 void	test_parser_pointers(char **args, char **io, char **files);
+void print_exec(t_shell *shell);
 
 #endif

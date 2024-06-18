@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/21 16:14:01 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/10 16:42:28 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/18 14:16:09 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,12 @@ void	set_input(char **io, t_parser *element)
 	{
 		if (element->index == 0) 
 		{
-			element->input = I_STDIN;
-			element->i_str = "STDIN";
+			element->input =  NONE;
+			element->i_str = "NONE";
 		}
 		else 
 		{
-			element->input = I_PIPE;
+			element->input = PIPE;
 			element->i_str = "PIPE";
 		}
 	}
@@ -50,7 +50,7 @@ void	set_output(char **io, t_parser *element)
 {
 	if (io[2] == 0 || io[3] == 0) 
 	{
-		element->output = O_STDOUT;
+		element->output = NONE;
 		element->o_str = NULL;
 	}
 	else 

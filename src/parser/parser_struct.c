@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_struct.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/18 13:37:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/31 12:47:27 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/18 15:11:02 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,10 @@ t_parser	*parserfreelist_ms(t_parser **lst)
 			free_double((*lst)->args);
 		if ((*lst)->files != NULL)
 			free_double((*lst)->files);
-		if (ft_memcmp_ms((*lst)->i_str, "STDIN") 
+		if (ft_memcmp_ms((*lst)->i_str, "NONE") 
 			&& ft_memcmp_ms((*lst)->i_str, "PIPE") && (*lst)->i_str != NULL)
 			free((*lst)->i_str);
-		if (ft_memcmp_ms((*lst)->o_str, "STDOUT") 
+		if (ft_memcmp_ms((*lst)->o_str, "NONE") 
 			&& ft_memcmp_ms((*lst)->o_str, "PIPE") && (*lst)->o_str != NULL)
 			free((*lst)->o_str);
 		if ((*lst)->file_types != NULL)
