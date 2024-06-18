@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:37:46 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/18 19:47:00 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/18 21:42:17 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_parser
 
 typedef struct s_exec
 {
+	int				token_count;
 	char			**token;
 	t_io			operator;
 	struct	s_exec	*next;
@@ -105,6 +106,7 @@ int	count_dblptr(char **args);
 //prep_exec_2.c
 void	remove_pipe_on_input(t_shell *shell);
 void	free_nodes_on_pipe(t_shell *shell, int pipe_count);
+void	get_token_count(t_shell *shell);
 
 //exec_struct.c
 t_exec	*execfreelist_ms(t_exec **lst);

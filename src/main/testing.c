@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:40:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/18 19:29:44 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/18 21:34:51 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,17 +166,18 @@ void print_exec(t_shell *shell)
 			i++;
 		}
 		if (current->operator == NONE)
-			printf(" [NONE]\n");
+			printf(" [NONE]");
 		else if (current->operator == GREAT)
-			printf(" [GREAT]\n");
+			printf(" [GREAT]");
 		else if (current->operator == APPEND)
-			printf(" [APPEND]\n");
+			printf(" [APPEND]");
 		else if (current->operator == LESS)
-			printf(" [LESS]\n");
+			printf(" [LESS]");
 		else if (current->operator == HEREDOC)
-			printf(" [HEREDOC]\n");
+			printf(" [HEREDOC]");
 		else if (current->operator == PIPE)
-			printf(" [PIPE]\n");
+			printf(" [PIPE]");
+		printf(" [TC: %d]\n", current->token_count);
 		current = current->next;
 	}
 	printf("----------------------\n");

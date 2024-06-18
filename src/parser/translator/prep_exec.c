@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 14:24:28 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/18 19:46:23 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/18 21:43:47 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void prep_exec(t_shell *shell)
 		parser = parser->next;
 	}
 	remove_pipe_on_input(shell);
-	// print_parser(shell);
+	get_token_count(shell);
 	print_exec(shell);
 	// execute(shell);
 	reset_loop(shell, NULL, NULL, 0);
@@ -58,6 +58,7 @@ void	create_exec_node(t_shell *shell, t_parser *parser, char **args, char *cmd)
 	else
 		node->operator = parser->output;
 	node->token = token;
+	node->token_count = 0;
 	node->next = NULL;
 	execaddback_ms(&shell->exec, node);
 }
@@ -76,6 +77,7 @@ void create_input_node(t_shell *shell, t_parser *parser)
 	else
 		node->operator = NONE;
 	node->token = token;
+	node->token_count = 0;
 	node->next = NULL;
 	execaddback_ms(&shell->exec, node);
 }
@@ -90,6 +92,7 @@ void create_output_node(t_shell *shell, t_parser *parser)
 	token[1] = NULL;
 	node->operator = NONE;
 	node->token = token;
+	node->token_count = 0;
 	node->next = NULL;
 	execaddback_ms(&shell->exec, node);
 }
