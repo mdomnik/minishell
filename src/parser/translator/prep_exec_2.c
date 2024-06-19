@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 19:35:03 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/18 21:43:16 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/19 16:57:06 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,7 @@ void free_nodes_on_pipe(t_shell *shell, int pipe_count)
 void get_token_count(t_shell *shell)
 {
 	t_exec *exec;
-	int		count;
 
-	count = 0;
 	exec = shell->exec;
 	while (exec != NULL)
 	{

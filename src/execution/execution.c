@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:54:38 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/04 17:37:11 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/19 16:56:53 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,12 @@
 void	single_cmd_exe(t_shell *shell)
 {
 	pid_t		pid;
-	t_parser	*current;
 	int			input_fd;
 	int			output_fd;
 	//int			status;
 
 	input_fd = STDIN_FILENO;
 	output_fd = STDOUT_FILENO;
-	current = shell->parser;
 	pid = fork();
 	if (pid == -1)
 	{

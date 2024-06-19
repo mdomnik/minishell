@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 15:00:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/04 17:43:58 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/19 16:57:21 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,8 @@ void	heredoc(t_shell *shell)
 void	handle_here_document(t_shell *shell)
 {
 	char	*line;
-	size_t	len;
 
 	line = NULL;
-	len = 0;
 	set_signals_child();
 	*(shell->red_fd) = open("/tmp/heredoc_tmp",
 			O_CREAT | O_WRONLY | O_TRUNC, 0777);
