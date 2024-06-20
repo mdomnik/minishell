@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:27:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/20 17:41:43 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/20 19:20:11 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,6 @@ void	shell_loop(t_shell *shell)
 			free(shell->last_dir);
 		if (shell->exit_status)
 			free(shell->exit_status);
-		if (shell->cmd_count)
-			free(shell->cmd_count);
 		free(shell);
 		printf("exit\n");
 		exit(0);
@@ -85,10 +83,8 @@ void	shell_loop(t_shell *shell)
  *
  * @param shell A pointer to the t_shell struct representing the shell.
  */
-void	reset_loop(t_shell *shell, char *msg, char *cmd, unsigned int err)
+void	reset_loop(t_shell *shell)
 {
-	if (msg)
-		ft_perror(msg, cmd, err, shell);
 	if (shell->line)
 		free(shell->line);
 	if (shell->lexer)
@@ -104,8 +100,6 @@ void	reset_loop(t_shell *shell, char *msg, char *cmd, unsigned int err)
 	shell->parser = NULL;
 	shell->exec = NULL;
 	reset_increment_k(0);
-	if (shell->pid == 0)
-		exit(1);
 	shell_loop(shell);
 }
 
@@ -129,9 +123,6 @@ t_shell	*init_shell(t_shell *shell)
 	shell->last_dir = NULL;
 	shell->exit_status = malloc(sizeof(int));
 	*(shell->exit_status) = 0;
-	shell->pid = -1;
-	shell->cmd_count = malloc(sizeof(int));
-	*(shell->cmd_count) = -1;
 	return (shell);
 }
 

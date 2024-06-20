@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:20:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/20 17:11:27 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/20 19:15:02 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,69 +94,69 @@ void	redir_output(t_exec *exec)
 		ft_open(exec->next->token[0], O_APPEND);
 }
 
-// char	**add_string(char **array, int *size, const char *new_string)
-// {
-// 	char	**new_array;
-// 	int		i;
+char	**add_string(char **array, int *size, const char *new_string)
+{
+	char	**new_array;
+	int		i;
 
-// 	new_array = malloc((*size + 1) * sizeof(char *));
-// 	if (new_array == NULL)
-// 	{
-// 		perror("malloc failed");
-// 		exit(EXIT_FAILURE);
-// 	}
-// 	i = 0;
-// 	while (i < *size)
-// 	{
-// 		new_array[i] = ft_strdup(array[i]);
-// 		i++;
-// 	}
-// 	new_array[*size] = ft_strdup(new_string);
-// 	free_d_lst(array);
-// 	array = malloc((*size + 2) * sizeof(char *));
-// 	i = 0;
-// 	while (i < *size + 1)
-// 	{
-// 		array[i] = ft_strdup(new_array[i]);
-// 		i++;
-// 	}
-// 	i = 0;
-// 	while (new_array[i] && i < *size + 1)
-// 	{
-// 		free(new_array[i]);
-// 		i++;
-// 	}
-// 	free(new_array);
-// 	(*size)++;
-// 	return (array);
-// }
+	new_array = malloc((*size + 1) * sizeof(char *));
+	if (new_array == NULL)
+	{
+		perror("malloc failed");
+		exit(EXIT_FAILURE);
+	}
+	i = 0;
+	while (i < *size)
+	{
+		new_array[i] = ft_strdup(array[i]);
+		i++;
+	}
+	new_array[*size] = ft_strdup(new_string);
+	free_d_lst(array);
+	array = malloc((*size + 2) * sizeof(char *));
+	i = 0;
+	while (i < *size + 1)
+	{
+		array[i] = ft_strdup(new_array[i]);
+		i++;
+	}
+	i = 0;
+	while (new_array[i] && i < *size + 1)
+	{
+		free(new_array[i]);
+		i++;
+	}
+	free(new_array);
+	(*size)++;
+	return (array);
+}
 
-// t_exec	*cat_exec(t_exec *exec)
-// {
-// 	t_exec *first;
-// 	t_exec *third;
-// 	int	size;
-// 	int	i;
+t_exec	*cat_exec(t_exec *exec)
+{
+	t_exec *first;
+	t_exec *third;
+	int	size;
+	int	i;
 
-// 	first = exec;
-// 	size = get_token_count_ms(first->token);
-// 	i = 0;
-// 	while (first->next->token[i])
-// 	{
-// 		first->token = add_string(first->token, &size, first->next->token[i]);
-// 		i++;
-// 	}
-// 	first->token[i + 1] = NULL;
-// 	first->operator = first->next->operator;
-// 	free_d_lst(first->next->token);
-// 	free(first->next);
-// 	if (exec->next->next)
-// 		third = exec->next->next;
-// 	else
-// 		third = NULL;
-// 	first->next = third;
-// 	return (first);
-// }
+	first = exec;
+	size = get_token_count_ms(first->token);
+	i = 0;
+	while (first->next->token[i])
+	{
+		first->token = add_string(first->token, &size, first->next->token[i]);
+		i++;
+	}
+	first->token[i + 1] = NULL;
+	first->operator = first->next->operator;
+	free_d_lst(first->next->token);
+	free(first->next);
+	if (exec->next->next)
+		third = exec->next->next;
+	else
+		third = NULL;
+	first->next = third;
+	return (first);
+}
 
 void	redir_exe(t_shell *shell, t_exec *exec)
 {
@@ -171,8 +171,8 @@ void	redir_exe(t_shell *shell, t_exec *exec)
 		redir_output(exec);
 	//print_exec(temp);
 	temp->operator = NONE;
-	/*if (pipe_check(temp) || redir_check(temp))
-		temp = cat_exec(temp);*/
+	if (pipe_check(temp) || redir_check(temp))
+		temp = cat_exec(temp);
 	//print_exec(temp);
 	//print_token(temp->token);
 	/*while (exec->operator != NONE && exec->operator != PIPE)

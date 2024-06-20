@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:33:36 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/20 17:56:32 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/20 19:18:32 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,4 +101,5 @@ void	execution(t_shell *shell)
 		else
 			exit_status = status / 256;
 	}
+	reset_loop(shell);
 }

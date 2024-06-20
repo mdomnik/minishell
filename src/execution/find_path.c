@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:04:13 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/20 17:58:30 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/20 18:38:40 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	**get_paths(t_shell *shell)
 	{
 		free(env);
 		free_double(path);
-		reset_loop(shell, ERR_PATH, shell->parser->cmd, 1);
+		exit(127);
 	}
 	free(env);
 	return (path);

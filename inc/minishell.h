@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/20 17:50:50 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/20 19:20:00 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,10 +75,6 @@ typedef struct s_shell
 	struct s_parser		*parser;
 	struct s_exec		*exec;
 	int					*exit_status;
-	int					*fd;
-	int					*red_fd;
-	int					*cmd_count;
-	int					pid;
 }			t_shell;
 
 //error_seq.c
@@ -91,7 +87,7 @@ void	free_shell(t_shell *shell);
 t_shell	*init_shell(t_shell *shell);
 void	shell_loop(t_shell *shell);
 t_shell	*init_shell(t_shell *shell);
-void	reset_loop(t_shell *shell, char *msg, char *cmd, unsigned int err);
+void	reset_loop(t_shell *shell);
 void	starting_dir(t_shell *shell);
 
 //signals.c

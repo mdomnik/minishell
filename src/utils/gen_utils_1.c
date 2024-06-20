@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:41:28 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/03 20:07:24 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/20 19:04:10 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ char	**add_delim_split(char *str, t_shell *shell)
 	if (ret[0] == NULL)
 	{
 		free_double(ret);
-		reset_loop(shell, ERR_CMD, shell->parser->cmd, 1);
+		ft_perror(ERR_CMD, NULL, 258, shell);
 	}
 	while (ret[i] != NULL)
 	{

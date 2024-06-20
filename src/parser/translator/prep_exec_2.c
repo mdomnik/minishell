@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 19:35:03 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/19 16:57:06 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/20 19:13:32 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,16 @@ void free_nodes_on_pipe(t_shell *shell, int pipe_count)
 	t_exec *temp;
 
 	exec = shell->exec;
-	while (exec != NULL && pipe_count > 0)
+	while (exec->next != NULL && pipe_count > 0)
 	{
+		if (exec != NULL && exec->operator == PIPE)
+			pipe_count--;
+		if (pipe_count == 0)
+			break;
 		temp = exec->next;
 		free_double(exec->token);
 		free(exec);
 		exec = temp;
-		if (exec != NULL && exec->operator == PIPE)
-			pipe_count--;
 	}
 	if (exec->operator == PIPE)
 	{

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:21:56 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/16 13:32:35 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/20 19:04:26 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,11 +55,11 @@ void check_final_lexer(t_shell *shell)
 	while (lexer->next != NULL)
 	{
 		if (find_redir(lexer->word) != 0 && lexer->next->token == T_PIPE)
-			reset_loop(shell, ERR_SYNTAX, NULL, 1);
+			ft_perror(ERR_SYNTAX, NULL, 258, shell);
 		lexer = lexer->next;
 	}
 	if (find_redir(lexer->word) != 0)
-		reset_loop(shell, ERR_SYNTAX, NULL, 1);
+		ft_perror(ERR_SYNTAX, NULL, 258, shell);
 }
 
 void	raise_shlvl(t_shell *shell)
