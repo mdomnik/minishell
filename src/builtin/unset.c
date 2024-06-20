@@ -3,28 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 21:35:04 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/01 18:04:47 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/20 16:35:31 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	builtin_unset(t_shell *shell)
+int	builtin_unset(t_shell *shell, t_exec *exec)
 {
 	int	i;
 
-	i = 0;
-	while (shell->parser->args[i])
+	i = 1;
+	while (exec->token[i])
 	{
-		unset_declare(shell, shell->parser->args[i]);
-		unset_env(shell, shell->parser->args[i]);
+		unset_declare(shell, exec->token[i]);
+		unset_env(shell, exec->token[i]);
 		i++;
 	}
 	sort_declare(shell);
-	// reset_loop(shell, NULL);
+	return (0);
 }
 
 void	unset_declare(t_shell *shell, char *str)

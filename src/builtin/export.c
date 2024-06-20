@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 01:08:04 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/03 20:02:52 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/20 16:33:05 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@
  *
  * @param shell The minishell structure.
  */
-void	builtin_export(t_shell *shell)
+int	builtin_export(t_shell *shell, t_exec *exec)
 {
 	int	i;
 
 	i = 0;
-	if (count_args(shell->parser->args) == 0)
+	if (exec->token_count == 1)
 	{
 		while (shell->declare[i])
 		{
@@ -32,11 +32,10 @@ void	builtin_export(t_shell *shell)
 			printf("%s\n", shell->declare[i]);
 			i++;
 		}
-		reset_loop(shell, NULL, shell->parser->cmd, 1);
-		return ;
+		return (0);
 	}
 	else
-		update_env_declare(shell);
+		return(update_env_declare(shell, exec));
 }
 
 /**
@@ -46,32 +45,31 @@ void	builtin_export(t_shell *shell)
  * @param shell The shell structure containing
  * the parser and other relevant data.
  */
-void	update_env_declare(t_shell *shell)
+int	update_env_declare(t_shell *shell, t_exec *exec)
 {
 	int	i;
 
-	i = 0;
-	while (shell->parser->args[i])
+	i = 1;
+	while (exec->token[i])
 	{
-		if (valid_format(shell->parser->args[i]) == -1)
+		if (valid_format(exec->token[i]) == -1)
+			return (-1);
+		else if (valid_format(exec->token[i]) == 1)
 		{
-			reset_loop(shell, ERR_EXP2, shell->parser->cmd, 1);
-		}
-		else if (valid_format(shell->parser->args[i]) == 1)
-		{
-			if (scan_declare(shell, shell->parser->args[i]) == 0)
-				add_declare(shell, shell->parser->args[i], 0);
+			if (scan_declare(shell, exec->token[i]) == 0)
+				add_declare(shell, exec->token[i], 0);
 		}
 		else
 		{
-			if (scan_env(shell, shell->parser->args[i]) == 0)
-				add_env(shell, shell->parser->args[i]);
-			if (scan_declare(shell, shell->parser->args[i]) == 0)
-				add_declare(shell, shell->parser->args[i], 1);
+			if (scan_env(shell, exec->token[i]) == 0)
+				add_env(shell, exec->token[i]);
+			if (scan_declare(shell, exec->token[i]) == 0)
+				add_declare(shell, exec->token[i], 1);
 		}
 		i++;
 	}
 	sort_declare(shell);
+	return (0);
 }
 
 /**

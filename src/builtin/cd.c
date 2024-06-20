@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 22:17:43 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/03 20:00:21 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/20 16:42:06 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,51 +17,47 @@
  * 
  * @param shell The shell structure.
  */
-void	builtin_cd(t_shell *shell)
+int	builtin_cd(t_shell *shell, t_exec *exec)
 {
-	if (count_args(shell->parser->args) > 1)
+	if (exec->token_count > 2)
 	{
-		reset_loop(shell, ERR_CDARG, shell->parser->cmd, 1);
-		return ;
+		return (-1);
 	}
-	else if (count_args(shell->parser->args) == 0)
+	else if (exec->token_count == 1)
 	{
 		cd_home(shell);
-		return ;
+		return (0);
 	}
-	else if (cmp_str(shell->parser->args[0], "-") == 0)
+	else if (cmp_str(exec->token[1], "-") == 0)
 	{
 		change_last_dir(shell);
-		reset_loop(shell, NULL, shell->parser->cmd, 1);
-		return ;
+		return (0);
 	}
 	set_last_dir(shell);
-	if (chdir(shell->parser->args[0]) == -1)
+	if (chdir(exec->token[1]) == -1)
 	{
-		printf("minishell: cd: %s:", shell->parser->args[0]);
-		reset_loop(shell, ERR_CD, shell->parser->cmd, 1);
-		return ;
+		printf("minishell: cd: %s:", exec->token[1]);
+		return (-1);
 	}
+	return (0);
 }
 
-void	cd_home(t_shell *shell)
+int	cd_home(t_shell *shell)
 {
 	char	*home;
 
 	home = ft_getenv("HOME", shell->env);
 	if (!home)
 	{
-		reset_loop(shell, ERR_CDHOME, shell->parser->cmd, 1);
-		return ;
+		return (-1);
 	}
 	if (chdir(home) == -1)
 	{
 		free(home);
-		reset_loop(shell, ERR_CD, shell->parser->cmd, 1);
-		return ;
+		return (-1);
 	}
 	free(home);
-	reset_loop(shell, NULL, shell->parser->cmd, 1);
+	return (0);
 }
 
 void	set_last_dir(t_shell *shell)

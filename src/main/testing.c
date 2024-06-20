@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:40:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/18 21:34:51 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/20 17:50:32 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,4 +181,17 @@ void print_exec(t_shell *shell)
 		current = current->next;
 	}
 	printf("----------------------\n");
+}
+
+void print_double_pointer(char **list)
+{
+	int	i;
+
+	i = 0;
+	while (list[i] != NULL)
+	{
+		printf("list[%d]: %s\n", i, list[i]);
+		i++;
+	}
+	printf("----------------\n");
 }

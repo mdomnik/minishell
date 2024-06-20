@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:12:05 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/03 19:56:10 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/20 15:59:32 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,24 @@ void	lower_shlvl(t_shell *shell);
 
 //gen_utils_split.c
 char	**ft_split_ms(const char *s, char c);
+
+//utils
+void	exit_shell(t_shell *shell, char *msg, int exit_status);
+void	destroy(t_shell *shell);
+void	free_d_lst(char **list);
+bool	strcmp_msn(char *s1, char *s2);
+bool	unexpected_token(char token);
+// int		unset_var(char *var_name, t_envp **envp);
+// t_envp	*envp_new_node(char *var_name, char *var_value, bool is_exported);
+// t_envp	*envp_last(t_envp *node);
+// void	envp_add_back(t_envp **envp, t_envp *new);
+// char	*get_envp(char *var_name, t_envp **envp);
+// char	*get_varvalue_envp(char *var_name, t_shell *shell);
+size_t	exec_size(t_exec *exec);
+bool	ft_isnum_bool(char *str);
+char	*ft_strjoin_msn(char *s1, char *s2);
+// void	envp_clean(t_envp **list);
+void	exec_clean(t_exec **exec);
+int	get_token_count_ms(char **token);
 
 #endif

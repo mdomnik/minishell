@@ -42,3 +42,5 @@ echo test hello <in1 <<in2 world | cat >out4 >>out5 world
 
 echo test hello world <<in2 | cat world >>out5
 
+
+add global exit status

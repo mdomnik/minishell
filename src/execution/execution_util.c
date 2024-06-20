@@ -1,35 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.c                                              :+:      :+:    :+:   */
+/*   execution_util.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/25 18:38:32 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/20 16:44:07 by mdomnik          ###   ########.fr       */
+/*   Created: 2024/06/18 14:08:26 by kaan              #+#    #+#             */
+/*   Updated: 2024/06/20 15:22:39 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/**
- * Prints the environment variables stored in the shell.
- *
- * @param shell The shell structure containing the environment variables.
- */
-int	builtin_env(t_shell *shell, t_exec *exec)
+bool	redir_check(t_exec *exec)
 {
-	int	i;
+	t_exec	*temp;
 
-	i = 0;
-	if (exec->token[0])
-	{
-		return (-1);
-	}
-	while (shell->env[i])
-	{
-		printf("%s\n", shell->env[i]);
-		i++;
-	}
-	return (0);
+	temp = exec;
+	while (temp->next && temp->operator == NONE)
+		temp = temp->next;
+	if (temp->operator != NONE && temp->operator != PIPE)
+		return (true);
+	return (false);
+}
+
+bool	pipe_check(t_exec *exec)
+{
+	t_exec	*temp;
+
+	temp = exec;
+	while (temp->next && temp->operator == NONE)
+		temp = temp->next;
+	if (temp->operator == PIPE)
+		return (true);
+	return (false);
 }

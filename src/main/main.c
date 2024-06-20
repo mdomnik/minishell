@@ -6,11 +6,13 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:27:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/18 20:53:32 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/20 17:41:43 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+int	exit_status = 0;
 
 /* Function runs at launch:
 user should start the shell program using just
@@ -49,7 +51,7 @@ int	main(int argc, char **argv, char **envp)
 
 void	shell_loop(t_shell *shell)
 {
-	set_signals_parent();
+	config_signals();
 	shell->line = readline(CL_NAME);
 	if (!shell->line) 
 	{

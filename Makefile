@@ -6,7 +6,7 @@
 #    By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 21:52:00 by kaan              #+#    #+#              #
-#    Updated: 2024/06/18 19:35:24 by mdomnik          ###   ########.fr        #
+#    Updated: 2024/06/20 15:52:22 by mdomnik          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,8 +33,12 @@ SRC =	src/builtin/cd.c\
 		src/builtin/export.c\
 		src/builtin/pwd.c\
 		src/builtin/unset.c\
+		src/execution/execution_util.c\
 		src/execution/execution.c\
-		src/execution/pathexec.c\
+		src/execution/find_path.c\
+		src/execution/less_util.c\
+		src/execution/pipe.c\
+		src/execution/redir.c\
 		src/expander/expander_process.c\
 		src/expander/expander_struct.c\
 		src/expander/expander.c\
@@ -44,7 +48,7 @@ SRC =	src/builtin/cd.c\
 		src/lexer/lexer.c\
 		src/main/error_seq.c\
 		src/main/main.c\
-		src/main/signals.c\
+		src/main/signal.c\
 		src/main/testing.c\
 		src/parser/parser_node.c\
 		src/parser/parser_struct.c\
@@ -60,10 +64,9 @@ SRC =	src/builtin/cd.c\
 		src/utils/gen_utils_3.c\
 		src/utils/gen_utils_4.c\
 		src/utils/gen_utils_split.c\
-		src/builtin/pipe.c\
-		src/builtin/redir.c\
-		src/builtin/pipex_util_1.c\
-		src/builtin/pipex_util_2.c\
+		src/utils/util_1.c\
+		src/utils/util_3.c\
+		src/utils/util_4.c\
 
 OBJ = $(patsubst %.c,$(OBJ_DIR)%.o,$(SRC))
 

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:16:07 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/04 17:21:33 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/20 16:30:16 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,20 @@
  * 
  * @param shell A pointer to the shell structure.
  */
-void	builtin_exit(t_shell *shell)
+void	builtin_exit(t_shell *shell, t_exec *exec)
 {
 	int exit_code;
 
 	exit_code = 0;
-	if (count_args(shell->parser->args) > 1)
+	if (exec->token_count > 2)
+		exit(EXIT_FAILURE);
+	else if (exec->token_count == 2)
 	{
-		reset_loop(shell, ERR_ARG, shell->parser->cmd, 1);
-		return ;
-	}
-	else if (count_args(shell->parser->args) == 1)
-	{
-		if (ft_isnum(shell->parser->args[0]) == 0)
+		if (ft_isnum(exec->token[1]) == 1)
 		{
-			reset_loop(shell, ERR_NUM, shell->parser->cmd, 2);
-			return ;
+			exit(EXIT_FAILURE);
 		}
-		exit_code = get_exit(ft_atoi(shell->parser->args[0]));
+		exit_code = get_exit(ft_atoi(exec->token[1]));
 		*(shell->exit_status) = exit_code;
 	}
 	if (shell->env)
@@ -50,6 +46,8 @@ void	builtin_exit(t_shell *shell)
 		expandfreelist_ms(&shell->expand);
 	if (shell->parser)
 		parserfreelist_ms(&shell->parser);
+	if (shell->exec)
+		execfreelist_ms(&shell->exec);
 	free(shell);
 	printf("exit\n");
 	exit(exit_code);
@@ -74,8 +72,8 @@ int ft_isnum(char *str)
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
-			return (0);
+			return (1);
 		i++;
 	}
-	return (1);
+	return (0);
 }

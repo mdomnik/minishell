@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:54:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/02 16:45:42 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/20 16:42:56 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,20 @@
 typedef struct s_shell	t_shell;
 
 //execution.c
-void	execute(t_shell *shell);
-void	single_cmd_exe(t_shell *shell);
-int		find_builtin(t_shell *shell);
+void	execution(t_shell *shell);
+bool	is_valid_id(char *token);
+bool	redir_check(t_exec *exec);
+bool	pipe_check(t_exec *exec);
+void	find_path(t_shell *shell, t_exec *exec);
+int		find_builtin(t_shell *shell, t_exec *exec);
 
-//pathexec.c
-char	**prep_path(t_shell *shell);
-int		find_path(t_shell *shell);
-void	exec_external(t_shell *shell, char *path);
+//pipe & redirection
+void	exec_cmd(t_shell *shell, t_exec *exec);
+void	pipe_exe(t_shell *shell, t_exec *exec);
+void	redir_exe(t_shell *shell, t_exec *exec);
+void	less_nofile_exit(void);
+void	less_multi_file(t_exec *exec, int fd);
+void	less_one_file(t_exec *exec, int fd);
+void	less_invalid_input(char *token);
 
 #endif

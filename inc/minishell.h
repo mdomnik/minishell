@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/18 15:08:51 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/20 17:50:50 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include "../lib/libft/inc/libft.h"
 # include <stdio.h>
 # include <string.h>
+# include <stdbool.h>
 # include <bsd/string.h>
 # include <unistd.h>
 # include <readline/readline.h>
@@ -94,9 +95,8 @@ void	reset_loop(t_shell *shell, char *msg, char *cmd, unsigned int err);
 void	starting_dir(t_shell *shell);
 
 //signals.c
-void	set_signals_parent(void);
-void	set_signals_child(void);
-void	sigquit_handler(int num);
+void	config_signals(void);
+void	child_signals(int signum);
 
 //testing.c
 void	print_lexer(t_shell *shell);
@@ -104,5 +104,6 @@ void	print_expand(t_shell *shell);
 void	print_parser(t_shell *shell);
 void	test_parser_pointers(char **args, char **io, char **files);
 void print_exec(t_shell *shell);
+void print_double_pointer(char **list);
 
 #endif

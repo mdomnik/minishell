@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:59:37 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/03 14:41:14 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/20 17:02:30 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  *
  * @param shell The shell structure.
  */
-void	builtin_echo(t_shell *shell)
+int	builtin_echo(t_exec *exec)
 {
 	int	n_flag_value;
 	int	*n_flag;
@@ -28,16 +28,18 @@ void	builtin_echo(t_shell *shell)
 
 	n_flag_value = 0;
 	n_flag = &n_flag_value;
-	i = check_echo_option(shell->parser->args, &n_flag, 0);
-	while (shell->parser->args[i])
+	i = check_echo_option(exec->token, &n_flag, 0);
+	i++;
+	while (exec->token[i])
 	{
-		printf("%s", shell->parser->args[i]);
-		if (shell->parser->args[i + 1])
+		printf("%s", exec->token[i]);
+		if (exec->token[i + 1])
 			printf(" ");
 		i++;
 	}
 	if (n_flag_value == 0)
 		printf("\n");
+	return (0);
 }
 
 /**
