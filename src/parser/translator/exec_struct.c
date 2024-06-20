@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:02:20 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/18 15:30:45 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/20 19:43:29 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ t_exec	*execfreelist_ms(t_exec **lst)
 		*lst = temp;
 	}
 	*lst = NULL;
-	reset_increment_i(0);
 	return (NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:19:13 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/20 19:18:16 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/20 19:57:09 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void	free_err(char *err_str, t_shell *shell)
 	free_shell(shell);
 	exit(1);
 }
-void ft_perror(const char *msg, char *cmd, unsigned int err, t_shell *shell)
+void ft_perror(char *msg, char *cmd, unsigned int err, t_shell *shell)
 {
-	if (cmd == NULL)
-		ft_putendl_fd(cmd, 2);
+	if (msg != NULL)
+		ft_putendl_fd(msg, 2);
 	else if (cmd != NULL)
 	{
 		write(2, cmd, ft_strlen(cmd));

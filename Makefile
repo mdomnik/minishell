@@ -6,7 +6,7 @@
 #    By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 21:52:00 by kaan              #+#    #+#              #
-#    Updated: 2024/06/20 15:52:22 by mdomnik          ###   ########.fr        #
+#    Updated: 2024/06/20 19:45:03 by mdomnik          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -102,6 +102,6 @@ comp: re
 	@./$(NAME)
 
 memcheck: re
-	@valgrind -s --leak-check=full --show-leak-kinds=all --suppressions=suppressions.supp ./$(NAME)
+	@valgrind -s --leak-check=full --track-origins=yes --show-leak-kinds=all --suppressions=suppressions.supp ./$(NAME)
 
 .PHONY: start all clean fclean re

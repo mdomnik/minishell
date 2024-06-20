@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/20 19:20:00 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/20 19:57:18 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct s_shell
 
 //error_seq.c
 void	simple_err(char *err_str);
-void	ft_perror(const char *msg, char *cmd, unsigned int err, t_shell *shell);
+void	ft_perror(char *msg, char *cmd, unsigned int err, t_shell *shell);
 void	free_err(char *err_str, t_shell *shell);
 void	free_shell(t_shell *shell);
 

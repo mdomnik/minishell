@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:33:36 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/20 19:18:32 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/20 19:53:14 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ int	find_builtin(t_shell *shell, t_exec *exec)
 void	single_exe(t_shell *shell, t_exec *exec)
 {
 	if (find_builtin(shell, exec) == 0)
+	{
+		free_shell(shell);
 		exit (EXIT_SUCCESS) ;
+	}
 	find_path(shell, exec);
 }
 
@@ -71,6 +74,7 @@ void	exec_cmd(t_shell *shell, t_exec *exec)
 		single_exe(shell, exec);
 	else
 		redir_exe(shell, exec);
+	free_shell(shell);
 	exit(exit_status);
 }
 
@@ -97,9 +101,10 @@ void	execution(t_shell *shell)
 	if (!WTERMSIG(status))
 	{
 		if (exit_status)
-			return ;
+			reset_loop(shell);
 		else
 			exit_status = status / 256;
 	}
+	execfreelist_ms(&shell->exec);
 	reset_loop(shell);
 }
