@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:16:07 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/20 16:30:16 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/21 14:23:30 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,16 @@ void	builtin_exit(t_shell *shell, t_exec *exec)
 
 	exit_code = 0;
 	if (exec->token_count > 2)
+	{
+		ft_putendl_fd("exit: too many arguments", 2);
 		exit(EXIT_FAILURE);
+	}
 	else if (exec->token_count == 2)
 	{
 		if (ft_isnum(exec->token[1]) == 1)
 		{
-			exit(EXIT_FAILURE);
+			ft_putendl_fd("exit: numeric argument required", 2);
+			exit(2);
 		}
 		exit_code = get_exit(ft_atoi(exec->token[1]));
 		*(shell->exit_status) = exit_code;

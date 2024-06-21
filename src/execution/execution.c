@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:33:36 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/21 14:08:23 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/21 14:19:24 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,12 @@ void	execution(t_shell *shell)
 {
 	t_exec	*exec;
 	int			status;
-
+	int			ret;
 	exec = shell->exec;
 	if (exec_size(exec) == 1)
 	{
-		if (find_builtin(shell, exec) == 2)
+		ret = find_builtin(shell, exec);
+		if (ret == 2)
 		{
 			if (fork() == 0)
 			{
@@ -94,6 +95,8 @@ void	execution(t_shell *shell)
 				find_path(shell, exec);
 			}
 		}
+		else if (ret == -1)
+			*(shell->exit_status) = 1;
 	}
 	else if (fork() == 0)
 		exec_cmd(shell, exec);

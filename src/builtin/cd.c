@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 22:17:43 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/20 16:42:06 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/21 14:21:43 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	builtin_cd(t_shell *shell, t_exec *exec)
 {
 	if (exec->token_count > 2)
 	{
+		ft_putendl_fd("cd: too many arguments", 2);
 		return (-1);
 	}
 	else if (exec->token_count == 1)
@@ -36,7 +37,7 @@ int	builtin_cd(t_shell *shell, t_exec *exec)
 	set_last_dir(shell);
 	if (chdir(exec->token[1]) == -1)
 	{
-		printf("minishell: cd: %s:", exec->token[1]);
+		ft_putendl_fd("cd: No such file or directory", 2);
 		return (-1);
 	}
 	return (0);
