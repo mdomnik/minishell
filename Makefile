@@ -6,7 +6,7 @@
 #    By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 21:52:00 by kaan              #+#    #+#              #
-#    Updated: 2024/06/20 19:45:03 by mdomnik          ###   ########.fr        #
+#    Updated: 2024/06/21 13:10:21 by mdomnik          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,6 +58,7 @@ SRC =	src/builtin/cd.c\
 		src/parser/parser.c\
 		src/parser/translator/prep_exec.c\
 		src/parser/translator/prep_exec_2.c\
+		src/parser/translator/prep_exec_3.c\
 		src/parser/translator/exec_struct.c\
 		src/utils/gen_utils_1.c\
 		src/utils/gen_utils_2.c\

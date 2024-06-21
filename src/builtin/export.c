@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 01:08:04 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/20 16:33:05 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/21 14:11:05 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,11 @@ int	update_env_declare(t_shell *shell, t_exec *exec)
 	while (exec->token[i])
 	{
 		if (valid_format(exec->token[i]) == -1)
+		{
+			ft_putendl_fd("export: not a valid identifier", 2);
+			shell->exit_status = 1;
 			return (-1);
+		}
 		else if (valid_format(exec->token[i]) == 1)
 		{
 			if (scan_declare(shell, exec->token[i]) == 0)

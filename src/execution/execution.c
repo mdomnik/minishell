@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:33:36 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/20 19:53:14 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/21 14:08:23 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int	find_builtin(t_shell *shell, t_exec *exec)
 	else if (cmp_str(cmd, "cd") == 0)
 		return(builtin_cd(shell, exec));
 	else
-		return (-1);
+		return (2);
 	return (1);
 }
 
@@ -86,7 +86,7 @@ void	execution(t_shell *shell)
 	exec = shell->exec;
 	if (exec_size(exec) == 1)
 	{
-		if (find_builtin(shell, exec) == -1)
+		if (find_builtin(shell, exec) == 2)
 		{
 			if (fork() == 0)
 			{

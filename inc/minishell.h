@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/20 19:57:18 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/21 13:48:08 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,32 @@
 # define ERR_EXP2 " not a valid identifier"
 # define ERR_DOLLAR " not valid in this context"
 # define ERR_NUM " numeric argument required\n"
+
+
+// MINISHELL
+# define CL_ARGUMENTS_ERR "minishell: no support for command-line arguments"
+# define NO_PIPE_PROMPT "minishell: no support for pipe prompt"
+# define NO_SYTX_PROMPT "minishell: no support for syntax prompt"
+# define PIPE_ERR "minishell: pipe() failed"
+# define FORK_ERR "minishell: fork() failed"
+
+// SYNTAX
+# define UNCLOSED_QUOTES "minishell: unclosed quotes"
+# define UNEXPECTED_TOKEN "minishell: syntax error near unexpected token '"
+# define SYTX_ERR_RDR "minishell: syntax error near unexpected token"
+
+// EXIT CMD
+# define EXIT_TOO_MANY_ARGS "exit: too many arguments"
+# define EXIT_NON_NUMERIC_ARG "exit: numeric argument required" 
+
+// CD CMD
+# define PATH_MAX	4096
+# define CD_TOO_MANY_ARGS "cd: too many arguments"
+# define OLDPWD_NOT_SET "cd: OLDPWD not set"
+
+//READ FILE
+# define NO_FILE " No such file or directory"
+
 
 /*outermost struct of the shell
   contains all other structs and

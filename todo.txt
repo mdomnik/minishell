@@ -44,3 +44,8 @@ echo test hello world <<in2 | cat world >>out5
 
 
 add global exit status
+hello
+hello
+hello
+hello
+hello

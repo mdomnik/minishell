@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:37:46 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/18 21:42:17 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/21 13:32:46 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,10 @@ int	count_dblptr(char **args);
 void	remove_pipe_on_input(t_shell *shell);
 void	free_nodes_on_pipe(t_shell *shell, int pipe_count);
 void	get_token_count(t_shell *shell);
+
+//prep_exec_3.c
+void remove_non_exist_input(t_shell *shell);
+void purge_till_input(t_shell *shell, int i);
 
 //exec_struct.c
 t_exec	*execfreelist_ms(t_exec **lst);
