@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/16 14:24:28 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/21 13:57:55 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/21 15:09:58 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ void prep_exec(t_shell *shell)
 			break;
 		parser = parser->next;
 	}
-	// remove_pipe_on_input(shell);
+	remove_pipe_on_input(shell);
 	remove_non_exist_input(shell);
 	get_token_count(shell);
-	//print_exec(shell);
+	check_file_existance(shell);
+	// print_exec(shell);
 	parserfreelist_ms(&shell->parser);
 	execution(shell);
 }

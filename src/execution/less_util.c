@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 22:52:14 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/20 20:02:58 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/21 15:12:33 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ extern int	exit_status;
 
 void	less_nofile_exit(void)
 {
-	ft_putendl_fd("NO_FILE", STDERR_FILENO);
+	ft_putendl_fd(NO_FILE, STDERR_FILENO);
 	//exit(EXIT_FAILURE);
 }
 

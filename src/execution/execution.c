@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:33:36 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/21 14:19:24 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/21 14:46:10 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,17 +96,19 @@ void	execution(t_shell *shell)
 			}
 		}
 		else if (ret == -1)
+		{
 			*(shell->exit_status) = 1;
+			execfreelist_ms(&shell->exec);
+			reset_loop(shell);
+			return ;
+		}
 	}
 	else if (fork() == 0)
 		exec_cmd(shell, exec);
 	waitpid(-1, &status, 0);
 	if (!WTERMSIG(status))
 	{
-		if (exit_status)
-			reset_loop(shell);
-		else
-			exit_status = status / 256;
+		*(shell->exit_status) = status / 256;
 	}
 	execfreelist_ms(&shell->exec);
 	reset_loop(shell);

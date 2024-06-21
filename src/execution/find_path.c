@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:04:13 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/20 18:38:40 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/21 14:35:42 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	exit_path(t_shell *shell, char **paths, char *cmd, int exit_status_x)
 	if(paths != NULL)
 		free_double(paths);
 	if (!WIFSIGNALED(exit_status_x))
-		exit_status = exit_status_x;
+		(exit_status) = exit_status_x;
 	free_shell(shell);
 	exit(exit_status);
 }
