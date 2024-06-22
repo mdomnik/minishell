@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:37:46 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/22 16:10:18 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/22 19:37:11 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_exec
 	int				token_count;
 	char			**token;
 	t_io			operator;
+	int				index;
 	struct	s_exec	*next;
 
 }	t_exec;
@@ -72,6 +73,8 @@ void 	set_token_count(t_shell *shell);
 //parser_utils_2.c
 void	create_redir_node(t_shell *shell, char *file, int type);
 void remove_nodes_till_pipe(t_shell *shell);
+void set_index_exec(t_shell *shell);
+
 
 //prep_exec.c
 // void	prep_exec(t_shell *shell);
@@ -94,5 +97,6 @@ t_exec	*execfreelist_ms(t_exec **lst);
 void	execaddback_ms(t_exec **lst, t_exec *new);
 void	create_exec_node(t_shell *shell, char **args, int operand);
 t_expand *remove_current_node(t_expand *expand);
+void	remove_exec_node_at_index(t_shell *shell, int index);
 
 #endif

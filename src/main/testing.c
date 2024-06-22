@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   testing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:40:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/22 15:21:52 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/22 19:32:14 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,6 +177,7 @@ void print_exec(t_shell *shell)
 			printf(" [HEREDOC]");
 		else if (current->operator == PIPE)
 			printf(" [PIPE]");
+		printf(" [index: %d] ", current->index);
 		printf(" [TC: %d]\n", current->token_count);
 		current = current->next;
 	}

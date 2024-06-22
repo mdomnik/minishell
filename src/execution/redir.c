@@ -6,7 +6,7 @@
 /*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:20:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/22 17:49:23 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/22 23:21:13 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,42 +14,39 @@
 
 extern int	exit_status;
 
+void	remove_less(t_shell *shell, t_exec *exec)
+{
+	t_exec	*current;
+	t_exec	*next_node;
+
+	current = exec;
+	while (current->next != NULL && current->next->operator == LESS)
+	{
+		next_node = current->next;
+		if (access(exec->next->token[0], F_OK | R_OK) == -1)
+			return ;
+		remove_exec_node_at_index(shell, next_node->index);
+		current = next_node;
+	}
+}
+
 void	less(t_shell *shell, t_exec *exec)
 {
-	int		fd;
+	int		in_file;
 
-	fd = 0;
 	if (exec->next->token[0])
 	{
-		while (exec->operator == LESS)
+		remove_less(shell, exec);
+		if (access(exec->next->token[0], F_OK | R_OK) == 0)
 		{
-			exec->operator = NONE;
-			if (access(exec->next->token[0], F_OK) == -1)
-			{
-				less_nofile(exec->next->token[0]);
-				return ;
-			}
-			else if (access(exec->next->token[0], R_OK) == -1)
-				less_nopermit_exit(shell);
-			exec = exec->next;
+			in_file = open(exec->next->token[0], O_RDONLY, 0666);
+			dup2(in_file, STDIN_FILENO);
 		}
-		perror("errror");
-		/*while (exec->operator == LESS)
+		else
 		{
-			exec->operator = NONE;
-			if (access(exec->next->token[0], F_OK) == -1)
-				less_nofile_exit();
-			exec = exec->next;
-		}*/
-		//ft_putnbr_fd(exec->token_count, 2);
-		//perror(exec->token[0]);
-		if (exec->token_count > 2
-			&& exec->token[1])
-			less_multi_file(exec, fd);
-		else if (access(exec->token[0], F_OK) == 0)
-			less_one_file(shell, exec, fd);
-		else if (pipe_check(exec) && redir_check(exec))
-			less_invalid_input(exec->token[0]);
+			ft_putendl_fd(NO_FILE, 2);
+			//exit(EXIT_FAILURE);
+		}
 	}
 }
 
@@ -81,16 +78,44 @@ void	ft_open(char *token, int option)
 	}
 }
 
-void	redir_output(t_exec *exec)
+void	remove_output_node(t_exec *exec)
 {
-	close(STDOUT_FILENO);
 	while (exec->next->operator == GREAT
 		|| exec->next->operator == APPEND)
 	{
 		if (exec->operator == GREAT)
+		{
+			//exec->operator = PIPE;
 			ft_open(exec->next->token[0], O_TRUNC);
+		}
 		else if (exec->operator == APPEND)
+		{
+			//exec->operator = PIPE;
 			ft_open(exec->next->token[0], O_APPEND);
+		}
+		exec = exec->next;
+		close(STDOUT_FILENO);
+	}
+}
+
+void	redir_output(t_exec *exec)
+{
+	close(STDOUT_FILENO);
+	//exec->operator = PIPE;
+	//remove_output_node(exec);
+	while (exec->next->operator == GREAT
+		|| exec->next->operator == APPEND)
+	{
+		if (exec->operator == GREAT)
+		{
+			//exec->operator = PIPE;
+			ft_open(exec->next->token[0], O_TRUNC);
+		}
+		else if (exec->operator == APPEND)
+		{
+			//exec->operator = PIPE;
+			ft_open(exec->next->token[0], O_APPEND);
+		}
 		exec = exec->next;
 		close(STDOUT_FILENO);
 	}
@@ -175,11 +200,21 @@ void	redir_exe(t_shell *shell, t_exec *exec)
 		heredoc(exec);
 	else
 		redir_output(exec);
-	//print_exec(temp);
-	temp->operator = NONE;
-	if (pipe_check(temp) || redir_check(temp))
+	//print_exec(shell);
+	if (temp->operator == LESS)
+	{
+		temp->operator = NONE;
 		temp = cat_exec(temp);
-	print_exec(shell);
+	}
+	else if (temp->operator == APPEND || temp->operator == GREAT)
+	{
+		temp->operator = NONE;
+	}
+	//if (pipe_check(temp) || input_redir_check(temp))
+	{
+		//temp = cat_exec(temp);
+	}
+	//print_exec(shell);
 	//print_token(temp->token);
 	/*while (exec->operator != NONE && exec->operator != PIPE)
 		exec = exec->next;*/

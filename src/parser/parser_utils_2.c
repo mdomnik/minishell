@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils_2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:29:20 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/22 17:04:06 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/22 19:35:44 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,19 @@ void remove_nodes_till_pipe(t_shell *shell)
 	}
 	if (shell->expand != NULL)
 		shell->expand->prev = NULL;
+}
+
+void set_index_exec(t_shell *shell)
+{
+	t_exec *exec;
+	int		i;
+
+	i = 0;
+	exec = shell->exec;
+	while(exec != NULL)
+	{
+		exec->index = i;
+		i++;
+		exec = exec->next;
+	}
 }

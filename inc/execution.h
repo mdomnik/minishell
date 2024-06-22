@@ -6,7 +6,7 @@
 /*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:54:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/22 17:41:05 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/22 20:20:30 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ typedef struct s_shell	t_shell;
 //execution.c
 void	execution(t_shell *shell);
 bool	is_valid_id(char *token);
-bool	redir_check(t_exec *exec);
+bool	input_redir_check(t_exec *exec);
 bool	pipe_check(t_exec *exec);
 void	find_path(t_shell *shell, t_exec *exec);
 int		find_builtin(t_shell *shell, t_exec *exec);
@@ -31,9 +31,9 @@ void	exec_cmd(t_shell *shell, t_exec *exec);
 void	pipe_exe(t_shell *shell, t_exec *exec);
 void	redir_exe(t_shell *shell, t_exec *exec);
 void	less_nofile(char *token);
-void	less_nopermit_exit(t_shell *shell);
+void	less_nopermit(char *token);
 void	less_multi_file(t_exec *exec, int fd);
-void	less_one_file(t_shell *shell, t_exec *exec, int fd);
+void	less_one_file(t_exec *exec, int fd);
 void	less_invalid_input(char *token);
 
 #endif

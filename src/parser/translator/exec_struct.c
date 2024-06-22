@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:02:20 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/22 15:41:05 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/22 21:55:18 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ void	create_exec_node(t_shell *shell, char **args, int operand)
 	node->token = double_dup(args);
 	node->token_count = 0;
 	node->operator = operand;
+	node->index = 0;
 	node->next = NULL;
 	execaddback_ms(&shell->exec, node);
 }
@@ -74,4 +75,41 @@ t_expand *remove_current_node(t_expand *expand)
 	free(expand->word);
 	free(expand);
 	return (next);
+}
+
+void remove_exec_node_at_index(t_shell *shell, int index)
+{
+    t_exec *exec;
+    t_exec *temp;
+    // Check if the list is empty
+    if (shell->exec == NULL)
+    {
+        perror("List is empty");
+        return;
+    }
+    exec = shell->exec;
+    // If the node to remove is the first node
+    if (exec->index == index)
+    {
+        shell->exec = exec->next;
+        free_double(exec->token);
+        free(exec);
+        print_exec(shell);
+        return;
+    }
+    // Iterate to find the node just before the one to remove
+    while (exec->next != NULL && exec->next->index != index)
+        exec = exec->next;
+    if (exec->next == NULL)
+    {
+        // Node with the given index was not found
+        perror("Node not found");
+        return;
+    }
+    // Remove the node
+    temp = exec->next;
+    exec->next = temp->next;
+    free_double(temp->token);
+    free(temp);
+    //print_exec(shell);
 }
