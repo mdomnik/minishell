@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:20:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/21 13:49:59 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/22 17:49:23 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 extern int	exit_status;
 
-void	less(t_exec *exec)
+void	less(t_shell *shell, t_exec *exec)
 {
 	int		fd;
 
@@ -25,23 +25,29 @@ void	less(t_exec *exec)
 		{
 			exec->operator = NONE;
 			if (access(exec->next->token[0], F_OK) == -1)
-				less_nofile_exit();
+			{
+				less_nofile(exec->next->token[0]);
+				return ;
+			}
+			else if (access(exec->next->token[0], R_OK) == -1)
+				less_nopermit_exit(shell);
 			exec = exec->next;
 		}
-		while (exec->operator == LESS)
+		perror("errror");
+		/*while (exec->operator == LESS)
 		{
 			exec->operator = NONE;
 			if (access(exec->next->token[0], F_OK) == -1)
 				less_nofile_exit();
 			exec = exec->next;
-		}
+		}*/
 		//ft_putnbr_fd(exec->token_count, 2);
 		//perror(exec->token[0]);
 		if (exec->token_count > 2
 			&& exec->token[1])
 			less_multi_file(exec, fd);
 		else if (access(exec->token[0], F_OK) == 0)
-			less_one_file(exec, fd);
+			less_one_file(shell, exec, fd);
 		else if (pipe_check(exec) && redir_check(exec))
 			less_invalid_input(exec->token[0]);
 	}
@@ -164,7 +170,7 @@ void	redir_exe(t_shell *shell, t_exec *exec)
 
 	temp = exec;
 	if (exec->operator == LESS)
-		less(exec);
+		less(shell, exec);
 	else if (exec->operator == HEREDOC)
 		heredoc(exec);
 	else
@@ -173,7 +179,7 @@ void	redir_exe(t_shell *shell, t_exec *exec)
 	temp->operator = NONE;
 	if (pipe_check(temp) || redir_check(temp))
 		temp = cat_exec(temp);
-	//print_exec(temp);
+	print_exec(shell);
 	//print_token(temp->token);
 	/*while (exec->operator != NONE && exec->operator != PIPE)
 		exec = exec->next;*/

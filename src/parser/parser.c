@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
+/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:28:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/22 17:04:48 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/22 17:43:42 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ void	parser(t_shell *shell)
 		expand = shell->expand;
 	}
 	set_token_count(shell);
-	// print_exec(shell);
-	reset_loop(shell);
+	//print_exec(shell);
 	execution(shell);
 }
 
