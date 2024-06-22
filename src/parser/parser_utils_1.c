@@ -5,131 +5,55 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/04/18 16:53:27 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/18 15:53:18 by mdomnik          ###   ########.fr       */
+/*   Created: 2024/06/21 17:56:43 by mdomnik           #+#    #+#             */
+/*   Updated: 2024/06/22 16:11:12 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-/**
- * Populates the io array with the given strings based on the token type.
- *
- * @param io The io array to populate.
- * @param str1 The first string to copy into the io array.
- * @param str2 The second string to copy into the io array.
- * @param token The token type indicating the operation to perform.
- * @return The updated io array.
- */
-char	**pop_io(char **io, char *str1, char *str2, int token)
+void	adjust_exec_operand(t_shell *shell, int pipe_count)
 {
-	if (token == T_LESSER || token == T_HEREDOC)
+	t_exec	*exec;
+	int		temp_operand;
+
+	exec = shell->exec;
+	temp_operand = NONE;
+	while(pipe_count > 0 && exec->next != NULL)
 	{
-		if (io[0])
-			free(io[0]);
-		if (io[1])
-			free(io[1]);
-		io[0] = ft_strdup(str1);
-		io[1] = ft_strdup(str2);
+		if (exec->operator == PIPE)
+			pipe_count--;
+		exec = exec->next;
 	}
-	else if (token == T_GREATER || token == T_APPEND)
+	while (exec->next != NULL)
 	{
-		if (io[2])
-			free(io[2]);
-		if (io[3])
-			free(io[3]);
-		io[2] = ft_strdup(str1);
-		io[3] = ft_strdup(str2);
+		temp_operand = exec->operator;
+		exec->operator = exec->next->operator;
+		exec->next->operator = temp_operand;
+		exec = exec->next;
 	}
-	return (io);
+	if (shell->expand != NULL)
+		exec->operator = PIPE;
+	else
+		exec->operator = NONE;
 }
 
-/**
- * Removes the first element from an array of strings.
- * 
- * @param args The array of strings from which to remove the first element.
- * @return A new array of strings without the first element.
- */
-char	**remove_first(char **args)
+void set_token_count(t_shell *shell)
 {
-	char	**temp;
-	int		i;
+	t_exec	*exec;
+	int		count;
 
-	i = 0;
-	if (args == NULL || args[0] == NULL)
-		return (NULL);
-	while (args[i] != NULL)
-		i++;
-	temp = (char **)malloc((i) * sizeof(char *));
-	i = 1;
-	while (args[i] != NULL)
+	exec = shell->exec;
+	count = 0;
+	while (exec != NULL)
 	{
-		temp[i - 1] = ft_strdup(args[i]);
-		i++;
-	}
-	temp[i - 1] = NULL;
-	return (temp);
-}
-
-/**
- * Finds the type of redirection based on the given string.
- *
- * @param str The string to check for redirection.
- * @return The type of redirection found.
- */
-int	find_redir(char *str)
-{
-	if (!ft_memcmp_ms(str, "|"))
-		return (PIPE);
-	else if (!ft_memcmp_ms(str, ">"))
-		return (GREAT);
-	else if (!ft_memcmp_ms(str, "<"))
-		return (LESS);
-	else if (!ft_memcmp_ms(str, "<<"))
-		return (HEREDOC);
-	else if (!ft_memcmp_ms(str, ">>"))
-		return (APPEND);
-	else if (!ft_memcmp_ms(str, "<>"))
-		return (T_MISTAKE);
-	return (NONE);
-}
-
-/**
- * Compares two memory blocks.
- *
- * This function compares the memory blocks pointed to by `s1` and `s2`.
- * It returns an integer less than, equal to, or greater than zero if the
- *  first `n` bytes of `s1` are found,
- * respectively, to be less than, to match, or be greater 
- * than the first `n` bytes of `s2`.
- *
- * @param s1 A pointer to the first memory block to be compared.
- * @param s2 A pointer to the second memory block to be compared.
- * @return An integer less than, equal to, or greater than zero if the first 
- * `n` bytes of `s1` are found,
- * respectively, to be less than, to match, or be greater than the first
- *  `n` bytes of `s2`.
- */
-int	ft_memcmp_ms(const void *s1, const void *s2)
-{
-	char	*p1;
-	char	*p2;
-	int		i;
-	int		len;
-
-	p1 = (char *)s1;
-	p2 = (char *)s2;
-	len = ft_strlen_ms(p1);
-	i = 0;
-	if (len != ft_strlen_ms(p2))
-		return (-1);
-	while (i < len)
-	{
-		if (p1[i] != p2[i])
+		if (exec->token != NULL)
 		{
-			return (p1[i] - p2[i]);
+			count = 0;
+			while (exec->token[count] != NULL)
+				count++;
+			exec->token_count = count;
 		}
-		i++;
+		exec = exec->next;
 	}
-	return (0);
 }

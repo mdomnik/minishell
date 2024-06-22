@@ -49,3 +49,12 @@ hello
 hello
 hello
 hello
+
+echo hello <less1 >out1 <<hd1 >>append1 world  >out2 |a >>append2 
+test <less2 >out3 this >>append3 | adasdas sad <<hd2 lsdsadsa sada <less3 >out4 <<hd3 <less4 >>append4
+
+
+echo hello world [less]
+in1 [append]
+
+single letter next to pipe from left

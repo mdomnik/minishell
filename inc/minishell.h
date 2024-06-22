@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/21 13:48:08 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/21 18:01:27 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,5 +127,6 @@ void	print_parser(t_shell *shell);
 void	test_parser_pointers(char **args, char **io, char **files);
 void print_exec(t_shell *shell);
 void print_double_pointer(char **list);
+void print_triple_pointer(char ***triple_pointer);
 
 #endif

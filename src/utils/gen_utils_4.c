@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/07 15:21:56 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/20 19:04:26 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/22 15:01:07 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,3 +98,43 @@ void	raise_shlvl(t_shell *shell)
 	}
 }
 
+int	find_redir(char *str)
+{
+	if (!ft_memcmp_ms(str, "|"))
+		return (PIPE);
+	else if (!ft_memcmp_ms(str, ">"))
+		return (GREAT);
+	else if (!ft_memcmp_ms(str, "<"))
+		return (LESS);
+	else if (!ft_memcmp_ms(str, "<<"))
+		return (HEREDOC);
+	else if (!ft_memcmp_ms(str, ">>"))
+		return (APPEND);
+	else if (!ft_memcmp_ms(str, "<>"))
+		return (T_MISTAKE);
+	return (NONE);
+}
+
+int	ft_memcmp_ms(const void *s1, const void *s2)
+{
+	char	*p1;
+	char	*p2;
+	int		i;
+	int		len;
+
+	p1 = (char *)s1;
+	p2 = (char *)s2;
+	len = ft_strlen_ms(p1);
+	i = 0;
+	if (len != ft_strlen_ms(p2))
+		return (-1);
+	while (i < len)
+	{
+		if (p1[i] != p2[i])
+		{
+			return (p1[i] - p2[i]);
+		}
+		i++;
+	}
+	return (0);
+}

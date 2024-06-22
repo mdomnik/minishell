@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 19:35:03 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/21 15:00:39 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/22 15:37:04 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,14 +63,14 @@ void free_nodes_on_pipe(t_shell *shell, int pipe_count)
 	shell->exec = exec;
 }
 
-void get_token_count(t_shell *shell)
-{
-	t_exec *exec;
+// void get_token_count(t_shell *shell)
+// {
+// 	t_exec *exec;
 
-	exec = shell->exec;
-	while (exec != NULL)
-	{
-		exec->token_count = count_dblptr(exec->token);
-		exec = exec->next;
-	}
-}
+// 	exec = shell->exec;
+// 	while (exec != NULL)
+// 	{
+// 		exec->token_count = count_dblptr(exec->token);
+// 		exec = exec->next;
+// 	}
+// }

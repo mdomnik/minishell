@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:12:05 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/20 15:59:32 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/22 15:01:22 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	adjust_lexer_redir(t_shell *shell);
 void	check_final_lexer(t_shell *shell);
 void	raise_shlvl(t_shell *shell);
 void	lower_shlvl(t_shell *shell);
+int		find_redir(char *str);
+int	ft_memcmp_ms(const void *s1, const void *s2);
 
 //gen_utils_split.c
 char	**ft_split_ms(const char *s, char c);

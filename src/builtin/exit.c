@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:16:07 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/21 14:23:30 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/21 16:26:23 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ void	builtin_exit(t_shell *shell, t_exec *exec)
 		lexerfreelist_ms(&shell->lexer);
 	if (shell->expand)
 		expandfreelist_ms(&shell->expand);
-	if (shell->parser)
-		parserfreelist_ms(&shell->parser);
 	if (shell->exec)
 		execfreelist_ms(&shell->exec);
 	free(shell);

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:40:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/20 17:50:32 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/22 15:21:52 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,10 +188,31 @@ void print_double_pointer(char **list)
 	int	i;
 
 	i = 0;
+	printf("Printing double pointer\n");
 	while (list[i] != NULL)
 	{
 		printf("list[%d]: %s\n", i, list[i]);
 		i++;
 	}
 	printf("----------------\n");
+}
+
+void print_triple_pointer(char ***triple_pointer)
+{
+	int i;
+	int j;
+
+	i = 0;
+	printf("Printing triple pointer\n");
+	while (triple_pointer[i] != NULL)
+	{
+		j = 0;
+		while (triple_pointer[i][j] != NULL)
+		{
+			printf("%s ", triple_pointer[i][j]);
+			j++;
+		}
+		printf("\n");
+		i++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:37:46 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/21 15:00:24 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/22 16:10:18 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,49 +59,25 @@ typedef struct s_info
 	char	**files;
 	int		*file_types;
 }				t_info;
-
-//parser_node.c
-void		set_io(char **io, t_parser *element);
-void		set_input(char **io, t_parser *element);
-void		set_output(char **io, t_parser *element);
-
-//parser_struct.c
-t_parser	*parsernew_ms(char **args, char **io,
-				char **files, int *file_types);
-int			reset_increment_k(int x);
-void		parseraddback_ms(t_parser **lst, t_parser *new);
-t_parser	*parserfreelist_ms(t_parser **lst);
+//parser.c
+void 	parser(t_shell *shell);
+void 	create_cmd_node(t_shell *shell, t_expand *expand);
+void	create_input_node(t_shell *shell, t_expand *expand);
+void	create_output_node(t_shell *shell, t_expand *expand);
 
 //parser_utils_1.c
-char		**pop_io(char **io, char *str1, char *str2, int token);
-char		**remove_first(char **args);
-int			find_redir(char *str);
-int			ft_memcmp_ms(const void *s1, const void *s2);
+void	adjust_exec_operand(t_shell *shell, int pipe_count);
+void 	set_token_count(t_shell *shell);
 
 //parser_utils_2.c
-void		purge_redir(t_shell *shell);
-void		delete_node(t_shell *shell, t_expand *current);
-void		free_io(char **double_str);
-void		create_parser_node(t_shell *shell, t_info info);
-void		adjust_output(t_shell *shell);
-
-//parser_utils_3.c
-void		handle_token(t_expand *cur, char **io, int *file_num);
-int			count_args_before_pipe(t_expand *expand);
-
-//parser.c
-void		parser(t_shell *shell);
-void		group_redir(t_shell *shell);
-void		group_files(t_shell *shell, char **io, int file_num);
-void		group_args(t_shell *shell, char **io,
-				char **files, int *file_types);
+void	create_redir_node(t_shell *shell, char *file, int type);
+void remove_nodes_till_pipe(t_shell *shell);
 
 //prep_exec.c
-void	prep_exec(t_shell *shell);
-void	create_exec_node(t_shell *shell, t_parser *parser,char **args, char *cmd);
-void	create_input_node(t_shell *shell, t_parser *parser);
-void create_output_node(t_shell *shell, t_parser *parser);
-int	count_dblptr(char **args);
+// void	prep_exec(t_shell *shell);
+// void	create_input_node(t_shell *shell, t_parser *parser);
+// void create_output_node(t_shell *shell, t_parser *parser);
+// int	count_dblptr(char **args);
 
 //prep_exec_2.c
 void	remove_pipe_on_input(t_shell *shell);
@@ -116,5 +92,7 @@ void check_file_existance(t_shell *shell);
 //exec_struct.c
 t_exec	*execfreelist_ms(t_exec **lst);
 void	execaddback_ms(t_exec **lst, t_exec *new);
+void	create_exec_node(t_shell *shell, char **args, int operand);
+t_expand *remove_current_node(t_expand *expand);
 
 #endif

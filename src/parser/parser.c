@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:28:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/20 19:03:39 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/22 16:16:58 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,143 +14,91 @@
 
 void	parser(t_shell *shell)
 {
-	group_redir(shell);
-	adjust_output(shell);
-	prep_exec(shell);
+	t_expand	*expand;
+	int			i;
+
+	i = 0;
+	expand = shell->expand;
+	while(expand != NULL)
+	{
+		create_cmd_node(shell, expand);
+		create_input_node(shell, expand);
+		create_output_node(shell, expand);
+		remove_nodes_till_pipe(shell);
+		adjust_exec_operand(shell, i);
+		i++;
+		expand = shell->expand;
+	}
+	set_token_count(shell);
+	execution(shell);
 }
 
-/**
- * Handles grouping and redirection in the shell.
- *
- * This function processes the tokens in the shell's expansion list and performs
- * grouping and redirection operations based on the token types. It checks for
- * syntax errors and populates the `io` array with input/output file names.
- * The `file_num` variable keeps track of the number of files in the `io` array.
- *
- * @param shell A pointer to the shell structure.
- */
-void	group_redir(t_shell *shell)
+void	create_cmd_node(t_shell *shell, t_expand *expand)
 {
-	t_expand	*cur;
-	char		**io;
-	int			file_num;
+	char **args;
+	int i;
 
-	cur = shell->expand;
-	if (!cur)
-		return ;
-	io = (char **)ft_calloc(4, sizeof(char *));
-	file_num = 0;
-	while (cur->next != NULL)
+	i = 0;
+	print_expand(shell);
+	while (expand != NULL && expand->token != T_PIPE)
 	{
-		if ((cur->token != T_WORD && cur->token != T_PIPE) 
-				&& (cur->next->token != T_WORD || !cur->next))
-		{
-			free_double(io);
-			ft_perror(ERR_SYNTAX, NULL, 258, shell);
-		}
-		if (cur->token == T_PIPE)
-			break ;
-		if (cur->token != T_WORD && cur->next->token == T_WORD)
-		{
-			if (cur->token == T_PIPE)
-				break ;
-			else
-				handle_token(cur, io, &file_num);
-		}
-		cur = cur->next;
+		if (expand->token == T_WORD && (expand->prev == NULL || expand->prev->token == T_WORD || expand->prev->token == T_PIPE))
+			i++;
+		expand = expand->next;
 	}
-	if (cur->token != T_WORD && cur->token != T_PIPE)
+	args = malloc(sizeof(char *) * (i + 1));
+	i = 0;
+	expand = shell->expand;
+	while (expand != NULL && expand->token != T_PIPE)
 	{
-		free_double(io);
-		ft_perror(ERR_SYNTAX, NULL, 258, shell);
+		if (expand->token == T_WORD && (expand->prev == NULL || expand->prev->token == T_WORD || expand->prev->token == T_WORD || expand->prev->token == T_PIPE))
+		{
+			args[i] = ft_strdup(expand->word);
+			i++;
+		}
+		expand = expand->next;
 	}
-	group_files(shell, io, file_num);
+	args[i] = NULL;
+	create_exec_node(shell, args, NONE);
+	free_double(args);
 }
 
-/**
- * Groups files and passes them to the `group_args` function.
- *
- * This function takes a `t_shell` struct, an array of input/output redirection
- * strings (`io`), and the number of files (`file_num`). It groups the files
- * from the `t_expand` linked list in the `shell` struct and stores them in the
- * `files` array. Then, it calls the `group_args` function to process the
- * grouped arguments.
- *
- * @param shell     The `t_shell` struct containing the expand linked list.
- * @param io        An array of input/output redirection strings.
- * @param file_num  The number of files to be grouped.
- */
-void	group_files(t_shell *shell, char **io, int file_num)
+void	create_input_node(t_shell *shell, t_expand *expand)
 {
-	t_expand	*current;
-	char		**files;
-	int			*file_types;
+	t_expand *temp;
 
-	current = shell->expand;
-	if (!current)
-		return ;
-	files = (char **)ft_calloc((file_num + 1), sizeof(char *));
-	file_types = (int *)ft_calloc((file_num + 1), sizeof(int));
-	file_num = 0;
-	while (current->next != NULL)
+	temp = expand;
+	while (expand != NULL && expand->token != T_PIPE)
 	{
-		if (current->token == T_PIPE)
-			break ;
-		if (current->token != T_WORD && current->next->token == T_WORD)
-		{
-			if (current->token == T_PIPE)
-				break ;
-			else if (current->token == T_GREATER || current->token == T_APPEND)
-			{
-				file_types[file_num] = current->token;
-				files[file_num++] = ft_strdup(current->next->word);
-			}
-		}
-		if (current->next == NULL)
-			break ;
-		current = current->next;
+		if (expand->token == T_LESSER)
+			create_redir_node(shell, expand->next->word, LESS);
+		expand = expand->next;
 	}
-	purge_redir(shell);
-	group_args(shell, io, files, file_types);
+	expand = temp;
+	while (expand != NULL && expand->token != T_PIPE)
+	{
+		if (expand->token == T_HEREDOC)
+			create_redir_node(shell, expand->next->word, HEREDOC);
+		expand = expand->next;
+	}
 }
 
-/**
- * Groups arguments from the shell's expand list and creates a parser node.
- * 
- * @param shell The shell structure.
- * @param io An array of input/output redirections.
- * @param files An array of file names for redirections.
- */
-void	group_args(t_shell *shell, char **io, char **files, int *file_types)
+void	create_output_node(t_shell *shell, t_expand *expand)
 {
-	char		**args;
-	t_expand	*current;
-	t_info		info;
-	int			arg_num;
+	t_expand *temp;
 
-	current = shell->expand;
-	arg_num = count_args_before_pipe(current);
-	args = (char **)ft_calloc((arg_num + 1), sizeof(char *));
-	if (!args)
-		free_err(ERR_MALLOC, shell);
-	arg_num = 0;
-	current = shell->expand;
-	while (current != NULL)
+	temp = expand;
+	while (expand != NULL && expand->token != T_PIPE)
 	{
-		if (current->token == T_PIPE)
-			break ;
-		args[arg_num++] = ft_strdup(current->word);
-		delete_node(shell, current);
-		current = shell->expand;
+		if (expand->token == T_GREATER)
+			create_redir_node(shell, expand->next->word, GREAT);
+		expand = expand->next;
 	}
-	info.args = args;
-	info.io = io;
-	info.files = files;
-	info.file_types = file_types;
-	create_parser_node(shell, info);
-	if (current != NULL)
+	expand = temp;
+	while (expand != NULL && expand->token != T_PIPE)
 	{
-		delete_node(shell, current);
-		group_redir(shell);
+		if (expand->token == T_APPEND)
+			create_redir_node(shell, expand->next->word, APPEND);
+		expand = expand->next;
 	}
 }
