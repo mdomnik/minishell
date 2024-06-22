@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 15:29:20 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/22 15:57:30 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/22 17:04:06 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,6 @@ void remove_nodes_till_pipe(t_shell *shell)
 		free(shell->expand);
 		shell->expand = temp;
 	}
+	if (shell->expand != NULL)
+		shell->expand->prev = NULL;
 }

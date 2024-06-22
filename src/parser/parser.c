@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:28:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/22 16:16:58 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/22 17:04:48 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ void	parser(t_shell *shell)
 		expand = shell->expand;
 	}
 	set_token_count(shell);
+	// print_exec(shell);
+	reset_loop(shell);
 	execution(shell);
 }
 
@@ -39,10 +41,9 @@ void	create_cmd_node(t_shell *shell, t_expand *expand)
 	int i;
 
 	i = 0;
-	print_expand(shell);
 	while (expand != NULL && expand->token != T_PIPE)
 	{
-		if (expand->token == T_WORD && (expand->prev == NULL || expand->prev->token == T_WORD || expand->prev->token == T_PIPE))
+		if (expand->token == T_WORD && (expand->prev == NULL || expand->prev->token == T_WORD))
 			i++;
 		expand = expand->next;
 	}
@@ -51,7 +52,7 @@ void	create_cmd_node(t_shell *shell, t_expand *expand)
 	expand = shell->expand;
 	while (expand != NULL && expand->token != T_PIPE)
 	{
-		if (expand->token == T_WORD && (expand->prev == NULL || expand->prev->token == T_WORD || expand->prev->token == T_WORD || expand->prev->token == T_PIPE))
+		if (expand->token == T_WORD && (expand->prev == NULL || expand->prev->token == T_WORD))
 		{
 			args[i] = ft_strdup(expand->word);
 			i++;
