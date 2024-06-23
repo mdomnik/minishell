@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kaan <kaan@student.42.de>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:02:20 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/22 21:55:18 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/23 17:03:39 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 void	create_exec_node(t_shell *shell, char **args, int operand)
 {
 	t_exec	*node;
-	int		i;
 
-	i = 0;
 	node = (t_exec *)malloc(sizeof(t_exec));
 	node->token = double_dup(args);
 	node->token_count = 0;
@@ -65,7 +63,7 @@ t_expand *remove_current_node(t_expand *expand)
 {
 	t_expand	*next;
 	t_expand	*prev;
-	
+
 	next = expand->next;
 	prev = expand->prev;
 	if (prev != NULL)

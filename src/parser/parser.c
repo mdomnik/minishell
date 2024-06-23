@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kaan <kaan@student.42.de>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:28:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/22 22:36:51 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/23 18:01:09 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,9 @@ void	parser(t_shell *shell)
 	}
 	set_token_count(shell);
 	set_index_exec(shell);
-	//print_exec(shell);
-	//reset_loop(shell);
-	execution(shell);
+	print_exec(shell);
+	reset_loop(shell);
+	//execution(shell);
 }
 
 void	create_cmd_node(t_shell *shell, t_expand *expand)

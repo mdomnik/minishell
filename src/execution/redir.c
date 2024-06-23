@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: kaan <kaan@student.42.de>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:20:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/22 23:21:13 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/23 18:02:58 by kaan             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,32 +78,42 @@ void	ft_open(char *token, int option)
 	}
 }
 
-void	remove_output_node(t_exec *exec)
+void	remove_output_node(t_shell *shell, t_exec *exec)
 {
-	while (exec->next->operator == GREAT
-		|| exec->next->operator == APPEND)
+	t_exec	*current;
+	t_exec	*next_node;
+
+	current = exec;
+	while (current->next != NULL
+		&& (current->next->operator == GREAT
+		|| current->next->operator == APPEND))
 	{
-		if (exec->operator == GREAT)
+		next_node = current->next;
+		if (current->operator == GREAT)
 		{
-			//exec->operator = PIPE;
-			ft_open(exec->next->token[0], O_TRUNC);
+			perror("GREAT");
+			ft_open(next_node->token[0], O_TRUNC);
+			current->operator = next_node->operator;
+			remove_exec_node_at_index(shell, next_node->index);
 		}
-		else if (exec->operator == APPEND)
+		else if (current->operator == APPEND)
 		{
-			//exec->operator = PIPE;
-			ft_open(exec->next->token[0], O_APPEND);
+			perror("append");
+			ft_open(next_node->token[0], O_APPEND);
+			current->operator = next_node->operator;
+			remove_exec_node_at_index(shell, next_node->index);
 		}
-		exec = exec->next;
+		current = next_node;
 		close(STDOUT_FILENO);
 	}
 }
 
-void	redir_output(t_exec *exec)
+void	redir_output(t_shell *shell, t_exec *exec)
 {
 	close(STDOUT_FILENO);
 	//exec->operator = PIPE;
-	//remove_output_node(exec);
-	while (exec->next->operator == GREAT
+	remove_output_node(shell, exec);
+	/*while (exec->next->operator == GREAT
 		|| exec->next->operator == APPEND)
 	{
 		if (exec->operator == GREAT)
@@ -118,11 +128,19 @@ void	redir_output(t_exec *exec)
 		}
 		exec = exec->next;
 		close(STDOUT_FILENO);
-	}
+	}*/
 	if (exec->operator == GREAT)
+	{
+		perror("last great");
 		ft_open(exec->next->token[0], O_TRUNC);
+		remove_exec_node_at_index(shell, exec->next->index);
+	}
 	else if (exec->operator == APPEND)
+	{
+		perror("last apennd");
 		ft_open(exec->next->token[0], O_APPEND);
+		remove_exec_node_at_index(shell, exec->next->index);
+	}
 }
 
 char	**add_string(char **array, int *size, const char *new_string)
@@ -199,8 +217,8 @@ void	redir_exe(t_shell *shell, t_exec *exec)
 	else if (exec->operator == HEREDOC)
 		heredoc(exec);
 	else
-		redir_output(exec);
-	//print_exec(shell);
+		redir_output(shell, exec);
+	print_exec(shell);
 	if (temp->operator == LESS)
 	{
 		temp->operator = NONE;
