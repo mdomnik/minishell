@@ -56,5 +56,3 @@ test <less2 >out3 this >>append3 | adasdas sad <<hd2 lsdsadsa sada <less3 >out4 
 
 echo hello world [less]
 in1 [append]
-
-single letter next to pipe from left

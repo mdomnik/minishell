@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 12:36:31 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/17 14:29:35 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 17:12:11 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	redir_scan(char *str, t_shell *shell, int split)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (check_redir(str[i], str[i + 1]) == T_WORD)
+		if (check_redir(str[i], str[i + 1], 1) == T_WORD)
 		{
 			i += form_word(str, shell, i, split);
 			split = 0;
@@ -66,7 +66,7 @@ int	form_word(char *str, t_shell *shell, int i, int split)
 	j = 0;
 	temp = NULL;
 	while (str[i + j + 1] != '\0' 
-		&& check_redir(str[i + j], str[i + j + 1]) == T_WORD)
+		&& check_redir(str[i + j], str[i + j + 1], 0) == T_WORD)
 		j++;
 	temp = ft_substr(str, i, j + 1);
 	if (!temp)
@@ -92,7 +92,7 @@ int	form_redir(char *str, t_shell *shell, int i)
 	t_lexer	*new;
 
 	temp = NULL;
-	type = check_redir(str[i], str[i + 1]);
+	type = check_redir(str[i], str[i + 1], 1);
 	if (type >= 1 && type <= 3)
 		j = 1;
 	else
@@ -119,7 +119,7 @@ int	form_redir(char *str, t_shell *shell, int i)
  *         - T_PIPE if c1 or c2 is '|'.
  *         - T_WORD if none of the above conditions are met.
  */
-int	check_redir(char c1, char c2)
+int	check_redir(char c1, char c2, int test)
 {
 	if (!cmpchar(c1, '>') && !cmpchar(c2, '>') && c2 != '\0')
 		return (T_APPEND);
@@ -131,7 +131,9 @@ int	check_redir(char c1, char c2)
 		return (T_GREATER);
 	else if (!cmpchar(c1, '<') || !cmpchar(c2, '<'))
 		return (T_LESSER);
-	else if (!cmpchar(c1, '|') || !cmpchar(c2, '|'))
+	else if ((!cmpchar(c1, '|') || !cmpchar(c2, '|')) && test == 0)
+		return (T_PIPE);
+	else if ((!cmpchar(c1, '|')) && test == 1)
 		return (T_PIPE);
 	return (T_WORD);
 }

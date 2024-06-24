@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gen_utils_1.c                                      :+:      :+:    :+:   */
+/*   utils_1.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:41:28 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/20 19:04:10 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 17:51:54 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,14 +112,7 @@ char	**add_delim_split(char *str, t_shell *shell)
 	else
 		is_env = 0;
 	if (str[0] == '$' && str[1] == '$')
-	{
-		ret = (char **)malloc(2 * sizeof(char *));
-		if (!ret)
-			return (NULL);
-		ret[0] = ft_strdup("201088");
-		ret[1] = NULL;
-		return (ret);
-	}
+		return (double_dollar (str));
 	if (str[0] == '$' && str[1] == '\0')
 	{
 		ret = (char **)malloc(2 * sizeof(char *));
@@ -146,38 +139,32 @@ char	**add_delim_split(char *str, t_shell *shell)
 	return (ret);
 }
 
-/**
- * Concatenates two strings and returns the result.
- * If the second string is NULL, it is treated as an empty string.
- * 
- * @param s1 The first string to concatenate.
- * @param s2 The second string to concatenate.
- * @return The concatenated string, or NULL if memory allocation fails.
- */
-char	*ft_strjoin_ms(char *s1, char *s2)
+char	**double_dollar(char *str)
 {
-	char	*new;
+	char	**ret;
+	char	*temp;
+	char	*pid;
 	int		i;
-	int		j;
 
+	pid = ft_itoa(getpid());
 	i = 0;
-	j = 0;
-	if (!s2)
-	{
-		s1 = malloc(1 * sizeof(char));
-		s1[0] = '\0';
-	}
-	new = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (!new)
+	ret = (char **)malloc(2 * sizeof(char *));
+	if (!ret)
 		return (NULL);
-	while (s1[i] != '\0')
-	{
-		new[i] = s1[i];
+	while (str[i] == '$')
 		i++;
+	temp = ft_substr(str, i, ft_strlen(str) - i);
+	ret[0] = NULL;
+	i = i / 2;
+	while (i > 0)
+	{
+		ret[0] = ft_strjoin(ret[0], pid);
+		i--;
 	}
-	while (s2[j] != '\0')
-		new[i++] = s2[j++];
-	new[i] = '\0';
-	free(s2);
-	return (new);
+	if (!ret[0])
+		ret[0] = ft_strjoin_ms(pid, temp);
+	else
+		ret[0] = ft_strjoin(ret[0], temp);
+	ret[1] = NULL;
+	return (ret);
 }

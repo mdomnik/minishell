@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:12:05 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 15:49:04 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 17:25:17 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	**double_dup(char **str);
 void	free_double(char **double_str);
 int		ft_strlen_ms(char *s);
 char	**add_delim_split(char *str, t_shell *shell);
-char	*ft_strjoin_ms(char *s1, char *s2);
+char	**double_dollar(char *str);
 
 //utils_2.c
 int		cmp_str(char *s1, const char *s2);
@@ -59,5 +59,6 @@ bool	ft_isnum_bool(char *str);
 size_t	exec_size(t_exec *exec);
 char	*ft_strjoin_msn(char *s1, char *s2);
 int		get_token_count_ms(char **token);
+char	*ft_strjoin_ms(char *s1, char *s2);
 
 #endif

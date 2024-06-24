@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:43:47 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 15:47:31 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 17:22:46 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,40 @@ int	get_token_count_ms(char **token)
 	while (token[i])
 		i++;
 	return (i);
+}
+
+/**
+ * Concatenates two strings and returns the result.
+ * If the second string is NULL, it is treated as an empty string.
+ * 
+ * @param s1 The first string to concatenate.
+ * @param s2 The second string to concatenate.
+ * @return The concatenated string, or NULL if memory allocation fails.
+ */
+char	*ft_strjoin_ms(char *s1, char *s2)
+{
+	char	*new;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	if (!s2)
+	{
+		s1 = malloc(1 * sizeof(char));
+		s1[0] = '\0';
+	}
+	new = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!new)
+		return (NULL);
+	while (s1[i] != '\0')
+	{
+		new[i] = s1[i];
+		i++;
+	}
+	while (s2[j] != '\0')
+		new[i++] = s2[j++];
+	new[i] = '\0';
+	free(s2);
+	return (new);
 }

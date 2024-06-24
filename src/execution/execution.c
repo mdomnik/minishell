@@ -6,13 +6,12 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:33:36 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 16:04:22 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 17:21:45 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-extern int	exit_status;
 
 bool	is_valid_id(char *token)
 {
@@ -107,17 +106,12 @@ void	execution(t_shell *shell)
 	else if (fork() == 0)
 		exec_cmd(shell, exec);
 	waitpid(-1, &status, 0);
-	if (!WTERMSIG(status))
-	{
-			execfreelist_ms(&shell->exec);
-			reset_loop(shell);
-		// ft_putnbr_fd(WTERMSIG(status), STDERR_FILENO);
-		// write(STDERR_FILENO, "\n", 1);
-		// ft_putnbr_fd(status, STDERR_FILENO);
-		// *(shell->exit_status) = status / 256;
-		// write(STDERR_FILENO, "\n", 1);
-		// ft_putnbr_fd(*(shell->exit_status), STDERR_FILENO);
-	}
+	if (WIFEXITED(status))
+    *(shell->exit_status) = WEXITSTATUS(status);
+    if (*(shell->exit_status) > 1)
+    *(shell->exit_status) = 1;
+    else if (WIFSIGNALED(status))
+    *(shell->exit_status) = WTERMSIG(status) - 1;
 	execfreelist_ms(&shell->exec);
 	reset_loop(shell);
 }

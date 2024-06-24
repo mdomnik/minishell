@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 16:08:41 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 17:12:43 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@
 # define ERR_MALLOC " failed to allocate memory"
 # define ERR_LEXER " failed to initialize lexer node"
 # define ERR_EXPAND " failed to initialize expand node"
-# define ERR_SYNTAX "syntax error near unexpected token\n"
+# define ERR_SYNTAX "syntax error near unexpected token"
 # define ERR_QUOTE " quote not terminated by another quote"
 # define ERR_CMD " command not found"
 # define ERR_PWD " failed to get current working directory"

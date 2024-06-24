@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:20:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 15:50:29 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 17:06:50 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	less(t_shell *shell, t_exec *exec)
 		if (access(exec->next->token[0], F_OK | R_OK) == 0)
 		{
 			in_file = open(exec->next->token[0], O_RDONLY, 0666);
+			exec->operator = exec->next->operator;
 			remove_exec_node_at_index(shell, exec->next->index);
 			dup2(in_file, STDIN_FILENO);
 		}
