@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 11:41:48 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/05/22 18:54:11 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/24 12:48:17 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int			check_whitespace(char *str);
 int			inc_whitespace(t_shell *shell, int i);
 
 //lexer.c
-void		tokenizer(t_shell *shell);
+void		tokenizer(t_shell *shell, int i, int split);
 int			node_process(t_shell *shell, int i, int split);
 int			double_quote(t_shell *shell, int i, int split);
 int			single_quote(t_shell *shell, int i, int split);

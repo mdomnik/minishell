@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:27:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/22 19:43:39 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/24 12:48:37 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	shell_loop(t_shell *shell)
 	if (shell->line[0] != '\0')
 	{
 		add_history(shell->line);
-		tokenizer(shell);
+		tokenizer(shell,0 , 1);
 	}
 	if (shell->line)
 		free(shell->line);

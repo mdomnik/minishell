@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:43:18 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 12:36:42 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 12:48:44 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,11 @@
  * 
  * @param shell The shell structure containing the input line.
  */
-void	tokenizer(t_shell *shell)
+void	tokenizer(t_shell *shell, int i, int split)
 {
-	int	i;
-	int	split;
-
-	i = 0;
-	split = 1;
 	shell->line = trim_whitespace(shell);
+	if (!shell->line)
+		return ;
 	while (shell->line[i] != '\0')
 	{
 		if (!is_whitespace_null(shell->line[i]))
