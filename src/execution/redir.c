@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.de>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:20:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/23 18:02:58 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/24 12:32:35 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,7 @@ void	redir_exe(t_shell *shell, t_exec *exec)
 		heredoc(exec);
 	else
 		redir_output(shell, exec);
-	print_exec(shell);
+	// print_exec(shell);
 	if (temp->operator == LESS)
 	{
 		temp->operator = NONE;

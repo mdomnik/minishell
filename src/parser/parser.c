@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.de>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:28:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/23 18:01:09 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/24 12:42:04 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	parser(t_shell *shell)
 	set_index_exec(shell);
 	print_exec(shell);
 	reset_loop(shell);
-	//execution(shell);
+	// execution(shell);
 }
 
 void	create_cmd_node(t_shell *shell, t_expand *expand)
@@ -72,15 +72,8 @@ void	create_input_node(t_shell *shell, t_expand *expand)
 	temp = expand;
 	while (expand != NULL && expand->token != T_PIPE)
 	{
-		if (expand->token == T_LESSER)
-			create_redir_node(shell, expand->next->word, LESS);
-		expand = expand->next;
-	}
-	expand = temp;
-	while (expand != NULL && expand->token != T_PIPE)
-	{
-		if (expand->token == T_HEREDOC)
-			create_redir_node(shell, expand->next->word, HEREDOC);
+		if (expand->token == T_LESSER || expand->token == T_HEREDOC)
+			create_redir_node(shell, expand->next->word, expand->token);
 		expand = expand->next;
 	}
 }
@@ -92,15 +85,8 @@ void	create_output_node(t_shell *shell, t_expand *expand)
 	temp = expand;
 	while (expand != NULL && expand->token != T_PIPE)
 	{
-		if (expand->token == T_GREATER)
-			create_redir_node(shell, expand->next->word, GREAT);
-		expand = expand->next;
-	}
-	expand = temp;
-	while (expand != NULL && expand->token != T_PIPE)
-	{
-		if (expand->token == T_APPEND)
-			create_redir_node(shell, expand->next->word, APPEND);
+		if (expand->token == T_GREATER || expand->token == T_APPEND)
+			create_redir_node(shell, expand->next->word, expand->token);
 		expand = expand->next;
 	}
 }
