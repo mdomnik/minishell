@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:00:12 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/20 15:26:51 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 12:51:54 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ typedef struct s_expand
 }		t_expand;
 
 //expander_process.c
-void		process_lexer(t_shell *shell,
-				t_lexer *lexer, char *string, int boolean);
+void		process_lexer(t_shell *shell, t_lexer *lexer,
+				char *string, int boolean);
 int			create_node(char *word, int token, t_shell *shell);
 
 //expander_struct.c

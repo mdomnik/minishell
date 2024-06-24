@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:20:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 12:32:35 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 12:52:24 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,7 +226,7 @@ void	redir_exe(t_shell *shell, t_exec *exec)
 	}
 	else if (temp->operator == APPEND || temp->operator == GREAT)
 	{
-		temp->operator = NONE;
+		temp->operator = PIPE;
 	}
 	//if (pipe_check(temp) || input_redir_check(temp))
 	{
