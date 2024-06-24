@@ -6,28 +6,11 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:33:36 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 18:13:54 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 20:34:06 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-bool	is_valid_id(char *token)
-{
-	size_t	i;
-
-	i = 0;
-	if (strcmp_msn(token, "="))
-		return (false);
-	while (token[i] && token[i] != '=')
-	{
-		if (ft_isdigit(token[i]) || token[i] == '!' || token[i] == '@'
-			|| token[i] == '{' || token[i] == '}' || token[i] == '-')
-			return (false);
-		i++;
-	}
-	return (true);
-}
 
 int	find_builtin(t_shell *shell, t_exec *exec)
 {
@@ -86,22 +69,9 @@ void	execution(t_shell *shell)
 	exec = shell->exec;
 	if (exec_size(exec) == 1)
 	{
-		ret = find_builtin(shell, exec);
-		if (ret == 2)
-		{
-			if (fork() == 0)
-			{
-				signal(SIGINT, child_signals);
-				find_path(shell, exec);
-			}
-		}
-		else if (ret == -1)
-		{
-			*(shell->exit_status) = 1;
-			execfreelist_ms(&shell->exec);
-			reset_loop(shell);
+		ret = single_exec(shell, exec);
+		if (ret == 1)
 			return ;
-		}
 	}
 	else if (fork() == 0)
 		exec_cmd(shell, exec);
@@ -114,4 +84,27 @@ void	execution(t_shell *shell)
 		*(shell->exit_status) = WTERMSIG(status) - 1;
 	execfreelist_ms(&shell->exec);
 	reset_loop(shell);
+}
+
+int	single_exec(t_shell *shell, t_exec *exec)
+{
+	int	ret;
+
+	ret = find_builtin(shell, exec);
+	if (ret == 2)
+	{
+		if (fork() == 0)
+		{
+			signal(SIGINT, child_signals);
+			find_path(shell, exec);
+		}
+	}
+	else if (ret == -1)
+	{
+		*(shell->exit_status) = 1;
+		execfreelist_ms(&shell->exec);
+		reset_loop(shell);
+		return (1);
+	}
+	return (0);
 }

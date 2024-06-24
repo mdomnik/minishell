@@ -6,34 +6,15 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:01:41 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 19:26:08 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 20:45:49 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-void	redir_output(t_shell *shell, t_exec *exec)
-{
-	close(STDOUT_FILENO);
-	remove_output_node(shell, exec);
-	if (exec->operator == GREAT)
-	{
-		perror("last great");
-		ft_open(exec->next->token[0], O_TRUNC);
-		remove_exec_node_at_index(shell, exec->next->index);
-	}
-	else if (exec->operator == APPEND)
-	{
-		perror("last apennd");
-		ft_open(exec->next->token[0], O_APPEND);
-		remove_exec_node_at_index(shell, exec->next->index);
-	}
-}
-
 char	**add_string(char **array, int *size, const char *new_string)
 {
 	char	**new_array;
-	int		i;
 
 	new_array = malloc((*size + 1) * sizeof(char *));
 	if (new_array == NULL)
@@ -41,30 +22,38 @@ char	**add_string(char **array, int *size, const char *new_string)
 		perror("malloc failed");
 		exit(EXIT_FAILURE);
 	}
-	i = 0;
-	while (i < *size)
-	{
-		new_array[i] = ft_strdup(array[i]);
-		i++;
-	}
-	new_array[*size] = ft_strdup(new_string);
-	free_double(array);
-	array = malloc((*size + 2) * sizeof(char *));
-	i = 0;
-	while (i < *size + 1)
-	{
-		array[i] = ft_strdup(new_array[i]);
-		i++;
-	}
-	i = 0;
-	while (new_array[i] != NULL && i < (*size))
-	{
-		free(new_array[i]);
-		i++;
-	}
-	free(new_array);
+	array = add_string_util(new_array, array, size, new_string);
 	(*size)++;
 	return (array);
+}
+
+char	**add_string_util(char **n_arr, char **arr, int *s, const char *n_str)
+{
+	int		i;
+
+	i = 0;
+	while (i < *s)
+	{
+		n_arr[i] = ft_strdup(arr[i]);
+		i++;
+	}
+	n_arr[*s] = ft_strdup(n_str);
+	free_double(arr);
+	arr = malloc((*s + 2) * sizeof(char *));
+	i = 0;
+	while (i < *s + 1)
+	{
+		arr[i] = ft_strdup(n_arr[i]);
+		i++;
+	}
+	i = 0;
+	while (n_arr[i] != NULL && i < (*s))
+	{
+		free(n_arr[i]);
+		i++;
+	}
+	free(n_arr);
+	return (arr);
 }
 
 t_exec	*cat_exec(t_exec *exec)
@@ -110,10 +99,7 @@ void	redir_exe(t_shell *shell, t_exec *exec)
 		exec->operator = NONE;
 	else if (exec->next && (exec->operator == APPEND
 			|| exec->operator == GREAT))
-			{
-				redir_output(shell, exec);
-				exec->operator = PIPE;
-			}
+		exec = return_exec(shell, exec);
 	else if (!exec->next && (exec->operator == APPEND
 			|| exec->operator == GREAT))
 		exec->operator = NONE;
@@ -121,4 +107,18 @@ void	redir_exe(t_shell *shell, t_exec *exec)
 		exec_cmd(shell, exec);
 	else
 		pipe_exe(shell, exec);
+}
+
+t_exec	*return_exec(t_shell *shell, t_exec *exec)
+{
+	if (shell->in_fd != -1)
+	{
+		dup2(shell->in_fd, STDIN_FILENO);
+		redir_output(shell, exec);
+	}
+	if (exec->next)
+		exec->operator = PIPE;
+	else
+		exec->operator = NONE;
+	return (exec);
 }

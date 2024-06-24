@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 17:59:48 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/21 14:19:59 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 20:03:40 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ int	builtin_pwd(t_shell *shell)
 	{
 		return (-1);
 	}
-	printf("%s\n", pwd);
 	update_pwd_env_declare(shell, pwd);
+	printf("%s\n", pwd);
 	free(pwd);
 	return (0);
 }
@@ -49,6 +49,14 @@ void	update_pwd_env_declare(t_shell *shell, char *str)
 		}
 		i++;
 	}
+	update_pwd_declare(shell, str);
+}
+
+void	update_pwd_declare(t_shell *shell, char *str)
+{
+	int		i;
+	char	*tmp;
+
 	i = 0;
 	tmp = ft_strdup("PWD=");
 	while (shell->declare[i])

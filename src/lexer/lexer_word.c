@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:43:48 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 15:05:28 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 19:45:38 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,5 +123,5 @@ int	inc_whitespace(t_shell *shell, int i)
 			|| (shell->line[i] >= 9 && shell->line[i] <= 13))
 			i++;
 	}
-	return i ;
+	return (i);
 }

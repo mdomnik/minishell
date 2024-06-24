@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:00:12 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 19:32:11 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 20:28:41 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,10 @@ typedef struct s_expand
 }			t_expand;
 
 //expander_delim.c
-char	**add_delim_split(char *str, t_shell *shell);
-char	**double_dollar(char *str);
+char		**add_delim_split(char *str, t_shell *shell);
+char		**double_dollar(char *str, int i);
+char		**single_dollar(void);
+void		free_err_delim(t_shell *shell, char **ret);
 
 //expander_process.c
 void		process_lexer(t_shell *shell, t_lexer *lexer,
@@ -54,5 +56,6 @@ t_expand	*expandfreelist_ms(t_expand **lst);
 void		expander(t_shell *shell);
 void		env_expander(t_lexer *lexer, int i, t_shell *shell);
 char		*search_replace_env(char *str, t_shell *shell);
+char		*give_ret_search_replace(t_shell *shell, char *temp);
 
 #endif

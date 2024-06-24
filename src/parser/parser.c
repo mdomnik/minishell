@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:28:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 19:33:58 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 19:55:48 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	parser(t_shell *shell)
 	}
 	set_token_count(shell);
 	set_index_exec(shell);
-	// reset_loop(shell);
 	execution(shell);
 }
 
@@ -52,14 +51,7 @@ void	create_cmd_node(t_shell *shell, t_expand *expand)
 	char	**args;
 	int		i;
 
-	i = 0;
-	while (expand != NULL && expand->token != T_PIPE)
-	{
-		if (expand->token == T_WORD && (expand->prev == NULL
-				|| expand->prev->token == T_WORD))
-			i++;
-		expand = expand->next;
-	}
+	i = count_args_cmd(expand);
 	args = malloc(sizeof(char *) * (i + 1));
 	i = 0;
 	expand = shell->expand;
@@ -76,6 +68,21 @@ void	create_cmd_node(t_shell *shell, t_expand *expand)
 	args[i] = NULL;
 	create_exec_node(shell, args, NONE);
 	free_double(args);
+}
+
+int	count_args_cmd(t_expand *expand)
+{
+	int	i;
+
+	i = 0;
+	while (expand != NULL && expand->token != T_PIPE)
+	{
+		if (expand->token == T_WORD && (expand->prev == NULL
+				|| expand->prev->token == T_WORD))
+			i++;
+		expand = expand->next;
+	}
+	return (i);
 }
 
 /**

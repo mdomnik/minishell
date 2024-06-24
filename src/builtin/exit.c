@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:16:07 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 16:09:11 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 19:52:58 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  */
 void	builtin_exit(t_shell *shell, t_exec *exec)
 {
-	int exit_code;
+	int	exit_code;
 
 	exit_code = 0;
 	if (exec->token_count > 2)
@@ -40,8 +40,18 @@ void	builtin_exit(t_shell *shell, t_exec *exec)
 		exit_code = get_exit(ft_atoi(exec->token[1]));
 		*(shell->exit_status) = exit_code;
 	}
+	free_structs(shell);
+	free(shell);
+	printf("exit\n");
+	exit(exit_code);
+}
+
+void	free_structs(t_shell *shell)
+{
 	if (shell->env)
 		free_double(shell->env);
+	if (shell->declare)
+		free_double(shell->declare);
 	if (shell->line)
 		free(shell->line);
 	if (shell->lexer)
@@ -50,12 +60,11 @@ void	builtin_exit(t_shell *shell, t_exec *exec)
 		expandfreelist_ms(&shell->expand);
 	if (shell->exec)
 		execfreelist_ms(&shell->exec);
-	free(shell);
-	printf("exit\n");
-	exit(exit_code);
+	if (shell->exit_status)
+		free(shell->exit_status);
 }
 
-int get_exit(int exit_code)
+int	get_exit(int exit_code)
 {
 	if (exit_code < 0)
 		exit_code = 256 + (exit_code % 256);
@@ -66,7 +75,7 @@ int get_exit(int exit_code)
 
 int	ft_isnum(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str[i] == '-' || str[i] == '+')

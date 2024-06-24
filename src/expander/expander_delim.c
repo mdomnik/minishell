@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 19:30:59 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 19:35:15 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 20:25:30 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,22 +33,12 @@ char	**add_delim_split(char *str, t_shell *shell)
 	else
 		is_env = 0;
 	if (str[0] == '$' && str[1] == '$')
-		return (double_dollar (str));
+		return (double_dollar (str, 0));
 	if (str[0] == '$' && str[1] == '\0')
-	{
-		ret = (char **)malloc(2 * sizeof(char *));
-		if (!ret)
-			return (NULL);
-		ret[0] = ft_strdup("$");
-		ret[1] = NULL;
-		return (ret);
-	}
+		return (single_dollar());
 	ret = ft_split_ms(str, '$');
 	if (ret[0] == NULL)
-	{
-		free_double(ret);
-		ft_perror(ERR_CMD, NULL, 258, shell);
-	}
+		free_err_delim(shell, ret);
 	while (ret[i] != NULL)
 	{
 		if (i > 0)
@@ -69,15 +59,13 @@ char	**add_delim_split(char *str, t_shell *shell)
  * the expanded string and the second element is NULL.
  *         Returns NULL if memory allocation fails.
  */
-char	**double_dollar(char *str)
+char	**double_dollar(char *str, int i)
 {
 	char	**ret;
 	char	*temp;
 	char	*pid;
-	int		i;
 
 	pid = ft_itoa(getpid());
-	i = 0;
 	ret = (char **)malloc(2 * sizeof(char *));
 	if (!ret)
 		return (NULL);
@@ -97,4 +85,22 @@ char	**double_dollar(char *str)
 		ret[0] = ft_strjoin(ret[0], temp);
 	ret[1] = NULL;
 	return (ret);
+}
+
+char	**single_dollar(void)
+{
+	char	**ret;
+
+	ret = (char **)malloc(2 * sizeof(char *));
+	if (!ret)
+		return (NULL);
+	ret[0] = ft_strdup("$");
+	ret[1] = NULL;
+	return (ret);
+}
+
+void	free_err_delim(t_shell *shell, char **ret)
+{
+	free_double(ret);
+	ft_perror(ERR_CMD, NULL, 258, shell);
 }

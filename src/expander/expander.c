@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:58:23 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 17:25:29 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 20:30:24 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,21 @@ char	*search_replace_env(char *str, t_shell *shell)
 	if (j == 1)
 		return (str);
 	temp = ft_substr(str, (i + 1), j - 1);
+	ret = give_ret_search_replace(shell, temp);
+	temp = ft_substr(str, (i + j), (ft_strlen(str) - (i + j)));
+	ret = ft_strjoin(ret, temp);
+	free(str);
+	str = ft_strdup(ret);
+	if (ret)
+		free(ret);
+	free(temp);
+	return (str);
+}
+
+char	*give_ret_search_replace(t_shell *shell, char *temp)
+{
+	char	*ret;
+
 	if (temp[0] == '?')
 	{
 		ret = ft_itoa(*shell->exit_status);
@@ -109,12 +124,5 @@ char	*search_replace_env(char *str, t_shell *shell)
 	if (!ret)
 		ret = ft_strdup("");
 	free(temp);
-	temp = ft_substr(str, (i + j), (ft_strlen(str) - (i + j)));
-	ret = ft_strjoin(ret, temp);
-	free(str);
-	str = ft_strdup(ret);
-	if (ret)
-		free(ret);
-	free(temp);
-	return (str);
+	return (ret);
 }

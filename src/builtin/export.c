@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/26 01:08:04 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/21 14:19:31 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 20:00:22 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	builtin_export(t_shell *shell, t_exec *exec)
 		return (0);
 	}
 	else
-		return(update_env_declare(shell, exec));
+		return (update_env_declare(shell, exec));
 }
 
 /**
@@ -53,10 +53,7 @@ int	update_env_declare(t_shell *shell, t_exec *exec)
 	while (exec->token[i])
 	{
 		if (valid_format(exec->token[i]) == -1)
-		{
-			ft_putendl_fd("export: not a valid identifier", 2);
-			return (-1);
-		}
+			return (ft_putendl_fd("export: not a valid identifier", 2), -1);
 		else if (valid_format(exec->token[i]) == 1)
 		{
 			if (scan_declare(shell, exec->token[i]) == 0)

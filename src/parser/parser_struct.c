@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:02:20 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 15:02:31 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 19:51:10 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,7 @@ void	remove_exec_node_at_index(t_shell *shell, int index)
 	t_exec	*temp;
 
 	if (shell->exec == NULL)
-	{
-		perror("List is empty");
 		return ;
-	}
 	exec = shell->exec;
 	if (exec->index == index)
 	{

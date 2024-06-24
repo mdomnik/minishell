@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:00:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 16:09:00 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 20:03:59 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int		builtin_env(t_shell *shell, t_exec *exec);
 
 //exit.c
 void	builtin_exit(t_shell *shell, t_exec *exec);
+void	free_structs(t_shell *shell);
 int		ft_isnum(char *str);
 int		get_exit(int exit_code);
 
@@ -47,6 +48,7 @@ void	add_env(t_shell *shell, char *str);
 //pwd.c
 int		builtin_pwd(t_shell *shell);
 void	update_pwd_env_declare(t_shell *shell, char *str);
+void	update_pwd_declare(t_shell *shell, char *str);
 
 //unset.c
 int		builtin_unset(t_shell *shell, t_exec *exec);

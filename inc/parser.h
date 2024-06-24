@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:37:46 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 15:00:25 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 19:55:39 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void		remove_exec_node_at_index(t_shell *shell, int index);
 //parser.c
 void		parser(t_shell *shell);
 void		create_cmd_node(t_shell *shell, t_expand *expand);
+int			count_args_cmd(t_expand *expand);
 void		create_input_node(t_shell *shell, t_expand *expand);
 void		create_output_node(t_shell *shell, t_expand *expand);
 

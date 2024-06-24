@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:20:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 18:02:41 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 20:15:32 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,15 @@ void	remove_less(t_shell *shell, t_exec *exec)
 
 void	less(t_shell *shell, t_exec *exec)
 {
-	int		in_file;
-
 	if (exec->next->token[0])
 	{
 		remove_less(shell, exec);
 		if (access(exec->next->token[0], F_OK | R_OK) == 0)
 		{
-			in_file = open(exec->next->token[0], O_RDONLY, 0666);
+			shell->in_fd = open(exec->next->token[0], O_RDONLY, 0666);
 			exec->operator = exec->next->operator;
 			remove_exec_node_at_index(shell, exec->next->index);
-			dup2(in_file, STDIN_FILENO);
+			dup2(shell->in_fd, STDIN_FILENO);
 		}
 		else
 		{
@@ -91,14 +89,12 @@ void	remove_output_node(t_shell *shell, t_exec *exec)
 		next_node = current->next;
 		if (current->operator == GREAT)
 		{
-			perror("GREAT");
 			ft_open(next_node->token[0], O_TRUNC);
 			current->operator = next_node->operator;
 			remove_exec_node_at_index(shell, next_node->index);
 		}
 		else if (current->operator == APPEND)
 		{
-			perror("append");
 			ft_open(next_node->token[0], O_APPEND);
 			current->operator = next_node->operator;
 			remove_exec_node_at_index(shell, next_node->index);
