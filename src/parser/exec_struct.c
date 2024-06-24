@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_struct.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.de>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 15:02:20 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/23 17:03:39 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/24 13:47:30 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../inc/minishell.h"
+#include "../../inc/minishell.h"
 
 void	create_exec_node(t_shell *shell, char **args, int operand)
 {

@@ -6,12 +6,18 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:28:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 13:16:45 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 14:27:47 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+/**
+ * Parses the input shell command and performs necessary transformations.
+ * changes it to the desired format for execution.
+ * 
+ * @param shell The shell structure containing the command and its components.
+ */
 void	parser(t_shell *shell)
 {
 	t_expand	*expand;
@@ -19,7 +25,7 @@ void	parser(t_shell *shell)
 
 	i = 0;
 	expand = shell->expand;
-	while(expand != NULL)
+	while (expand != NULL)
 	{
 		create_cmd_node(shell, expand);
 		create_input_node(shell, expand);
@@ -31,20 +37,26 @@ void	parser(t_shell *shell)
 	}
 	set_token_count(shell);
 	set_index_exec(shell);
-	// print_exec(shell);
-	// reset_loop(shell);
+	//print_exec(shell);
 	execution(shell);
 }
 
+/**
+ * Creates a command node in the exec's data structure.
+ * 
+ * @param shell The shell structure.
+ * @param expand The expand structure containing the parsed tokens.
+ */
 void	create_cmd_node(t_shell *shell, t_expand *expand)
 {
-	char **args;
-	int i;
+	char	**args;
+	int		i;
 
 	i = 0;
 	while (expand != NULL && expand->token != T_PIPE)
 	{
-		if (expand->token == T_WORD && (expand->prev == NULL || expand->prev->token == T_WORD))
+		if (expand->token == T_WORD && (expand->prev == NULL
+				|| expand->prev->token == T_WORD))
 			i++;
 		expand = expand->next;
 	}
@@ -53,7 +65,8 @@ void	create_cmd_node(t_shell *shell, t_expand *expand)
 	expand = shell->expand;
 	while (expand != NULL && expand->token != T_PIPE)
 	{
-		if (expand->token == T_WORD && (expand->prev == NULL || expand->prev->token == T_WORD))
+		if (expand->token == T_WORD && (expand->prev == NULL
+				|| expand->prev->token == T_WORD))
 		{
 			args[i] = ft_strdup(expand->word);
 			i++;
@@ -65,9 +78,15 @@ void	create_cmd_node(t_shell *shell, t_expand *expand)
 	free_double(args);
 }
 
+/**
+ * Creates input nodes in the exec's data structure until
+ * end of expand list or pipe.
+ * @param shell The shell structure.
+ * @param expand The expand linked list.
+ */
 void	create_input_node(t_shell *shell, t_expand *expand)
 {
-	t_expand *temp;
+	t_expand	*temp;
 
 	temp = expand;
 	while (expand != NULL && expand->token != T_PIPE)
@@ -80,9 +99,15 @@ void	create_input_node(t_shell *shell, t_expand *expand)
 	}
 }
 
+/*
+ * Creates output nodes in the exec's data structure until
+ * end of expand list or pipe.
+ * @param shell The shell structure.
+ * @param expand The expand linked list.
+ */
 void	create_output_node(t_shell *shell, t_expand *expand)
 {
-	t_expand *temp;
+	t_expand	*temp;
 
 	temp = expand;
 	while (expand != NULL && expand->token != T_PIPE)

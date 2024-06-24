@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:33:36 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 13:07:07 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 14:41:34 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,12 @@ void	execution(t_shell *shell)
 	waitpid(-1, &status, 0);
 	if (!WTERMSIG(status))
 	{
+		ft_putnbr_fd(WTERMSIG(status), STDERR_FILENO);
+		write(STDERR_FILENO, "\n", 1);
+		ft_putnbr_fd(status, STDERR_FILENO);
 		*(shell->exit_status) = status / 256;
+		write(STDERR_FILENO, "\n", 1);
+		ft_putnbr_fd(*(shell->exit_status), STDERR_FILENO);
 	}
 	execfreelist_ms(&shell->exec);
 	reset_loop(shell);

@@ -6,13 +6,11 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:04:13 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/21 14:35:42 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 14:36:48 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-extern int	exit_status;
 
 void	exit_path(t_shell *shell, char **paths, char *cmd, int exit_status_x)
 {
@@ -21,9 +19,10 @@ void	exit_path(t_shell *shell, char **paths, char *cmd, int exit_status_x)
 	if(paths != NULL)
 		free_double(paths);
 	if (!WIFSIGNALED(exit_status_x))
-		(exit_status) = exit_status_x;
+		*(shell->exit_status) = exit_status_x;
+	*(shell->exit_status) = exit_status_x;
 	free_shell(shell);
-	exit(exit_status);
+	exit(*(shell->exit_status));
 }
 
 char	**get_paths(t_shell *shell)
@@ -88,7 +87,7 @@ void	find_path(t_shell *shell, t_exec *exec)
 	if (!bin_path)
 	{
 		err_cmd(exec->token[0]);
-		exit_path(shell, paths, NULL, 127);
+		exit_path(shell, paths, NULL, 1);
 	}
 	if (execve(bin_path, exec->token, shell->env) == -1)
 	{

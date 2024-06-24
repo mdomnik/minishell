@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:20:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 12:52:24 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 14:32:59 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,14 @@ void	less(t_shell *shell, t_exec *exec)
 		if (access(exec->next->token[0], F_OK | R_OK) == 0)
 		{
 			in_file = open(exec->next->token[0], O_RDONLY, 0666);
+			remove_exec_node_at_index(shell, exec->next->index);
 			dup2(in_file, STDIN_FILENO);
 		}
 		else
 		{
-			ft_putendl_fd(NO_FILE, 2);
+			ft_putendl_fd(NO_FILE, 3);
+			//remove_exec_node_at_index(shell, exec->next->index);
+			dup2(3, STDIN_FILENO);
 			//exit(EXIT_FAILURE);
 		}
 	}
@@ -207,37 +210,42 @@ t_exec	*cat_exec(t_exec *exec)
 	return (first);
 }
 
-void	redir_exe(t_shell *shell, t_exec *exec)
+void    redir_exe(t_shell *shell, t_exec *exec)
 {
-	t_exec	*temp;
-
-	temp = exec;
-	if (exec->operator == LESS)
-		less(shell, exec);
-	else if (exec->operator == HEREDOC)
-		heredoc(exec);
-	else
-		redir_output(shell, exec);
-	// print_exec(shell);
-	if (temp->operator == LESS)
-	{
+    t_exec  *temp;
+    temp = exec;
+    if (exec->operator == LESS)
+        less(shell, exec);
+    else if (exec->operator == HEREDOC)
+        heredoc(exec);
+    else
+        redir_output(shell, exec);
+    //print_exec(shell);
+    if (temp->next && temp->operator == LESS)
+    {
+        temp->operator = NONE;
+        temp = cat_exec(temp);
+    }
+	else if (!temp->next && (temp->operator == LESS))
 		temp->operator = NONE;
-		temp = cat_exec(temp);
-	}
-	else if (temp->operator == APPEND || temp->operator == GREAT)
-	{
-		temp->operator = PIPE;
-	}
-	//if (pipe_check(temp) || input_redir_check(temp))
-	{
-		//temp = cat_exec(temp);
-	}
-	//print_exec(shell);
-	//print_token(temp->token);
-	/*while (exec->operator != NONE && exec->operator != PIPE)
-		exec = exec->next;*/
-	if (exec->operator == NONE)
-		exec_cmd(shell, temp);
-	else
-		pipe_exe(shell, exec);
+    else if (temp->next && (temp->operator == APPEND || temp->operator == GREAT))
+    {
+        temp->operator = PIPE;
+    }
+    else if (!temp->next && (temp->operator == APPEND || temp->operator == GREAT))
+    {
+        temp->operator = NONE;
+    }
+    //if (pipe_check(temp) || input_redir_check(temp))
+    {
+        //temp = cat_exec(temp);
+    }
+    //print_exec(shell);
+    //print_token(temp->token);
+    /*while (exec->operator != NONE && exec->operator != PIPE)
+        exec = exec->next;*/
+    if (exec->operator == NONE)
+        exec_cmd(shell, temp);
+    else
+        pipe_exe(shell, exec);
 }

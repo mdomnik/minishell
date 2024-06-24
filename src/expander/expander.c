@@ -6,14 +6,14 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:58:23 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 13:15:33 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 13:24:34 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
 /**
- * Expands the shell variables and performs tokenization.
+ * Expands the environmental variables and performs tokenization.
  * 
  * @param shell The shell structure.
  */
@@ -94,7 +94,7 @@ char	*search_replace_env(char *str, t_shell *shell)
 		i++;
 	if (str[i] == '\0') 
 		return (str);
-	while(str[i + j] != '$' && str[i + j] != '\0' && str[i + j] != ' ')
+	while (str[i + j] != '$' && str[i + j] != '\0' && str[i + j] != ' ')
 		j++;
 	if (j == 1)
 		return (str);

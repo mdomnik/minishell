@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:37:46 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/22 19:37:11 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/24 13:30:58 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 //prototyping shell struct
 typedef struct s_shell	t_shell;
 
+//enum for io redirection
 typedef enum e_io
 {
 	NONE,
@@ -28,41 +29,19 @@ typedef enum e_io
 	PIPE,
 }	t_io;
 
-typedef struct s_parser
-{
-	char			*cmd;
-	char			**args;
-	int				input;
-	char			*i_str;
-	int				output;
-	char			*o_str;
-	char			**files;
-	int				*file_types;
-	int				index;
-	struct s_parser	*prev;
-	struct s_parser	*next;
-}	t_parser;
-
+//exec struct for use in exection
 typedef struct s_exec
 {
 	int				token_count;
 	char			**token;
 	t_io			operator;
 	int				index;
-	struct	s_exec	*next;
-
+	struct s_exec	*next;
 }	t_exec;
 
-typedef struct s_info
-{
-	char	**args;
-	char	**io;
-	char	**files;
-	int		*file_types;
-}				t_info;
 //parser.c
-void 	parser(t_shell *shell);
-void 	create_cmd_node(t_shell *shell, t_expand *expand);
+void	parser(t_shell *shell);
+void	create_cmd_node(t_shell *shell, t_expand *expand);
 void	create_input_node(t_shell *shell, t_expand *expand);
 void	create_output_node(t_shell *shell, t_expand *expand);
 
@@ -74,23 +53,6 @@ void 	set_token_count(t_shell *shell);
 void	create_redir_node(t_shell *shell, char *file, int type);
 void remove_nodes_till_pipe(t_shell *shell);
 void set_index_exec(t_shell *shell);
-
-
-//prep_exec.c
-// void	prep_exec(t_shell *shell);
-// void	create_input_node(t_shell *shell, t_parser *parser);
-// void create_output_node(t_shell *shell, t_parser *parser);
-// int	count_dblptr(char **args);
-
-//prep_exec_2.c
-void	remove_pipe_on_input(t_shell *shell);
-void	free_nodes_on_pipe(t_shell *shell, int pipe_count);
-void	get_token_count(t_shell *shell);
-
-//prep_exec_3.c
-void remove_non_exist_input(t_shell *shell);
-void purge_till_input(t_shell *shell, int i);
-void check_file_existance(t_shell *shell);
 
 //exec_struct.c
 t_exec	*execfreelist_ms(t_exec **lst);

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:40:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 13:16:22 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 14:05:30 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,58 +63,6 @@ void	print_expand(t_shell *shell)
 }
 
 /**
- * Prints the contents of the parser in the given shell.
- *
- * @param shell The shell containing the parser.
- */
-void	print_parser(t_shell *shell)
-{
-	t_parser	*current;
-	int			i;
-
-	current = shell->parser;
-	if (shell->parser == NULL)
-		printf("Stack is empty\n");
-	printf("parser contents:\n");
-	while (current != NULL)
-	{
-		printf("cmd: [%s] ", current->cmd);
-		printf("args: ");
-		i = 0;
-		if (current->args != NULL)
-		{
-			while (current->args[i] != NULL)
-			{
-				printf("[%s] ", current->args[i]);
-				i++;
-			}		
-		}	
-		printf("\n");
-		printf("input: [%d] [%s]\n", current->input, current->i_str);
-		printf("output: [%d] [%s]\n", current->output, current->o_str);
-		printf("files: ");
-		i = 0;
-		while (current->files[i] != NULL)
-		{
-			printf("[%s] ", current->files[i]);
-			i++;
-		}
-		printf("\n");
-		i = 0;
-		printf("file_types: ");
-		while (current->file_types[i] != 0)
-		{
-			printf("[%d] ", current->file_types[i]);
-			i++;
-		}
-		printf("\n");
-		printf("index: %d\n", current->index);
-		current = current->next;
-	}
-	printf("----------------------\n");
-}
-
-/**
  * This function is used to test the pointers in the parser.
  * It takes three arrays of strings as arguments: args, io, and files.
  * It prints the values of the files array, args array, and io array.
@@ -163,6 +111,7 @@ void print_exec(t_shell *shell)
 		while (current->token[i] != NULL)
 		{
 			ft_putstr_fd(current->token[i], 2);
+			ft_putstr_fd(" ", 2);
 			i++;
 		}
 		if (current->operator == NONE)

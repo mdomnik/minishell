@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:28:06 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/30 21:27:38 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 13:47:42 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,39 +49,6 @@ int	count_args(char **args)
 	while (args[i])
 		i++;
 	return (i);
-}
-
-/**
- * Appends the command at the front of the argument array.
- * 
- * @param shell The shell structure.
- * @param args The argument array.
- * @return The updated argument array with the command appended at the front,
- *         or NULL if memory allocation fails.
- */
-char	**append_cmd_front(t_shell *shell, char **args)
-{
-	char	**copy;
-	int		i;
-
-	i = 0;
-	copy = malloc(sizeof(char *) * (count_args(args) + 2));
-	if (!copy)
-		return (NULL);
-	copy[0] = ft_strdup(shell->parser->cmd);
-	while (args[i] != NULL)
-	{
-		copy[i + 1] = ft_strdup(args[i]);
-		if (!copy[i])
-		{
-			free_double(copy);
-			return (NULL);
-		}
-		i++;
-	}
-	copy[i + 1] = NULL;
-	free_double(args);
-	return (copy);
 }
 
 /**

@@ -6,7 +6,7 @@
 #    By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 21:52:00 by kaan              #+#    #+#              #
-#    Updated: 2024/06/22 15:29:36 by mdomnik          ###   ########.fr        #
+#    Updated: 2024/06/24 13:28:22 by mdomnik          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,13 +50,10 @@ SRC =	src/builtin/cd.c\
 		src/main/main.c\
 		src/main/signal.c\
 		src/main/testing.c\
-		src/parser/parser.c\
+		src/parser/exec_struct.c\
 		src/parser/parser_utils_1.c\
 		src/parser/parser_utils_2.c\
-		src/parser/translator/prep_exec.c\
-		src/parser/translator/prep_exec_2.c\
-		src/parser/translator/prep_exec_3.c\
-		src/parser/translator/exec_struct.c\
+		src/parser/parser.c\
 		src/utils/gen_utils_1.c\
 		src/utils/gen_utils_2.c\
 		src/utils/gen_utils_3.c\
