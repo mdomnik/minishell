@@ -6,7 +6,7 @@
 #    By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 21:52:00 by kaan              #+#    #+#              #
-#    Updated: 2024/06/24 15:44:33 by mdomnik          ###   ########.fr        #
+#    Updated: 2024/06/24 18:10:06 by mdomnik          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,10 +35,11 @@ SRC =	src/builtin/cd.c\
 		src/builtin/unset.c\
 		src/execution/execution_util.c\
 		src/execution/execution.c\
-		src/execution/find_path.c\
-		src/execution/less_util.c\
+		src/execution/find_path_1.c\
+		src/execution/find_path_2.c\
 		src/execution/pipe.c\
-		src/execution/redir.c\
+		src/execution/redir_1.c\
+		src/execution/redir_2.c\
 		src/expander/expander_process.c\
 		src/expander/expander_struct.c\
 		src/expander/expander.c\

@@ -6,12 +6,11 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:33:36 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 17:21:45 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 18:13:54 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
 
 bool	is_valid_id(char *token)
 {
@@ -36,19 +35,19 @@ int	find_builtin(t_shell *shell, t_exec *exec)
 
 	cmd = exec->token[0];
 	if (cmp_str(cmd, "echo") == 0)
-		return(builtin_echo(exec));
+		return (builtin_echo(exec));
 	else if (cmp_str(cmd, "env") == 0)
-		return(builtin_env(shell, exec));
+		return (builtin_env(shell, exec));
 	else if (cmp_str(cmd, "exit") == 0)
 		builtin_exit(shell, exec);
 	else if (cmp_str(cmd, "export") == 0)
-		return(builtin_export(shell, exec));
+		return (builtin_export(shell, exec));
 	else if (cmp_str(cmd, "pwd") == 0)
-		return(builtin_pwd(shell));
+		return (builtin_pwd(shell));
 	else if (cmp_str(cmd, "unset") == 0)
-		return(builtin_unset(shell, exec));
+		return (builtin_unset(shell, exec));
 	else if (cmp_str(cmd, "cd") == 0)
-		return(builtin_cd(shell, exec));
+		return (builtin_cd(shell, exec));
 	else
 		return (2);
 	return (1);
@@ -82,7 +81,8 @@ void	execution(t_shell *shell)
 	t_exec	*exec;
 	int		status;
 	int		ret;
-	
+
+	status = 0;
 	exec = shell->exec;
 	if (exec_size(exec) == 1)
 	{
@@ -107,11 +107,11 @@ void	execution(t_shell *shell)
 		exec_cmd(shell, exec);
 	waitpid(-1, &status, 0);
 	if (WIFEXITED(status))
-    *(shell->exit_status) = WEXITSTATUS(status);
-    if (*(shell->exit_status) > 1)
-    *(shell->exit_status) = 1;
-    else if (WIFSIGNALED(status))
-    *(shell->exit_status) = WTERMSIG(status) - 1;
+		*(shell->exit_status) = WEXITSTATUS(status);
+	if (*(shell->exit_status) > 1)
+		*(shell->exit_status) = 1;
+	else if (WIFSIGNALED(status))
+		*(shell->exit_status) = WTERMSIG(status) - 1;
 	execfreelist_ms(&shell->exec);
 	reset_loop(shell);
 }

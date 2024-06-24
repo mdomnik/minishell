@@ -6,13 +6,11 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:45:51 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 16:05:19 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 18:00:41 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-extern int	exit_status;
 
 void	left_side(t_exec *exec, t_shell *shell, int pipe_fd[2])
 {

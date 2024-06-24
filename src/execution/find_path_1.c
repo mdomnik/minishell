@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_path.c                                        :+:      :+:    :+:   */
+/*   find_path_1.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:04:13 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 16:03:14 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 18:17:59 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,10 @@ void	exit_path(t_shell *shell, char **paths, char *cmd, int exit_status_x)
 {
 	if (cmd)
 		perror(cmd);
-	if(paths != NULL)
+	if (paths != NULL)
 		free_double(paths);
-	if (!WIFSIGNALED(exit_status_x))
-		*(shell->exit_status) = exit_status_x;
-	*(shell->exit_status) = exit_status_x;
 	free_shell(shell);
-	exit(*(shell->exit_status));
+	exit(exit_status_x);
 }
 
 char	**get_paths(t_shell *shell)
@@ -77,7 +74,8 @@ void	err_cmd(char *cmd)
 char	**append_cmd_front(t_shell *shell, char **args)
 {
 	char	**copy;
-	int	 i;
+	int		i;
+
 	i = 0;
 	copy = malloc(sizeof(char *) * (count_args(args) + 2));
 	if (!copy)
@@ -96,39 +94,4 @@ char	**append_cmd_front(t_shell *shell, char **args)
 	copy[i + 1] = NULL;
 	free_double(args);
 	return (copy);
-}
-void	exec_external(t_shell *shell, char *path)
-{
-	shell->exec->token = append_cmd_front(shell, shell->exec->token);
-	execve(path, shell->exec->token, shell->env);
-}
-int ft_exec_external(t_shell *shell, char *cmd, char **path)
-{
-	exec_external(shell, cmd);
-	free_double(path);
-	return (0);
-}
-int find_path(t_shell *shell, t_exec *exec)
-{
-	char		*bin_path;
-	char		**paths;
-	bin_path = exec->token[0];
-	paths = get_paths(shell);
-	if (!paths)
-		exit(127);
-	if (access(exec->token[0], F_OK | X_OK) == 0)
-		return (ft_exec_external(shell, exec->token[0], paths));
-	bin_path = get_bin_path(exec->token[0], paths);
-	if (!bin_path)
-	{
-		perror("empty bin path");
-		err_cmd(exec->token[0]);
-		exit_path(shell, paths, NULL, 1);
-	}
-	if (execve(bin_path, exec->token, shell->env) == -1)
-	{
-		free(bin_path);
-		exit_path(shell, paths, exec->token[0], 127);
-	}
-	return (0);
 }
