@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:28:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 14:27:47 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 14:44:53 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@ void	parser(t_shell *shell)
 	}
 	set_token_count(shell);
 	set_index_exec(shell);
-	//print_exec(shell);
 	execution(shell);
 }
 

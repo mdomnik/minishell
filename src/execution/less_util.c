@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   less_util.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/14 22:52:14 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/22 20:44:19 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/24 16:04:59 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,5 @@ void	less_invalid_input(char *token)
 	err_msg = ft_strjoin("minishell: ", token);
 	perror(err_msg);
 	free(err_msg);
-	exit_status = 2;
 	exit(EXIT_FAILURE);
 }

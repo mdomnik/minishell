@@ -6,7 +6,7 @@
 #    By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 21:52:00 by kaan              #+#    #+#              #
-#    Updated: 2024/06/24 13:28:22 by mdomnik          ###   ########.fr        #
+#    Updated: 2024/06/24 15:44:33 by mdomnik          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,18 +50,16 @@ SRC =	src/builtin/cd.c\
 		src/main/main.c\
 		src/main/signal.c\
 		src/main/testing.c\
-		src/parser/exec_struct.c\
-		src/parser/parser_utils_1.c\
-		src/parser/parser_utils_2.c\
+		src/parser/parser_helpers.c\
+		src/parser/parser_struct.c\
 		src/parser/parser.c\
-		src/utils/gen_utils_1.c\
-		src/utils/gen_utils_2.c\
-		src/utils/gen_utils_3.c\
-		src/utils/gen_utils_4.c\
-		src/utils/gen_utils_split.c\
-		src/utils/util_1.c\
-		src/utils/util_3.c\
-		src/utils/util_4.c\
+		src/utils/utils_1.c\
+		src/utils/utils_2.c\
+		src/utils/utils_3.c\
+		src/utils/utils_4.c\
+		src/utils/utils_5.c\
+		src/utils/utils_6.c\
+		src/utils/utils_7.c\
 
 OBJ = $(patsubst %.c,$(OBJ_DIR)%.o,$(SRC))
 

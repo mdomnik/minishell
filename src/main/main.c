@@ -6,13 +6,11 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:27:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 12:57:41 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 15:59:47 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
-
-int	exit_status = 0;
 
 /* Function runs at launch:
 user should start the shell program using just
@@ -21,7 +19,6 @@ arguments are given, return error. else,
 main initializes components of s_shell struct,
 copies all environmental variables to shell->env
 and starts the core loop ("shell_loop") */
-
 int	main(int argc, char **argv, char **envp)
 {
 	t_shell	*shell;
@@ -48,7 +45,6 @@ int	main(int argc, char **argv, char **envp)
 /* core loop of the shell
     waits for input from user, then
     sends it for processing */
-
 void	shell_loop(t_shell *shell)
 {
 	config_signals();

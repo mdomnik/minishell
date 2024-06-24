@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:16:07 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/21 16:26:23 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 16:09:11 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int get_exit(int exit_code)
 	return (exit_code);
 }
 
-int ft_isnum(char *str)
+int	ft_isnum(char *str)
 {
 	int i;
 

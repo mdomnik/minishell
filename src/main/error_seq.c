@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:19:13 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/21 16:26:32 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 15:59:11 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,16 @@ void	free_err(char *err_str, t_shell *shell)
 	free_shell(shell);
 	exit(1);
 }
-void ft_perror(char *msg, char *cmd, unsigned int err, t_shell *shell)
+
+/**
+ * Prints an error message and updates the shell's exit status.
+ *
+ * @param msg The error message to be printed (optional).
+ * @param cmd The command associated with the error (optional).
+ * @param err The error code.
+ * @param shell The shell structure.
+ */
+void	ft_perror(char *msg, char *cmd, unsigned int err, t_shell *shell)
 {
 	if (msg != NULL)
 		ft_putendl_fd(msg, 2);

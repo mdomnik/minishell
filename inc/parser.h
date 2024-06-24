@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/12 15:37:46 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 13:30:58 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 15:00:25 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,26 +39,23 @@ typedef struct s_exec
 	struct s_exec	*next;
 }	t_exec;
 
+//parser_helpers.c
+void		adjust_exec_operand(t_shell *shell, int pipe_count);
+void		set_token_count(t_shell *shell);
+void		create_redir_node(t_shell *shell, char *file, int type);
+void		remove_nodes_till_pipe(t_shell *shell);
+void		set_index_exec(t_shell *shell);
+
+//parser_struct.c
+void		create_exec_node(t_shell *shell, char **args, int operand);
+t_exec		*execfreelist_ms(t_exec **lst);
+void		execaddback_ms(t_exec **lst, t_exec *new);
+void		remove_exec_node_at_index(t_shell *shell, int index);
+
 //parser.c
-void	parser(t_shell *shell);
-void	create_cmd_node(t_shell *shell, t_expand *expand);
-void	create_input_node(t_shell *shell, t_expand *expand);
-void	create_output_node(t_shell *shell, t_expand *expand);
-
-//parser_utils_1.c
-void	adjust_exec_operand(t_shell *shell, int pipe_count);
-void 	set_token_count(t_shell *shell);
-
-//parser_utils_2.c
-void	create_redir_node(t_shell *shell, char *file, int type);
-void remove_nodes_till_pipe(t_shell *shell);
-void set_index_exec(t_shell *shell);
-
-//exec_struct.c
-t_exec	*execfreelist_ms(t_exec **lst);
-void	execaddback_ms(t_exec **lst, t_exec *new);
-void	create_exec_node(t_shell *shell, char **args, int operand);
-t_expand *remove_current_node(t_expand *expand);
-void	remove_exec_node_at_index(t_shell *shell, int index);
+void		parser(t_shell *shell);
+void		create_cmd_node(t_shell *shell, t_expand *expand);
+void		create_input_node(t_shell *shell, t_expand *expand);
+void		create_output_node(t_shell *shell, t_expand *expand);
 
 #endif

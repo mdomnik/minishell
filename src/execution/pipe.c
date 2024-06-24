@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:45:51 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/22 20:08:10 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/24 16:05:19 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ void	pipe_exe(t_shell *shell, t_exec *exec)
 		exit_shell(shell, "FORK_ERR", EXIT_FAILURE);
 	if (child_pid == 0)
 		left_side(exec, shell, pipe_fd);
-    right_side(exec->next, shell, pipe_fd);
+	right_side(exec->next, shell, pipe_fd);
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
 	waitpid(child_pid, &status, 0);
-	exit_status = status / 256;
+	*(shell->exit_status) = status / 256;
 }

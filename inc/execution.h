@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:54:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/22 20:20:30 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/24 16:03:35 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	execution(t_shell *shell);
 bool	is_valid_id(char *token);
 bool	input_redir_check(t_exec *exec);
 bool	pipe_check(t_exec *exec);
-void	find_path(t_shell *shell, t_exec *exec);
+int		find_path(t_shell *shell, t_exec *exec);
 int		find_builtin(t_shell *shell, t_exec *exec);
 
 //pipe & redirection

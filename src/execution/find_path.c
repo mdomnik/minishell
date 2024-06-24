@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:04:13 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 14:36:48 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 16:03:14 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,18 +74,54 @@ void	err_cmd(char *cmd)
 	ft_putendl_fd(": command not found", STDERR_FILENO);
 }
 
-void	find_path(t_shell *shell, t_exec *exec)
+char	**append_cmd_front(t_shell *shell, char **args)
+{
+	char	**copy;
+	int	 i;
+	i = 0;
+	copy = malloc(sizeof(char *) * (count_args(args) + 2));
+	if (!copy)
+		return (NULL);
+	copy[0] = ft_strdup(shell->exec->token[0]);
+	while (args[i] != NULL)
+	{
+		copy[i + 1] = ft_strdup(args[i]);
+		if (!copy[i])
+		{
+			free_double(copy);
+			return (NULL);
+		}
+		i++;
+	}
+	copy[i + 1] = NULL;
+	free_double(args);
+	return (copy);
+}
+void	exec_external(t_shell *shell, char *path)
+{
+	shell->exec->token = append_cmd_front(shell, shell->exec->token);
+	execve(path, shell->exec->token, shell->env);
+}
+int ft_exec_external(t_shell *shell, char *cmd, char **path)
+{
+	exec_external(shell, cmd);
+	free_double(path);
+	return (0);
+}
+int find_path(t_shell *shell, t_exec *exec)
 {
 	char		*bin_path;
 	char		**paths;
-
 	bin_path = exec->token[0];
 	paths = get_paths(shell);
 	if (!paths)
 		exit(127);
+	if (access(exec->token[0], F_OK | X_OK) == 0)
+		return (ft_exec_external(shell, exec->token[0], paths));
 	bin_path = get_bin_path(exec->token[0], paths);
 	if (!bin_path)
 	{
+		perror("empty bin path");
 		err_cmd(exec->token[0]);
 		exit_path(shell, paths, NULL, 1);
 	}
@@ -94,5 +130,5 @@ void	find_path(t_shell *shell, t_exec *exec)
 		free(bin_path);
 		exit_path(shell, paths, exec->token[0], 127);
 	}
-	return ;
+	return (0);
 }

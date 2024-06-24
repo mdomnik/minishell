@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:20:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 14:32:59 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 15:50:29 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ char	**add_string(char **array, int *size, const char *new_string)
 		i++;
 	}
 	new_array[*size] = ft_strdup(new_string);
-	free_d_lst(array);
+	free_double(array);
 	array = malloc((*size + 2) * sizeof(char *));
 	i = 0;
 	while (i < *size + 1)
@@ -200,7 +200,7 @@ t_exec	*cat_exec(t_exec *exec)
 	}
 	first->token[i + 1] = NULL;
 	first->operator = first->next->operator;
-	free_d_lst(first->next->token);
+	free_double(first->next->token);
 	free(first->next);
 	if (exec->next->next)
 		third = exec->next->next;

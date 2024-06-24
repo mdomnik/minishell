@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   util_4.c                                           :+:      :+:    :+:   */
+/*   utils_7.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:43:47 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/20 16:49:09 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 15:47:31 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+/**
+ * Calculates the size of a linked list of t_exec nodes.
+ *
+ * @param exec The head of the linked list.
+ * @return The size of the linked list.
+ */
 size_t	exec_size(t_exec *exec)
 {
-	t_exec	*temp;
+	t_exec		*temp;
 	size_t		size;
 
 	temp = exec;
@@ -27,6 +33,13 @@ size_t	exec_size(t_exec *exec)
 	return (size);
 }
 
+/**
+ * Concatenates two strings and returns the result.
+ * 
+ * @param s1 The first string to concatenate.
+ * @param s2 The second string to concatenate.
+ * @return The concatenated string, or NULL if either s1 or s2 is NULL.
+ */
 char	*ft_strjoin_msn(char *s1, char *s2)
 {
 	size_t	len_s1;
@@ -54,13 +67,12 @@ char	*ft_strjoin_msn(char *s1, char *s2)
 	return (appended);
 }
 
-bool	single_dollar(char *input_at_i)
-{
-	return ((!input_at_i[1]
-			|| input_at_i[1] == ' '
-			|| input_at_i[1] == '\"'));
-}
-
+/**
+ * Counts the number of tokens in an array of strings.
+ *
+ * @param token The array of strings representing the tokens.
+ * @return The number of tokens in the array.
+ */
 int	get_token_count_ms(char **token)
 {
 	int	i;
