@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:28:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 12:52:56 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 13:16:45 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,10 @@ void	create_input_node(t_shell *shell, t_expand *expand)
 	temp = expand;
 	while (expand != NULL && expand->token != T_PIPE)
 	{
-		if (expand->token == T_LESSER || expand->token == T_HEREDOC)
-			create_redir_node(shell, expand->next->word, expand->token);
+		if (expand->token == T_LESSER)
+			create_redir_node(shell, expand->next->word, LESS);
+		else if (expand->token == T_HEREDOC)
+			create_redir_node(shell, expand->next->word, HEREDOC);
 		expand = expand->next;
 	}
 }
@@ -85,8 +87,10 @@ void	create_output_node(t_shell *shell, t_expand *expand)
 	temp = expand;
 	while (expand != NULL && expand->token != T_PIPE)
 	{
-		if (expand->token == T_GREATER || expand->token == T_APPEND)
-			create_redir_node(shell, expand->next->word, expand->token);
+		if (expand->token == T_GREATER)
+			create_redir_node(shell, expand->next->word, GREAT);
+		if (expand->token == T_APPEND)
+			create_redir_node(shell, expand->next->word, APPEND);
 		expand = expand->next;
 	}
 }

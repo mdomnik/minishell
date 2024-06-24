@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:00:12 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 12:51:54 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 13:15:50 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,22 @@
 //prototyping prompt struct
 typedef struct s_shell	t_shell;
 
+/**
+ * @struct t_expand
+ * @brief Represents an expand structure.
+ *
+ * The `t_expand` struct is used to store information about an expand operation.
+ * It contains a word, a token, an index, and pointers to the previous
+ * and next expand structures.
+ */
 typedef struct s_expand
 {
 	char			*word;
 	int				token;
 	int				index;
-	struct s_expand	*prev;
 	struct s_expand	*next;
-}		t_expand;
+	struct s_expand	*prev;
+}			t_expand;
 
 //expander_process.c
 void		process_lexer(t_shell *shell, t_lexer *lexer,
@@ -42,6 +50,5 @@ t_expand	*expandfreelist_ms(t_expand **lst);
 void		expander(t_shell *shell);
 void		env_expander(t_lexer *lexer, int i, t_shell *shell);
 char		*search_replace_env(char *str, t_shell *shell);
-
 
 #endif

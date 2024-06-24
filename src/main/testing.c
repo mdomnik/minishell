@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   testing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kaan <kaan@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:40:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/22 19:32:14 by kaan             ###   ########.fr       */
+/*   Updated: 2024/06/24 13:16:22 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,34 +154,38 @@ void print_exec(t_shell *shell)
 	i = 0;
 	current = shell->exec;
 	if (shell->exec == NULL)
-		printf("Stack is empty\n");
-	printf("exec Stack contents:\n");
+		ft_putstr_fd("Stack is empty\n", 2);
+	ft_putstr_fd("exec Stack contents:\n", 2);
 	while (current != NULL)
 	{
-		printf("tokens :");
+		ft_putstr_fd("tokens :", 2);
 		i = 0;
 		while (current->token[i] != NULL)
 		{
-			printf(" %s", current->token[i]);
+			ft_putstr_fd(current->token[i], 2);
 			i++;
 		}
 		if (current->operator == NONE)
-			printf(" [NONE]");
+			ft_putstr_fd(" [NONE]", 2);
 		else if (current->operator == GREAT)
-			printf(" [GREAT]");
+			ft_putstr_fd(" [GREAT]", 2);
 		else if (current->operator == APPEND)
-			printf(" [APPEND]");
+			ft_putstr_fd(" [APPEND]", 2);
 		else if (current->operator == LESS)
-			printf(" [LESS]");
+			ft_putstr_fd(" [LESS]", 2);
 		else if (current->operator == HEREDOC)
-			printf(" [HEREDOC]");
+			ft_putstr_fd(" [HEREDOC]", 2);
 		else if (current->operator == PIPE)
-			printf(" [PIPE]");
-		printf(" [index: %d] ", current->index);
-		printf(" [TC: %d]\n", current->token_count);
+			ft_putstr_fd(" [PIPE]", 2);
+		ft_putstr_fd(" [index: ", 2);
+		ft_putnbr_fd(current->index, 2);
+		ft_putstr_fd("] ", 2);
+		ft_putstr_fd(" [TC: ", 2);
+		ft_putnbr_fd(current->token_count, 2);
+		ft_putstr_fd("]\n", 2);
 		current = current->next;
 	}
-	printf("----------------------\n");
+	ft_putstr_fd("----------------------\n", 2);
 }
 
 void print_double_pointer(char **list)
