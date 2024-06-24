@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:28:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 17:34:21 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 19:33:58 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ void	parser(t_shell *shell)
 	while (expand != NULL)
 	{
 		create_cmd_node(shell, expand);
-		create_input_node(shell, expand);
 		create_output_node(shell, expand);
+		create_input_node(shell, expand);
 		remove_nodes_till_pipe(shell);
 		adjust_exec_operand(shell, i);
 		i++;

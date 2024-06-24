@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:00:12 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 13:15:50 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 19:32:11 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,10 @@ typedef struct s_expand
 	struct s_expand	*next;
 	struct s_expand	*prev;
 }			t_expand;
+
+//expander_delim.c
+char	**add_delim_split(char *str, t_shell *shell);
+char	**double_dollar(char *str);
 
 //expander_process.c
 void		process_lexer(t_shell *shell, t_lexer *lexer,

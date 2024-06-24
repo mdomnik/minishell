@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 17:12:43 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 19:35:38 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ typedef struct s_shell
 	struct s_parser		*parser;
 	struct s_exec		*exec;
 	int					*exit_status;
+	int					in_fd;
+	int					out_fd;
 }			t_shell;
 
 //error_seq.c

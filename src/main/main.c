@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:27:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 15:59:47 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/24 19:36:36 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ void	reset_loop(t_shell *shell)
 	shell->lexer = NULL;
 	shell->parser = NULL;
 	shell->exec = NULL;
+	shell->in_fd = -1;
+	shell->out_fd = -1;
 	shell_loop(shell);
 }
 
@@ -116,6 +118,8 @@ t_shell	*init_shell(t_shell *shell)
 	shell->last_dir = NULL;
 	shell->exit_status = malloc(sizeof(int));
 	*(shell->exit_status) = 0;
+	shell->in_fd = -1;
+	shell->out_fd = -1;
 	return (shell);
 }
 
