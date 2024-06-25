@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:54:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/25 14:25:00 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/25 17:22:05 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,5 +62,6 @@ char	**add_string(char **array, int *size, const char *new_string);
 char	**add_string_util(char **n_arr, char **arr, int *s, const char *n_str);
 t_exec	*cat_exec(t_exec *exec);
 void	redir_exe(t_shell *shell, t_exec *exec);
+int		is_directory(char *path);
 
 #endif

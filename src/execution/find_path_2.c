@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 17:59:53 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/25 14:44:20 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/25 17:26:34 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 
 void	exec_external(t_shell *shell, char *cmd, char **path)
 {
+	if (is_directory(cmd) == 1)
+	{
+		ft_putstr_fd(cmd, 2);
+		ft_putendl_fd(": Is a directory", 2);
+		free_double(path);
+		free(cmd);
+		free_shell(shell);
+		exit(126);
+	}
 	if (ft_strchr(cmd, '/') == 0)
 	{
 		ft_putstr_fd(cmd, 2);
@@ -70,5 +79,16 @@ int	find_path(t_shell *shell, t_exec *exec)
 void	terminate_bin_path(t_shell *shell, t_exec *exec, char **paths)
 {
 	err_cmd(exec->token[0]);
-	exit_path(shell, paths, NULL, 1);
+	exit_path(shell, paths, NULL, 127);
+}
+
+int	is_directory(char *path)
+{
+	struct stat	stats;
+
+	if (stat(path, &stats) == -1)
+		return (0);
+	if (S_ISDIR(stats.st_mode))
+		return (1);
+	return (0);
 }
