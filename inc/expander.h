@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 15:00:12 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/25 17:03:56 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/25 20:37:06 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ void		free_err_delim(t_shell *shell, char **ret);
 void		process_lexer(t_shell *shell, t_lexer *lexer,
 				char *string, int boolean);
 int			create_node(char *word, int token, t_shell *shell);
+t_expand	*remove_empty_node(t_shell *shell, t_expand *expand);
+t_expand	*remove_empty_node_2(t_shell *shell, t_expand *expand);
+void		remove_empty_expand(t_shell *shell);
 
 //expander_struct.c
 t_expand	*expandnew_ms(char *word, int token);

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:58:23 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/25 17:04:34 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/25 20:35:19 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,9 @@ void	expander(t_shell *shell)
 	env_expander(lexer, 0, shell);
 	process_lexer(shell, lexer, string, boolean);
 	lexerfreelist_ms(&shell->lexer);
-	parser(shell);
+	remove_empty_expand(shell);
+	if (shell->expand != NULL)
+		parser(shell);
 }
 
 /**

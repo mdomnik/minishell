@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 15:15:56 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/04/20 20:17:06 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/25 20:38:05 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,67 @@ int	create_node(char *word, int token, t_shell *shell)
 	expandaddback_ms(&shell->expand, new);
 	word = NULL;
 	return (0);
+}
+
+t_expand	*remove_empty_node(t_shell *shell, t_expand *expand)
+{
+	t_expand	*temp;
+
+	if (expand->prev == NULL && expand->next == NULL)
+	{
+		free(expand->word);
+		free(expand);
+		expand = NULL;
+		shell->expand = NULL;
+	}
+	else if (expand->prev == NULL)
+	{
+		temp = expand->next;
+		temp->prev = NULL;
+		free(expand->word);
+		free(expand);
+		shell->expand = temp;
+	}
+	else
+		return (remove_empty_node_2(shell, expand));
+	return (shell->expand);
+}
+
+t_expand	*remove_empty_node_2(t_shell *shell, t_expand *expand)
+{
+	t_expand	*temp;
+
+	if (expand->next == NULL)
+	{
+		temp = expand;
+		expand->prev->next = NULL;
+		free(temp->word);
+		free(temp);
+	}
+	else
+	{
+		temp = expand;
+		expand->prev->next = expand->next;
+		expand->next->prev = expand->prev;
+		free(temp->word);
+		free(temp);
+		temp = NULL;
+	}
+	return (shell->expand);
+}
+
+void	remove_empty_expand(t_shell *shell)
+{
+	t_expand	*expand;
+
+	expand = shell->expand;
+	while (expand != NULL)
+	{
+		if (expand->word[0] == '\0')
+		{
+			expand = remove_empty_node(shell, expand);
+		}
+		else
+			expand = expand->next;
+	}
 }

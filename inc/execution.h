@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:54:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/25 17:22:05 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/25 17:49:13 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	**append_cmd_front(t_shell *shell, char **args);
 void	exec_external(t_shell *shell, char *cmd, char **path);
 int		ft_exec_external(t_shell *shell, char *cmd, char **path);
 int		find_path(t_shell *shell, t_exec *exec);
-void	terminate_bin_path(t_shell *shell, t_exec *exec, char **paths);
+void	terminate_bin_path(t_shell *shell, char *cmd, t_exec *exec, char **paths);
 t_exec	*return_exec(t_shell *shell, t_exec *exec);
 
 //pipe.c

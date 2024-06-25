@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 17:59:53 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/25 17:26:34 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/25 20:44:27 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,40 @@
 
 void	exec_external(t_shell *shell, char *cmd, char **path)
 {
-	if (is_directory(cmd) == 1)
-	{
-		ft_putstr_fd(cmd, 2);
-		ft_putendl_fd(": Is a directory", 2);
-		free_double(path);
-		free(cmd);
-		free_shell(shell);
-		exit(126);
-	}
-	if (ft_strchr(cmd, '/') == 0)
-	{
-		ft_putstr_fd(cmd, 2);
-		ft_putstr_fd(": command not found\n", 2);
-		free_double(path);
-		free(cmd);
-		free_shell(shell);
-		exit(EXIT_FAILURE);
-	}
+	// if (ft_strchr(cmd, '/') == 0)
+	// {
+	// 	printf("im herea	\n");
+	// 	ft_putstr_fd(cmd, 2);
+	// 	ft_putstr_fd(": command not found\n", 2);
+	// 	free_double(path);
+	// 	free(cmd);
+	// 	free_shell(shell);
+	// 	exit(EXIT_FAILURE);
+	// }
+	// else
+	// {
+	// 	if (is_directory(cmd) == 1)
+	// 	{
+	// 		ft_putstr_fd(cmd, 2);
+	// 		ft_putendl_fd(": Is a directory", 2);
+	// 		free_double(path);
+	// 		free(cmd);
+	// 		free_shell(shell);
+	// 		exit(126);
+	// 	}
+	// 	else if (access(cmd, F_OK) == -1)
+	// 	{
+	// 		ft_putstr_fd(cmd, 2);
+	// 		ft_putstr_fd(": No such file or directory\n", 2);
+	// 		free_double(path);
+	// 		free(cmd);
+	// 		free_shell(shell);
+	// 		exit(127);
+	// 	}
+	// }
 	if (execve(cmd, shell->exec->token, shell->env) == -1)
 	{
-		free_double(path);
-		free(cmd);
-		free_shell(shell);
-		exit(EXIT_FAILURE);
+		terminate_bin_path(shell, cmd, shell->exec, path);
 	}
 }
 
@@ -60,13 +70,16 @@ int	find_path(t_shell *shell, t_exec *exec)
 	bin_path = get_bin_path(exec->token[0], paths);
 	if (!bin_path)
 	{
-		if (access(exec->token[0], F_OK | X_OK) == 0)
+		if (access(exec->token[0], X_OK) == 0)
 		{
 			cmd = ft_strdup(exec->token[0]);
 			return (ft_exec_external(shell, cmd, paths));
 		}
 		else
-			terminate_bin_path(shell, exec, paths);
+		{
+			cmd = ft_strdup(exec->token[0]);
+			terminate_bin_path(shell, cmd, exec, paths);
+		}
 	}
 	if (execve(bin_path, exec->token, shell->env) == -1)
 	{
@@ -76,9 +89,48 @@ int	find_path(t_shell *shell, t_exec *exec)
 	return (0);
 }
 
-void	terminate_bin_path(t_shell *shell, t_exec *exec, char **paths)
+void	terminate_bin_path(t_shell *shell, char *cmd, t_exec *exec, char **paths)
 {
-	err_cmd(exec->token[0]);
+	(void)exec;
+	if (ft_strchr(cmd, '/') == 0)
+	{
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": command not found\n", 2);
+		free_double(paths);
+		free(cmd);
+		free_shell(shell);
+		exit(127);
+	}
+	if (is_directory(cmd) == 1)
+	{
+		ft_putstr_fd(cmd, 2);
+		ft_putendl_fd(": Is a directory", 2);
+		free_double(paths);
+		free(cmd);
+		free_shell(shell);
+		exit(126);
+	}
+	else
+	{
+		if (access(cmd, F_OK) == -1)
+		{
+			ft_putstr_fd(cmd, 2);
+			ft_putstr_fd(": No such file or directory\n", 2);
+			free_double(paths);
+			free(cmd);
+			free_shell(shell);
+			exit(127);
+		}
+		else
+		{
+			ft_putstr_fd(" Permission denied\n", 2);
+			free_double(paths);
+			free(cmd);
+			free_shell(shell);
+			exit(126);
+		}
+	}
+	free(cmd);
 	exit_path(shell, paths, NULL, 127);
 }
 
