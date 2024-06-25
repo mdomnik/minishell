@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:43:47 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 17:22:46 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/25 16:55:32 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,4 +117,18 @@ char	*ft_strjoin_ms(char *s1, char *s2)
 	new[i] = '\0';
 	free(s2);
 	return (new);
+}
+
+void	adjust_token_values(t_shell *shell)
+{
+	t_lexer	*lexer;
+
+	lexer = shell->lexer;
+	while (lexer != NULL)
+	{
+		if (lexer->token != T_WORD)
+			if (find_redir(lexer->word) == 0)
+				lexer->token = T_WORD;
+		lexer = lexer->next;
+	}
 }

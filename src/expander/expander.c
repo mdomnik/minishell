@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 14:58:23 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/25 15:40:52 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/25 17:04:34 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	env_expander(t_lexer *lexer, int i, t_shell *shell)
 			env_split = add_delim_split(lexer->word, shell);
 			while (env_split[i] != NULL)
 			{
-				env_split[i] = search_replace_env(env_split[i], shell);
+				env_split[i] = search_replace_env(env_split[i], shell, 0, 1);
 				i++;
 			}
 			i = 0;
@@ -81,20 +81,17 @@ void	env_expander(t_lexer *lexer, int i, t_shell *shell)
  * @param shell A pointer to the shell structure.
  * @return The modified string with environment variables replaced.
  */
-char	*search_replace_env(char *str, t_shell *shell)
+char	*search_replace_env(char *str, t_shell *shell, int i, int j)
 {
-	int		i;
-	int		j;
 	char	*temp;
 	char	*ret;
 
-	i = 0;
-	j = 1;
 	while (str[i] != '$' && str[i] != '\0') 
 		i++;
 	if (str[i] == '\0') 
 		return (str);
-	while (str[i + j] != '$' && str[i + j] != '\0' && str[i + j] != ' ')
+	while (str[i + j] != '$' && str[i + j] != '\0'
+		&& str[i + j] != ' ' && str[i + j] != 39)
 		j++;
 	if (j == 1)
 		return (str);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   gen_utils_2.c                                      :+:      :+:    :+:   */
+/*   utils_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:28:06 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 13:47:42 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/25 16:50:04 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,5 +93,18 @@ void	prep_declare(t_shell *shell)
 		if (!shell->declare[i])
 			free_err(ERR_MALLOC, shell);
 		i++;
+	}
+}
+
+void	check_redir_faults(t_shell *shell)
+{
+	t_lexer	*temp;
+
+	temp = shell->lexer;
+	while (temp->next != NULL)
+	{
+		if (temp->token != T_WORD && temp->next->token != T_WORD)
+			ft_perror(ERR_SYNTAX, NULL, 258, shell);
+		temp = temp->next;
 	}
 }

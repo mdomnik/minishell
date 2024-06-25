@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:43:18 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 17:11:53 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/25 16:55:58 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	tokenizer(t_shell *shell, int i, int split)
 	adjust_lexer_redir(shell);
 	delete_empty_nodes(shell);
 	check_final_lexer(shell);
+	adjust_token_values(shell);
+	check_redir_faults(shell);
 	expander(shell);
 }
 
