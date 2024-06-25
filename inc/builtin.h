@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/25 18:00:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 20:03:59 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/25 13:57:37 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,9 @@ typedef struct s_shell	t_shell;
 
 //cd.c
 int		builtin_cd(t_shell *shell, t_exec *exec);
+int		check_argument_count(t_shell *shell, t_exec *exec);
 int		cd_home(t_shell *shell);
-void	set_last_dir(t_shell *shell);
 void	change_last_dir(t_shell *shell);
-
 //echo.c
 int		builtin_echo(t_exec *exec);
 int		check_echo_option(char **args, int **n_flag, int i);

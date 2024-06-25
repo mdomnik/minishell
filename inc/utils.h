@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/17 12:12:05 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 19:31:59 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/25 13:26:39 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ typedef struct s_shell	t_shell;
 char	**double_dup(char **str);
 void	free_double(char **double_str);
 int		ft_strlen_ms(char *s);
+void	update_pwd_oldpwd(t_shell *shell, char *pwd_str, char *o_pwd_str);
+void	update_declare_pwd(t_shell *shell, char *pwd_str, char *o_pwd_str);
 
 //utils_2.c
 int		cmp_str(char *s1, const char *s2);

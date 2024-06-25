@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:41:28 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 19:31:17 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/25 13:41:30 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,53 @@ int	ft_strlen_ms(char *s)
 		i++;
 	}
 	return (i);
+}
+
+void	update_pwd_oldpwd(t_shell *shell, char *pwd_str, char *o_pwd_str)
+{
+	int		i;
+
+	i = 0;
+	while (ft_strncmp("PWD=", shell->env[i], 4) != 0)
+		i++;
+	if (shell->env[i] != NULL)
+	{
+		free(shell->env[i]);
+		shell->env[i] = ft_strjoin_ms("PWD=", ft_strdup(pwd_str));
+	}
+	i = 0;
+	while (ft_strncmp("OLDPWD=", shell->env[i], 7) != 0)
+		i++;
+	if (shell->env[i] != NULL)
+	{
+		free(shell->env[i]);
+		shell->env[i] = ft_strjoin_ms("OLDPWD=", ft_strdup(o_pwd_str));
+	}
+	update_declare_pwd(shell, ft_strdup(pwd_str), ft_strdup(o_pwd_str));
+	free(pwd_str);
+	free(o_pwd_str);
+}
+
+void	update_declare_pwd(t_shell *shell, char *pwd_str, char *o_pwd_str)
+{
+	int		i;
+
+	i = 0;
+	while (ft_strncmp("PWD=", shell->declare[i], 4) != 0)
+		i++;
+	if (shell->declare[i] != NULL)
+	{
+		free(shell->declare[i]);
+		shell->declare[i] = ft_strjoin_ms("PWD=", ft_strdup(pwd_str));
+	}
+	i = 0;
+	while (ft_strncmp("OLDPWD=", shell->declare[i], 7) != 0)
+		i++;
+	if (shell->declare[i] != NULL)
+	{
+		free(shell->declare[i]);
+		shell->declare[i] = ft_strjoin_ms("OLDPWD=", ft_strdup(o_pwd_str));
+	}
+	free(pwd_str);
+	free(o_pwd_str);
 }
