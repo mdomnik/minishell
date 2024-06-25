@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 19:35:38 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/25 15:28:00 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,6 @@ typedef struct s_shell
 	char				*line;
 	char				**env;
 	char				**declare;
-	char				*last_dir;
 	struct s_expand		*expand;
 	struct s_lexer		*lexer;
 	struct s_parser		*parser;
@@ -80,7 +79,6 @@ t_shell	*init_shell(t_shell *shell);
 void	shell_loop(t_shell *shell);
 t_shell	*init_shell(t_shell *shell);
 void	reset_loop(t_shell *shell);
-void	starting_dir(t_shell *shell);
 
 //signals.c
 void	child_signals(int signum);

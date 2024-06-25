@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:01:41 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 20:45:49 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/25 15:58:15 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ void	redir_exe(t_shell *shell, t_exec *exec)
 		exec = return_exec(shell, exec);
 	else if (!exec->next && (exec->operator == APPEND
 			|| exec->operator == GREAT))
+		exec->operator = NONE;
+	else if (exec->operator == HEREDOC)
 		exec->operator = NONE;
 	if (exec->operator == NONE)
 		exec_cmd(shell, exec);

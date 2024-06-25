@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 13:19:13 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 15:59:11 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/25 15:27:23 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,6 @@ void	free_shell(t_shell *shell)
 		expandfreelist_ms(&shell->expand);
 	if (shell->exec)
 		execfreelist_ms(&shell->exec);
-	if (shell->last_dir)
-		free(shell->last_dir);
 	if (shell->exit_status)
 		free(shell->exit_status);
 	free(shell);

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:33:36 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 20:34:06 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/25 16:39:40 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	execution(t_shell *shell)
 	waitpid(-1, &status, 0);
 	if (WIFEXITED(status))
 		*(shell->exit_status) = WEXITSTATUS(status);
-	if (*(shell->exit_status) > 1)
+	else if (*(shell->exit_status) > 1)
 		*(shell->exit_status) = 1;
 	else if (WIFSIGNALED(status))
 		*(shell->exit_status) = WTERMSIG(status) - 1;
