@@ -6,7 +6,7 @@
 #    By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 21:52:00 by kaan              #+#    #+#              #
-#    Updated: 2024/06/24 19:31:50 by mdomnik          ###   ########.fr        #
+#    Updated: 2024/06/26 12:36:43 by mdomnik          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ SRC =	src/builtin/cd.c\
 		src/main/error_seq.c\
 		src/main/main.c\
 		src/main/signal.c\
+		src/main/signal_2.c\
 		src/main/testing.c\
 		src/parser/parser_helpers.c\
 		src/parser/parser_struct.c\

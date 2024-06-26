@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/15 16:40:24 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/24 14:05:30 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/26 12:49:42 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,10 +94,10 @@ void	test_parser_pointers(char **args, char **io, char **files)
 	printf("----------------\n");
 }
 
-void print_exec(t_shell *shell)
+void	print_exec(t_shell *shell)
 {
 	t_exec	*current;
-	int	i;
+	int		i;
 
 	i = 0;
 	current = shell->exec;
@@ -137,7 +137,7 @@ void print_exec(t_shell *shell)
 	ft_putstr_fd("----------------------\n", 2);
 }
 
-void print_double_pointer(char **list)
+void	print_double_pointer(char **list)
 {
 	int	i;
 
@@ -151,10 +151,10 @@ void print_double_pointer(char **list)
 	printf("----------------\n");
 }
 
-void print_triple_pointer(char ***triple_pointer)
+void	print_triple_pointer(char ***triple_pointer)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	printf("Printing triple pointer\n");

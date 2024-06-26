@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/24 18:01:41 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/25 15:58:15 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/26 12:59:49 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	redir_exe(t_shell *shell, t_exec *exec)
 	if (exec->operator == LESS)
 		less(shell, exec);
 	else if (exec->operator == HEREDOC)
-		heredoc(exec);
+		heredoc(shell, exec);
 	else
 		redir_output(shell, exec);
 	if (exec->next && exec->operator == LESS)

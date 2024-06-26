@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/25 18:13:47 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/26 12:37:30 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,11 @@ void	reset_loop(t_shell *shell);
 void	child_signals(int signum);
 void	dismiss_signal(int signum);
 void	config_signals(void);
+
+//signals_2.c
+void	sigquit_handler(int num);
+void	sigint_handler_child(int num);
+void	set_signals_child(void);
 
 //testing.c
 void	print_lexer(t_shell *shell);

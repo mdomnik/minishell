@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:20:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 20:15:32 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/26 12:59:14 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,13 @@ void	less(t_shell *shell, t_exec *exec)
 	}
 }
 
-void	heredoc(t_exec *exec)
+void	heredoc(t_shell *shell, t_exec *exec)
 {
 	char	*buff;
 	int		fd[2];
 
 	pipe(fd);
+	set_signals_child();
 	while (1)
 	{
 		buff = readline("> ");
@@ -61,6 +62,8 @@ void	heredoc(t_exec *exec)
 			break ;
 		ft_putendl_fd(buff, fd[1]);
 	}
+	exec->operator = exec->next->operator;
+	remove_exec_node_at_index(shell, exec->next->index);
 	close(fd[1]);
 	dup2(fd[0], STDIN_FILENO);
 	close(fd[0]);

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/20 19:54:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/25 20:52:45 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/26 12:59:28 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	pipe_exe(t_shell *shell, t_exec *exec);
 //redir_1.c
 void	remove_less(t_shell *shell, t_exec *exec);
 void	less(t_shell *shell, t_exec *exec);
-void	heredoc(t_exec *exec);
+void	heredoc(t_shell *shell, t_exec *exec);
 void	ft_open(char *token, int option);
 void	remove_output_node(t_shell *shell, t_exec *exec);
 
