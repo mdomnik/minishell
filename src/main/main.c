@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:27:52 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/25 15:28:05 by mdomnik          ###   ########.fr       */
+/*   Updated: 2025/10/27 18:21:38 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,53 +46,51 @@ int	main(int argc, char **argv, char **envp)
     sends it for processing */
 void	shell_loop(t_shell *shell)
 {
-	config_signals();
-	shell->line = readline(CL_NAME);
-	if (!shell->line) 
+	while (1)
 	{
-		if (shell->declare)
-			free_double(shell->declare);
-		if (shell->env)
-			free_double(shell->env);
-		if (shell->exit_status)
-			free(shell->exit_status);
-		free(shell);
-		printf("exit\n");
-		exit(0);
+		config_signals();
+		shell->line = readline(CL_NAME);
+		if (!shell->line)
+		{
+			if (shell->declare)
+				free_double(shell->declare);
+			if (shell->env)
+				free_double(shell->env);
+			if (shell->exit_status)
+				free(shell->exit_status);
+			free(shell);
+			printf("exit\n");
+			exit(0);
+		}
+		if (shell->line[0] != '\0')
+		{
+			add_history(shell->line);
+			tokenizer(shell, 0, 1);
+		}
+		reset_loop(shell);
 	}
-	if (shell->line[0] != '\0')
-	{
-		add_history(shell->line);
-		tokenizer(shell, 0, 1);
-	}
-	if (shell->line)
-		free(shell->line);
-	shell_loop(shell);
 }
 
-/**
- * Resets the loop by freeing the memory allocated for the shell's line
- * and then calls the shell_loop function.
- *
- * @param shell A pointer to the t_shell struct representing the shell.
- */
 void	reset_loop(t_shell *shell)
 {
 	if (shell->line)
+	{
 		free(shell->line);
+		shell->line = NULL;
+	}
 	if (shell->lexer)
 		lexerfreelist_ms(&shell->lexer);
 	if (shell->expand)
 		expandfreelist_ms(&shell->expand);
 	if (shell->exec)
 		execfreelist_ms(&shell->exec);
+
 	shell->expand = NULL;
 	shell->lexer = NULL;
 	shell->parser = NULL;
 	shell->exec = NULL;
 	shell->in_fd = -1;
 	shell->out_fd = -1;
-	shell_loop(shell);
 }
 
 /* this function initializes all components

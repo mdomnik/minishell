@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 20:28:57 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/25 19:43:03 by mdomnik          ###   ########.fr       */
+/*   Updated: 2025/10/27 18:00:08 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,6 @@ int	count_args_cmd(t_expand *expand)
  */
 void	create_input_node(t_shell *shell, t_expand *expand)
 {
-	t_expand	*temp;
-
-	temp = expand;
 	while (expand != NULL && expand->token != T_PIPE)
 	{
 		if (expand->token == T_LESSER)
@@ -114,9 +111,6 @@ void	create_input_node(t_shell *shell, t_expand *expand)
  */
 void	create_output_node(t_shell *shell, t_expand *expand)
 {
-	t_expand	*temp;
-
-	temp = expand;
 	while (expand != NULL && expand->token != T_PIPE)
 	{
 		if (expand->token == T_GREATER)

@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 16:45:51 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/24 18:00:41 by mdomnik          ###   ########.fr       */
+/*   Updated: 2025/10/27 18:22:39 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 void	left_side(t_exec *exec, t_shell *shell, int pipe_fd[2])
 {
-	close(STDOUT_FILENO);
-	dup(pipe_fd[1]);
+	dup2(pipe_fd[1], STDOUT_FILENO);
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
 	exec_cmd(shell, exec);
@@ -23,8 +22,7 @@ void	left_side(t_exec *exec, t_shell *shell, int pipe_fd[2])
 
 void	right_side(t_exec *exec, t_shell *shell, int pipe_fd[2])
 {
-	close(STDIN_FILENO);
-	dup(pipe_fd[0]);
+	dup2(pipe_fd[0], STDIN_FILENO);
 	close(pipe_fd[0]);
 	close(pipe_fd[1]);
 	exec_cmd(shell, exec);

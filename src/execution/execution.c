@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:33:36 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/25 16:39:40 by mdomnik          ###   ########.fr       */
+/*   Updated: 2025/10/27 18:24:17 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,8 @@ void	execution(t_shell *shell)
 	waitpid(-1, &status, 0);
 	if (WIFEXITED(status))
 		*(shell->exit_status) = WEXITSTATUS(status);
-	else if (*(shell->exit_status) > 1)
-		*(shell->exit_status) = 1;
 	else if (WIFSIGNALED(status))
 		*(shell->exit_status) = WTERMSIG(status) - 1;
-	execfreelist_ms(&shell->exec);
-	reset_loop(shell);
 }
 
 int	single_exec(t_shell *shell, t_exec *exec)
@@ -93,10 +89,20 @@ int	single_exec(t_shell *shell, t_exec *exec)
 	ret = find_builtin(shell, exec);
 	if (ret == 2)
 	{
-		if (fork() == 0)
+		pid_t pid = fork();
+		int   status;
+		if (pid == 0)
 		{
 			signal(SIGINT, child_signals);
 			find_path(shell, exec);
+		}
+		else
+		{
+			waitpid(pid, &status, 0);
+			if (WIFEXITED(status))
+				*(shell->exit_status) = WEXITSTATUS(status);
+			else if (WIFSIGNALED(status))
+				*(shell->exit_status) = WTERMSIG(status) - 1;
 		}
 	}
 	else if (ret == -1)

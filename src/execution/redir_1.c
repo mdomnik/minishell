@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/13 17:20:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/26 12:59:14 by mdomnik          ###   ########.fr       */
+/*   Updated: 2025/10/27 18:23:02 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	less(t_shell *shell, t_exec *exec)
 		}
 		else
 		{
-			ft_putendl_fd(NO_FILE, 3);
-			dup2(3, STDIN_FILENO);
+			ft_putendl_fd(NO_FILE, STDERR_FILENO);
+			*(shell->exit_status) = 1;
 		}
 	}
 }
