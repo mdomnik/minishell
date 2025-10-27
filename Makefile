@@ -6,7 +6,7 @@
 #    By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/02/28 21:52:00 by kaan              #+#    #+#              #
-#    Updated: 2024/06/26 12:36:43 by mdomnik          ###   ########.fr        #
+#    Updated: 2024/06/26 13:41:06 by mdomnik          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ OBJ_DIR	= obj/
 
 CC = cc
 
-FLAGS = -g -Wall -Wextra -Werror -I
+FLAGS = -Wall -Wextra -Werror -I
 
 READFLAG = -lreadline
 
@@ -52,7 +52,6 @@ SRC =	src/builtin/cd.c\
 		src/main/main.c\
 		src/main/signal.c\
 		src/main/signal_2.c\
-		src/main/testing.c\
 		src/parser/parser_helpers.c\
 		src/parser/parser_struct.c\
 		src/parser/parser.c\
@@ -98,6 +97,6 @@ comp: re
 	@./$(NAME)
 
 memcheck: re
-	@valgrind -s --leak-check=full --track-origins=yes --show-leak-kinds=all --suppressions=suppressions.supp ./$(NAME)
+	@valgrind -s --leak-check=full --track-origins=yes --show-leak-kinds=all ./$(NAME)
 
 .PHONY: start all clean fclean re

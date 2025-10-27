@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 21:53:11 by kaan              #+#    #+#             */
-/*   Updated: 2024/06/26 12:37:30 by mdomnik          ###   ########.fr       */
+/*   Updated: 2024/06/26 13:39:52 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,5 @@ void	config_signals(void);
 void	sigquit_handler(int num);
 void	sigint_handler_child(int num);
 void	set_signals_child(void);
-
-//testing.c
-void	print_lexer(t_shell *shell);
-void	print_expand(t_shell *shell);
-void	test_parser_pointers(char **args, char **io, char **files);
-void	print_exec(t_shell *shell);
-void	print_double_pointer(char **list);
-void	print_triple_pointer(char ***triple_pointer);
 
 #endif
