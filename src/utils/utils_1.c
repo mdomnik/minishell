@@ -6,7 +6,7 @@
 /*   By: mdomnik <mdomnik@student.42berlin.de>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 15:41:28 by mdomnik           #+#    #+#             */
-/*   Updated: 2024/06/25 14:14:12 by mdomnik          ###   ########.fr       */
+/*   Updated: 2025/10/27 19:09:20 by mdomnik          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,51 +91,136 @@ int	ft_strlen_ms(char *s)
 	return (i);
 }
 
+#include "../../inc/minishell.h"
+
+/**
+ * Safely updates PWD and OLDPWD in both shell->env and shell->declare.
+ * Creates them if they don't exist.
+ */
 void	update_pwd_oldpwd(t_shell *shell, char *pwd_str, char *o_pwd_str)
 {
 	int		i;
+	int		found_pwd = 0;
+	int		found_oldpwd = 0;
+	char	*tmp;
 
-	i = 0;
-	while (ft_strncmp("PWD=", shell->env[i], 4) != 0)
-		i++;
-	if (shell->env[i] != NULL)
+	if (!shell || !shell->env)
+		return;
+
+	/* ---------- Update or add to env ---------- */
+	for (i = 0; shell->env[i]; i++)
 	{
-		free(shell->env[i]);
-		shell->env[i] = ft_strjoin_ms("PWD=", ft_strdup(pwd_str));
+		if (!found_pwd && ft_strncmp(shell->env[i], "PWD=", 4) == 0)
+		{
+			free(shell->env[i]);
+			shell->env[i] = ft_strjoin_ms("PWD=", ft_strdup(pwd_str));
+			found_pwd = 1;
+		}
+		else if (!found_oldpwd && ft_strncmp(shell->env[i], "OLDPWD=", 7) == 0)
+		{
+			free(shell->env[i]);
+			shell->env[i] = ft_strjoin_ms("OLDPWD=", ft_strdup(o_pwd_str));
+			found_oldpwd = 1;
+		}
 	}
-	i = 0;
-	while (ft_strncmp("OLDPWD=", shell->env[i], 7) != 0)
-		i++;
-	if (shell->env[i] != NULL)
+
+	if (!found_pwd)
 	{
-		free(shell->env[i]);
-		shell->env[i] = ft_strjoin_ms("OLDPWD=", ft_strdup(o_pwd_str));
+		tmp = ft_strjoin_ms("PWD=", ft_strdup(pwd_str));
+		add_env(shell, tmp);
+		free(tmp);
 	}
-	update_declare_pwd(shell, ft_strdup(pwd_str), ft_strdup(o_pwd_str));
+	if (!found_oldpwd)
+	{
+		tmp = ft_strjoin_ms("OLDPWD=", ft_strdup(o_pwd_str));
+		add_env(shell, tmp);
+		free(tmp);
+	}
+
+	/* ---------- Also update declare ---------- */
+	update_declare_pwd(shell, pwd_str, o_pwd_str);
+	/* update_declare_pwd frees pwd_str/o_pwd_str */
+}
+
+/**
+ * Updates PWD and OLDPWD in shell->declare.
+ * Adds them if they don't exist.
+ */
+void	update_declare_pwd(t_shell *shell, char *pwd_str, char *o_pwd_str)
+{
+	int		i;
+	int		found_pwd = 0;
+	int		found_oldpwd = 0;
+	char	*tmp;
+
+	if (!shell || !shell->declare)
+	{
+		free(pwd_str);
+		free(o_pwd_str);
+		return;
+	}
+
+	for (i = 0; shell->declare[i]; i++)
+	{
+		if (!found_pwd && ft_strncmp(shell->declare[i], "PWD=", 4) == 0)
+		{
+			free(shell->declare[i]);
+			shell->declare[i] = ft_strjoin_ms("PWD=", ft_strdup(pwd_str));
+			found_pwd = 1;
+		}
+		else if (!found_oldpwd && ft_strncmp(shell->declare[i], "OLDPWD=", 7) == 0)
+		{
+			free(shell->declare[i]);
+			shell->declare[i] = ft_strjoin_ms("OLDPWD=", ft_strdup(o_pwd_str));
+			found_oldpwd = 1;
+		}
+	}
+
+	if (!found_pwd)
+	{
+		tmp = ft_strjoin_ms("PWD=", ft_strdup(pwd_str));
+		append_declare(shell, tmp);
+		free(tmp);
+	}
+	if (!found_oldpwd)
+	{
+		tmp = ft_strjoin_ms("OLDPWD=", ft_strdup(o_pwd_str));
+		append_declare(shell, tmp);
+		free(tmp);
+	}
+
 	free(pwd_str);
 	free(o_pwd_str);
 }
 
-void	update_declare_pwd(t_shell *shell, char *pwd_str, char *o_pwd_str)
+/**
+ * Appends a new entry to shell->declare.
+ * Works like add_env() but for the declare array.
+ */
+void	append_declare(t_shell *shell, char *str)
 {
+	char	**copy;
 	int		i;
 
+	if (!shell)
+		return;
+
 	i = 0;
-	while (ft_strncmp("PWD=", shell->declare[i], 4) != 0)
+	while (shell->declare && shell->declare[i])
 		i++;
-	if (shell->declare[i] != NULL)
-	{
-		free(shell->declare[i]);
-		shell->declare[i] = ft_strjoin_ms("PWD=", ft_strdup(pwd_str));
-	}
+	copy = malloc(sizeof(char *) * (i + 2));
+	if (!copy)
+		return;
+
 	i = 0;
-	while (ft_strncmp("OLDPWD=", shell->declare[i], 7) != 0)
-		i++;
-	if (shell->declare[i] != NULL)
+	while (shell->declare && shell->declare[i])
 	{
-		free(shell->declare[i]);
-		shell->declare[i] = ft_strjoin_ms("OLDPWD=", ft_strdup(o_pwd_str));
+		copy[i] = ft_strdup(shell->declare[i]);
+		i++;
 	}
-	free(pwd_str);
-	free(o_pwd_str);
+	copy[i] = ft_strdup(str);
+	copy[i + 1] = NULL;
+
+	free_double(shell->declare);
+	shell->declare = copy;
 }
